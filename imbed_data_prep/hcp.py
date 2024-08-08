@@ -176,26 +176,26 @@ class Hcp3Dacc:
                 )
                 yield id, title_aggregate
 
-        def titles_aggregate_sr(
-            dacc,
-            *,
-            titles_sep='\n\n###\n\n',
-            main_title_sep='\n\n\n######\n\n\n',
-            print_progress_every=50_000,
-        ):
-            """For each article, aggregate its title with the titles of the papers it cites.
+    def titles_aggregate_sr(
+        dacc,
+        *,
+        titles_sep='\n\n###\n\n',
+        main_title_sep='\n\n\n######\n\n\n',
+        print_progress_every=50_000,
+    ):
+        """For each article, aggregate its title with the titles of the papers it cites.
 
-            We use `dacc.info_hcp2.set_index('id')['title']` to get the titles of an id.
-            If a title is missing, it is ignored.
+        We use `dacc.info_hcp2.set_index('id')['title']` to get the titles of an id.
+        If a title is missing, it is ignored.
 
-            Returns a generator of `(id, aggregated_titles)` pairs.
-            """
-            titles_aggregate_sr = dict()
-            it = dacc.titles_aggregate(
-                titles_sep=titles_sep, main_title_sep=main_title_sep
-            )
-            for i, (citing_id, titles_aggregate) in enumerate(it, 1):
-                if i % print_progress_every == 0:
-                    print(f"Proccessed {i} elements")
-                titles_aggregate_sr[citing_id] = titles_aggregate
-            return pd.Series(titles_aggregate_sr, name='titles_aggregate')
+        Returns a generator of `(id, aggregated_titles)` pairs.
+        """
+        titles_aggregate_sr = dict()
+        it = dacc.titles_aggregate(
+            titles_sep=titles_sep, main_title_sep=main_title_sep
+        )
+        for i, (citing_id, titles_aggregate) in enumerate(it, 1):
+            if i % print_progress_every == 0:
+                print(f"Proccessed {i} elements")
+            titles_aggregate_sr[citing_id] = titles_aggregate
+        return pd.Series(titles_aggregate_sr, name='titles_aggregate')
