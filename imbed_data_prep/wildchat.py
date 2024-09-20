@@ -30,11 +30,13 @@ from imbed.util import (
     ensure_fullpath,
     ensure_cache,
     add_extension,
-    kmeans_cluster_indices,
     CacheSpec,
+    log_calls,
+    log_method_calls,
+    counts,
 )
+from imbed.data_prep import kmeans_cluster_indices
 from imbed.base import extension_base_wrap
-from lkj import clog, print_with_timestamp, log_calls as _log_calls
 
 import pandas as pd
 import numpy as np
@@ -47,7 +49,11 @@ huggingface_data_stub = "allenai/WildChat-1M"
 # TODO: Use config2py tools to use and save default values
 # TODO: Use config2py tools to include a message containing the default values
 _DFLT_CACHE_DIR = saves_join(data_name)
-DFLT_CACHE_DIR = get_config('WILDCHAT_CACHE_DIR', default=_DFLT_CACHE_DIR)
+
+DFLT_CACHE_DIR = os.environ.get('WILDCHAT_CACHE_DIR', default=_DFLT_CACHE_DIR)
+# # For a more flexible configs getter (that will ask user for missing keys):
+# DFLT_CACHE_DIR = get_config('WILDCHAT_CACHE_DIR', default=_DFLT_CACHE_DIR)
+
 # _DFLT_RAW_DATA_FILEPATH = os.path.join(DFLT_CACHE_DIR, raw_data_name)
 # DFLT_RAW_DATA_FILEPATH = get_config(
 #     'GITHUB_REPOS_RAW_DATA_FILEPATH', default=_DFLT_RAW_DATA_FILEPATH
@@ -59,14 +65,16 @@ DFLT_N_CLUSTERS = (5, 8, 13, 21, 34)
 # cache_this = partial(_cache_this, cache='cache')
 cache_this = _cache_this
 
-log_calls = _log_calls(
-    logger=print_with_timestamp,
-    log_condition=partial(_log_calls.instance_flag_is_set, flag_attr='verbose'),
-)
-
-
+import oa
 from dataclasses import dataclass, KW_ONLY
-from imbed.base import HugfaceDaccBase, DFLT_SAVES_DIR
+from imbed.base import (
+    HugfaceDaccBase,
+    DFLT_SAVES_DIR,
+    add_token_info_to_df,
+    DFLT_EMBEDDING_MODEL,
+)
+from tabled import expand_rows, expand_columns
+
 
 @dataclass
 class WildchatDacc(HugfaceDaccBase):
@@ -75,7 +83,83 @@ class WildchatDacc(HugfaceDaccBase):
     _: KW_ONLY
     saves_dir: Optional[str] = None
     root_saves_dir: str = DFLT_SAVES_DIR
+    verbose: int = 1
+    model: str = DFLT_EMBEDDING_MODEL
 
+    @cache_this(cache='saves', key=add_extension('parquet'))
+    @log_method_calls
+    def expanded_train(self):
+        return expand_wildchat_data(self.train_data)
+
+    @property
+    def expanded_en(self):
+        return self.expanded_train[self.expanded_train.language == 'English']
+
+    @property
+    def language_conversation_counts(self):
+        return counts(self.train_data.language)
+
+    @property
+    def language_turn_counts(self):
+        return counts(self.expanded_train.language)
+
+    # @cache_this(cache='saves', key=add_extension('.parquet'))
+    # @log_method_calls
+    @cache_this(cache='saves', key=add_extension('.parquet'))
+    @log_method_calls
+    def embeddable_df(self):
+        df = self.expanded_train
+        df['id_'] = df.index.values
+        df['segment_length'] = df['conversation.content'].apply(len)
+        df = add_token_info_to_df(
+            df,
+            segments_col='conversation.content',
+            model=self.model,
+        )  # takes 10mn
+        # then keep only those conversations (grouped by hash) that have all valid segments
+        return df.groupby('conversation_hash').filter(
+            lambda x: x['segment_is_valid'].all()
+        )
+
+
+def expand_wildchat_data(df):
+    """
+    Expand columns and rows of raw wildchat data, to get a more flattened dataframe.
+
+    The raw data contains several columns that have nested data. More specifically,
+    the columns -- 'conversation', 'openai_moderation', and 'detoxify_moderation' --
+    which contain (aligned) lists of dicts, where each dict of a list corresponds to
+    a "part" of the conversation conversation: Either the "user", or the "assistant"
+    role -- the size of this list should be the number of "turns" times two (user part,
+    followed with assistant response).
+
+    So we expand the lists, thus expanding the rows to contain exactly a part each.
+    Then we expand the dicts, thus expanding the colums, to contain a field of the dict
+    each.
+    Finally, there's one more level of nested dicts in the
+    'openai_moderation.categories' and 'openai_moderation.category_scores' columns,
+    which we also flatten by expanding columns.
+    Note that before we do this, we drop rows that have null openai_moderation values.
+    There were 16996 such rows in the (row-expanded) raw data.
+
+    """
+    # for each (aligned) item of conversation and moderation, make a new row
+    df = expand_rows(df, ['conversation', 'openai_moderation', 'detoxify_moderation'])
+    # These items are dicts, so expand their fields into columns
+    df = expand_columns(
+        df, ['conversation', 'openai_moderation', 'detoxify_moderation']
+    )
+    # openai_moderation has yet one more level of nesting so flatten that too
+    openai_moderation_cols = [
+        'openai_moderation.categories',
+        'openai_moderation.category_scores',
+    ]
+    #   some 16996 rows have null openai_moderation values: drop them before expanding
+    df.dropna(subset=openai_moderation_cols, inplace=True)
+    df = expand_columns(df, openai_moderation_cols)
+    # remove all columns that have a / in them (because they have duplicates)
+    df = df[[c for c in df.columns if '/' not in c]]
+    return df
 
 
 # @dataclass

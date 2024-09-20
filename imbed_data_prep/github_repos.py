@@ -30,9 +30,9 @@ from imbed.util import (
     ensure_fullpath,
     ensure_cache,
     add_extension,
-    kmeans_cluster_indices,
     CacheSpec,
 )
+from imbed.data_prep import kmeans_cluster_indices
 from imbed.base import extension_base_wrap
 from lkj import clog, print_with_timestamp, log_calls as _log_calls
 
