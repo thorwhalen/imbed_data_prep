@@ -2,7 +2,7 @@
 
 import os
 from functools import cached_property, partial
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Sequence, Callable
 import pandas as pd
 import numpy as np
@@ -15,7 +15,19 @@ from imbed.util import (
     umap_2d_embeddings_df,
     two_d_embedding_dict_to_df,
     save_df_to_zipped_tsv,
+    fuzzy_induced_graph,
+    # get_config,
 )
+
+
+def get_src_key_from_local_configs():
+    config_val = os.environ.get('HCP_PUBS_SRC_KEY', None)
+    if config_val:
+        return config_val
+    else:
+        raise ValueError(
+            "You must specify a src_key or set HCP_PUBS_SRC_KEY in environment variables"
+        )
 
 
 # def embeddings_for_ids(ids: Sequence[int], embeddings):
@@ -46,7 +58,7 @@ simple_mean_aggregator = partial(np.mean, axis=0)
 
 @dataclass
 class Hcp3Dacc:
-    src_key: str
+    src_key: str = field(default_factory=get_src_key_from_local_configs)
     mean_aggregator: Callable[[np.ndarray], np.ndarray] = cosine_mean_aggregator
     src_store_factory: Callable = Files
 
@@ -54,6 +66,7 @@ class Hcp3Dacc:
     embeddings_src_key = 'publications-hcp2-embeddings.parquet'
     citations_src_key = 'citation-links-hcp3.tsv.zip'
     info_src_key = 'publications-hcp2.tsv.zip'
+    aggregate_titles_embeddings_key = 'aggregate_titles_embeddings.parquet'
 
     @cached_property
     def pjoin(self):
@@ -76,6 +89,10 @@ class Hcp3Dacc:
         return self.pjoin(self.info_src_key)
 
     @cached_property
+    def aggregate_titles_embeddings_filepath(self):
+        return self.pjoin(self.aggregate_titles_embeddings_key)
+
+    @cached_property
     def embeddings_hcp2(self):
         embeddings_hcp2 = pd.read_parquet(self.embeddings_filepath)
         embeddings_hcp2 = embeddings_hcp2.set_index('id')['embedding']
@@ -89,6 +106,32 @@ class Hcp3Dacc:
     def _citations_ids(self):
         return set(self._citations_hcp3['citing_pub_id']) | set(
             self._citations_hcp3['cited_pub_id']
+        )
+
+    def citation_graph(
+        self, min_proportion=1, *, min_citations: int = 1, ids_with_embeddings=None
+    ):
+        """
+        Return the citation graph as a dict of {citing_id: [cited_id, ...]} pairs.
+        The graph is pruned to only include articles who have a `min_proportion`
+        of citations that have embeddings (in ids_with_embeddings).
+
+        Args:
+            min_proportion (float): The minimum proportion of citations that must have
+                embeddings for a node to be included in the graph.
+
+        """
+        if ids_with_embeddings is None:
+            ids_with_embeddings = set(self.aggregate_titles_embeddings['id'])
+        citations = {
+            k: v for k, v in self.citations_of.items() if len(v) >= min_citations
+        }
+        return dict(
+            fuzzy_induced_graph(
+                citations,
+                ids_with_embeddings,
+                min_proportion=min_proportion,
+            )
         )
 
     @cached_property
@@ -155,6 +198,22 @@ class Hcp3Dacc:
         """Precomputed titles aggregates, with info"""
         return pd.read_parquet(io.BytesIO(self.store[self.titles_aggr_src_key]))
 
+    @cached_property
+    def aggregate_titles_embeddings(self):
+        return pd.read_parquet(self.aggregate_titles_embeddings_filepath)
+
+    def citing_and_cited_titles(dacc):
+        """Generator of (id, citing_title, cited_titles) triples.
+        Helper for dacc.titles_aggregate method.
+        """
+        titles = dacc.info_hcp2.set_index('id')['title']
+        for id_, cited_ids in dacc.citations_of.items():
+            cited_ids = sorted(set(cited_ids) - dacc.missing_cited_ids)
+            cited_titles = titles.loc[cited_ids].dropna()
+            citing_title = titles.loc[id_]
+            if citing_title and len(cited_titles):
+                yield id_, citing_title, cited_titles
+
     def titles_aggregate(
         dacc, *, titles_sep='\n\n###\n\n', main_title_sep='\n\n\n######\n\n\n'
     ):
@@ -165,16 +224,11 @@ class Hcp3Dacc:
 
         Returns a generator of `(id, aggregated_titles)` pairs.
         """
-        titles = dacc.info_hcp2.set_index('id')['title']
-        for id, cited_ids in dacc.citations_of.items():
-            cited_ids = sorted(set(cited_ids) - dacc.missing_cited_ids)
-            cited_titles = titles.loc[cited_ids].dropna()
-            citing_title = titles.loc[id]
-            if citing_title and len(cited_titles):
-                title_aggregate = (
-                    citing_title + main_title_sep + titles_sep.join(cited_titles)
-                )
-                yield id, title_aggregate
+        for id_, citing_title, cited_titles in dacc.citing_and_cited_titles():
+            title_aggregate = (
+                citing_title + main_title_sep + titles_sep.join(cited_titles)
+            )
+            yield id_, title_aggregate
 
     def titles_aggregate_sr(
         dacc,
@@ -191,9 +245,7 @@ class Hcp3Dacc:
         Returns a generator of `(id, aggregated_titles)` pairs.
         """
         titles_aggregate_sr = dict()
-        it = dacc.titles_aggregate(
-            titles_sep=titles_sep, main_title_sep=main_title_sep
-        )
+        it = dacc.titles_aggregate(titles_sep=titles_sep, main_title_sep=main_title_sep)
         for i, (citing_id, titles_aggregate) in enumerate(it, 1):
             if i % print_progress_every == 0:
                 print(f"Proccessed {i} elements")

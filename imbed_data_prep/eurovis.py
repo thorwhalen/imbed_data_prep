@@ -1,38 +1,20 @@
 """Data prep for Eurovis data."""
 
 from functools import partial
-from io import BytesIO
 import os
 from dataclasses import dataclass, KW_ONLY
-from typing import Sequence, Callable, Optional
+from typing import Optional
 
-from dol import cache_this as _cache_this, Files, Pipe
-from graze import url_to_file_download
-from graze.base import (
-    return_filepath,
-    return_contents,
-    key_egress_print_downloading_message_with_size,
-)
-from dol.tools import cache_property_method
+from dol import cache_this as _cache_this
 from imbed.util import (
     saves_join,
-    get_config,
     planar_embeddings,
-    PlanarEmbeddingSpec,
     planar_embeddings_dict_to_df,
-    DFLT_PLANAR_EMBEDDING_KIND,
-    ensure_fullpath,
-    ensure_cache,
     add_extension,
-    CacheSpec,
-    log_calls,
-    log_method_calls,
-    counts,
 )
 
 
 import pandas as pd
-import numpy as np
 
 
 data_name = 'eurovis'
@@ -48,22 +30,14 @@ DFLT_CACHE_DIR = os.environ.get('EUROVIS_CACHE_DIR', default=_DFLT_CACHE_DIR)
 DFLT_N_CLUSTERS = (5, 8, 13, 21, 34)
 
 
-# TODO: _cache_this doesn't work well with partial
-# cache_this = partial(_cache_this, cache='cache')
-cache_this = partial(_cache_this, cache='saves', key=add_extension('parquet'))
-
 import oa
-from functools import lru_cache
 from dataclasses import dataclass, KW_ONLY
 from imbed.base import (
     LocalSavesMixin,
     DFLT_SAVES_DIR,
-    add_token_info_to_df,
     DFLT_EMBEDDING_MODEL,
 )
 from imbed.data_prep import ImbedArtifactsMixin
-from tabled import expand_rows, expand_columns
-from dol.tools import cache_property_method
 
 
 # TODO: Move embed_segments_one_by_one to reusables (e.g. imbed)
@@ -82,6 +56,11 @@ def embed_segments_one_by_one(segments: Mapping[str, str]) -> KeyVectorPairs:
         except Exception as e:
             print(f"Error processing ({i=}) {key}: {e}")
             # continue
+
+
+# TODO: _cache_this doesn't work well with partial
+# cache_this = partial(_cache_this, cache='cache')
+cache_this = partial(_cache_this, cache='saves', key=add_extension('parquet'))
 
 
 @dataclass
@@ -119,7 +98,7 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
         ]
         assert df['n_tokens'].max() <= max_tokens, "some segments exceed max tokens"
 
-        df.set_index('doi', inplace=True)
+        df.set_index('doi', drop=False, inplace=True)
         df.index.name = 'id_'
         return df
 
@@ -132,7 +111,7 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
         df = pd.DataFrame(vectors).T
         df.index.name = 'id_'
         return df
-    
+
     @cache_this
     def planar_embeddings(self):
         # TODO: Test this
@@ -140,21 +119,20 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
         # make it into a dataframe with the same index as the embeddings_df
         return planar_embeddings_dict_to_df(d)
 
-
     @property
     def segments(self):
         df = self.embeddable
-        segments = dict(zip(df.doi, df.segment))
+        segments = dict(zip(df.index.values, df.segment))
         assert len(segments) == len(df), "oops, duplicate DOIs"
-        assert all(map(oa.text_is_valid, df.segment)), "some segments are invalid"
+        assert all(
+            map(oa.text_is_valid, df.segment.values)
+        ), "some segments are invalid"
 
         return segments
-
 
     @cache_this
     def clusters_df(self):
         return super().clusters_df()
-    
 
     @cache_this(cache='saves', key=add_extension('parquet'))
     def merged_artifacts(self):
@@ -163,3 +141,6 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
         t = t.merge(self.clusters_df, left_index=True, right_index=True)
         return t
 
+    @cache_this
+    def testing123(self):
+        return pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})

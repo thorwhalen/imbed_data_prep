@@ -296,7 +296,6 @@ def mk_dacc():
 #     df = flat_en[~flat_en.conversation_id.isin(invalid_conversations)]
 #     return df
 
-from imbed.segmentation import fixed_step_chunker
 from imbed.util import clog
 from imbed.base import batches, DFLT_CHK_SIZE
 
