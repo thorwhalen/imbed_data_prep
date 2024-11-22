@@ -33,7 +33,7 @@ from imbed.util import (
     CacheSpec,
 )
 from imbed.data_prep import kmeans_cluster_indices
-from imbed.base import extension_base_wrap
+from imbed.base import extension_based_wrap
 from lkj import clog, print_with_timestamp, log_calls as _log_calls
 
 import pandas as pd
@@ -103,7 +103,7 @@ class GithubReposData:
         self.raw_data_local_path = ensure_fullpath(
             self.raw_data_local_path, conditional_rootdir=self.cache
         )
-        self.cache = extension_base_wrap(ensure_cache(self.cache))
+        self.cache = extension_based_wrap(ensure_cache(self.cache))
         self.log = clog(self.verbose)
 
         # TODO: Why do I need to do this?

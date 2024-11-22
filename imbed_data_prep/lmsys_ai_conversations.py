@@ -19,7 +19,7 @@ from datasets import load_dataset
 
 from dol import Files, add_ipython_key_completions
 from tabled import expand_rows, expand_columns
-from imbed.util import saves_join, merge_data, extension_base_wrap, counts
+from imbed.util import saves_join, merge_data, extension_based_wrap, counts
 
 
 def concatenate_arrays(arrays):
@@ -52,7 +52,7 @@ class Dacc:
 
     @cached_property
     def saves(self):
-        return add_ipython_key_completions(extension_base_wrap(self.saves_bytes_store))
+        return add_ipython_key_completions(extension_based_wrap(self.saves_bytes_store))
 
     def get_data(self, data_spec: DataSpec, *, assert_type=None):
         if isinstance(data_spec, str):

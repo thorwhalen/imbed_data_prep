@@ -63,7 +63,7 @@ def embed_segments_one_by_one(segments: Mapping[str, str]) -> KeyVectorPairs:
 
 import pandas as pd
 from haggle import KaggleDatasets
-from imbed import extension_base_wrap
+from imbed import extension_based_wrap
 
 
 @dataclass
@@ -91,7 +91,7 @@ class Dacc(LocalSavesMixin, ImbedArtifactsMixin):
 
         kaggle = KaggleDatasets()
 
-        raw_data_store = extension_base_wrap(kaggle['kazanova/sentiment140'])
+        raw_data_store = extension_based_wrap(kaggle['kazanova/sentiment140'])
         list(raw_data_store)
         df = raw_data_store['training.1600000.processed.noemoticon.csv']
 

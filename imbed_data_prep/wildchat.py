@@ -36,7 +36,7 @@ from imbed.util import (
     counts,
 )
 from imbed.data_prep import kmeans_cluster_indices
-from imbed.base import extension_base_wrap
+from imbed.base import extension_based_wrap
 
 import pandas as pd
 import numpy as np
@@ -183,7 +183,7 @@ def expand_wildchat_data(df):
 #         self.raw_data_local_path = ensure_fullpath(
 #             self.raw_data_local_path, conditional_rootdir=self.cache
 #         )
-#         self.cache = extension_base_wrap(ensure_cache(self.cache))
+#         self.cache = extension_based_wrap(ensure_cache(self.cache))
 #         self.log = clog(self.verbose)
 
 #         # TODO: Why do I need to do this?
