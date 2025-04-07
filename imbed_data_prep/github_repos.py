@@ -19,7 +19,7 @@ from graze.base import (
     return_contents,
     key_egress_print_downloading_message_with_size,
 )
-from dol.tools import cache_property_method
+from dol.caching import cache_property_method
 from imbed.util import (
     saves_join,
     get_config,

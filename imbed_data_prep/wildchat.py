@@ -1,9 +1,5 @@
 """Data prep for Github Repositories data.
 
-Data source:
-- [GitHub Public Repository Metadata](https://www.kaggle.com/datasets/pelmers/github-repository-metadata-with-5-stars?resource=download) 
-- ([Dropbox link to parquet file](https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=0))
-
 """
 
 from functools import partial
@@ -19,7 +15,7 @@ from graze.base import (
     return_contents,
     key_egress_print_downloading_message_with_size,
 )
-from dol.tools import cache_property_method
+from dol.caching import cache_property_method
 from imbed.util import (
     saves_join,
     get_config,
