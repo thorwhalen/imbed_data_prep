@@ -3,7 +3,7 @@
 import os
 from functools import cached_property, partial
 from dataclasses import dataclass, field
-from typing import Sequence, Callable
+from collections.abc import Sequence, Callable
 import pandas as pd
 import numpy as np
 import io

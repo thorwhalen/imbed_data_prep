@@ -11,7 +11,8 @@ sentiment analysis, and various projections.
 import re
 import os
 from dataclasses import dataclass, field, KW_ONLY
-from typing import Optional, List, Union, Callable, Dict, Any, Tuple
+from typing import Optional, List, Union, Dict, Any, Tuple
+from collections.abc import Callable
 from functools import partial
 
 import numpy as np
@@ -66,9 +67,9 @@ class TrumpZelenskyyDacc:
     pca_for_lda_components: int = 50
     speaker_pattern: str = r'\[(?P<speaker>[^\]]+)\]: (?P<text>.*)'
     other_speaker_label: str = 'Other'
-    embeddings_provider: Optional[Callable] = None
+    embeddings_provider: Callable | None = None
     verbose: int = 1
-    saves_dir: Optional[str] = None
+    saves_dir: str | None = None
     
     # Internal fields
     _store: Any = field(init=False, default=None)

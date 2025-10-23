@@ -6,7 +6,8 @@ from functools import partial
 from io import BytesIO
 import os
 from dataclasses import dataclass, KW_ONLY
-from typing import Sequence, Callable, Optional
+from typing import Optional
+from collections.abc import Sequence, Callable
 
 from dol import cache_this as _cache_this, Files, Pipe
 from graze import url_to_file_download
@@ -75,9 +76,9 @@ from tabled import expand_rows, expand_columns
 @dataclass
 class WildchatDacc(HugfaceDaccBase):
     huggingface_data_stub: str = huggingface_data_stub
-    name: Optional[str] = data_name
+    name: str | None = data_name
     _: KW_ONLY
-    saves_dir: Optional[str] = None
+    saves_dir: str | None = None
     root_saves_dir: str = DFLT_SAVES_DIR
     verbose: int = 1
     model: str = DFLT_EMBEDDING_MODEL

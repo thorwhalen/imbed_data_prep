@@ -44,7 +44,7 @@ from imbed.data_prep import ImbedArtifactsMixin
 
 
 # TODO: Move embed_segments_one_by_one to reusables (e.g. imbed)
-from typing import Mapping, Generator
+from collections.abc import Mapping, Generator
 
 KeyVectorPairs = Generator[tuple[str, list[float]], None, None]
 
@@ -68,7 +68,7 @@ from imbed import extension_based_wrap
 
 @dataclass
 class Dacc(LocalSavesMixin, ImbedArtifactsMixin):
-    name: Optional[str] = data_name
+    name: str | None = data_name
     _: KW_ONLY
     saves_dir: str = os.path.join(DFLT_SAVES_DIR, data_name)
     verbose: int = 1

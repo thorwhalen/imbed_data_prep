@@ -55,12 +55,13 @@ class Htmls(TextFiles):
 
 
 from itertools import chain
-from typing import Union, Mapping
+from typing import Union
+from collections.abc import Mapping
 
 Folderpath = str
 
 
-def htmls_store(htmls: Union[Folderpath, Mapping[str, str]]) -> Htmls:
+def htmls_store(htmls: Folderpath | Mapping[str, str]) -> Htmls:
     if isinstance(htmls, str):
         if os.path.isdir(htmls):
             folderpath = htmls
@@ -70,15 +71,15 @@ def htmls_store(htmls: Union[Folderpath, Mapping[str, str]]) -> Htmls:
     return htmls
 
 
-def gather_info(htmls: Union[Folderpath, Mapping[str, str]]):
+def gather_info(htmls: Folderpath | Mapping[str, str]):
     htmls = htmls_store(htmls)
     for d in chain.from_iterable(map(extract_info, htmls.values())):
         d['pdf_url'] = d['url'].replace('Pages/Default.aspx', 'Documents')
 
 
-def get_laws_info(htmls: Union[Folderpath, Mapping[str, str]]):
+def get_laws_info(htmls: Folderpath | Mapping[str, str]):
     htmls = htmls_store(htmls)
     laws_info = list(chain.from_iterable(map(extract_info, htmls.values())))
     assert all(x['pdf'] for x in laws_info)
-    assert len(set(x['name'] for x in laws_info)) == len(laws_info)
+    assert len({x['name'] for x in laws_info}) == len(laws_info)
     return laws_info

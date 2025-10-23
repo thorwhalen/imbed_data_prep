@@ -3,7 +3,7 @@ Prepare wordnet words data.
 """
 
 import os
-from typing import Sized, Iterable
+from collections.abc import Sized, Iterable
 from functools import cached_property
 
 import pandas as pd

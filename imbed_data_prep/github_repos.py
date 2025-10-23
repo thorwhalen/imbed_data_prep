@@ -10,7 +10,7 @@ from functools import partial
 from io import BytesIO
 import os
 from dataclasses import dataclass, KW_ONLY
-from typing import Sequence, Callable
+from collections.abc import Sequence, Callable
 
 from dol import cache_this as _cache_this, Files, Pipe
 from graze import url_to_file_download

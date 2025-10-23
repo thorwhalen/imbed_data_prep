@@ -9,7 +9,8 @@ Data here: https://huggingface.co/papers/2309.11998
 from functools import cached_property, partial
 import os
 from dataclasses import dataclass
-from typing import List, Tuple, Dict, Any, Callable, Union, Literal
+from typing import List, Tuple, Dict, Any, Union, Literal
+from collections.abc import Callable
 from collections import Counter
 from itertools import chain
 

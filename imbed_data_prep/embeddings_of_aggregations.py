@@ -3,7 +3,8 @@
 import numpy as np
 from dol import Pipe
 import pandas as pd
-from typing import List, Mapping, TypeVar, Callable, Tuple, Iterable
+from typing import List, TypeVar, Tuple
+from collections.abc import Mapping, Callable, Iterable
 import oa
 from imbed.base import simple_semantic_features
 from imbed.util import fuzzy_induced_graph as fuzzy_induced_graph, Node, Nodes
@@ -195,7 +196,7 @@ def test_get_n_unique_permutations_error():
         assert False, "ValueError was not raised when expected"
 
 
-from typing import Sequence
+from collections.abc import Sequence
 
 
 def _is_vector(v):
