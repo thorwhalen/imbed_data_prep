@@ -144,18 +144,26 @@ class WordsDacc:
     def words_set(self):
         return set(self.word_list)
 
-    # @cache_this(cache='df_files', key='word_counts.csv')
-    @cache_this
+    @cache_this(cache='df_files', key='_word_counts.parquet')
+    def _word_counts(self):
+        return pd.read_csv(
+            self.word_frequency_data_url, keep_default_na=False, na_values=[]
+        )
+    
+    @cache_this  # keep in RAM
     def word_counts(self):
         # Note: The (..., keep_default_na=False, na_values=[]) is to avoid words "null" and "nan" being interpretted as NaN
         #    see https://www.skytowner.com/explore/preventing_strings_from_getting_parsed_as_nan_for_read_csv_in_pandas
-        return pd.read_csv(
-            self.word_frequency_data_url, keep_default_na=False, na_values=[]
-        ).set_index('word')['count']
+        return self._word_counts.set_index('word')['count']
+    
 
-    @cache_this(cache='df_files', key='wordnet_words.parquet')
-    def wordnet_words(self):
+    @cache_this(cache='df_files', key='_wordnet_words.parquet')
+    def _wordnet_words(self):
         return sorted(list(wn.all_lemma_names()))
+    
+    @cache_this
+    def wordnet_words(self):
+        return self._wordnet_words.values[:, 0]
 
     @cache_this(cache='df_files', key='word_and_synset.parquet')
     def word_and_synset(self):
