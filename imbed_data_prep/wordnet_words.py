@@ -1,10 +1,50 @@
 """
 Prepare wordnet words data.
+
+The steps are:
+* Get a list of most frequent (English) words
+* Get embeddings for each of these words
+* Get planar projections for these embeddings
+* Link the words in various ways (i.e make the link data)
+
+Many of the metadata items we have are lists of synsets (often empty).
+These have been accessed via the `wordnet_collection_meta` dataframe
+and can be used to connect some synsets to other synsets, therefore some words to other words.
+
+In WordNet, a **synset** (short for "synonym set") is a group of words that share the same meaning or concept. Think of it as a cluster of synonyms that can be used interchangeably in certain contexts without changing the overall meaning. For example, the words "happy," "joyful," and "elated" might belong to the same synset because they convey similar emotions.
+
+The synset relationships are as follows:
+
+* **attributes**: These are qualities or characteristics associated with a synset. *Example*: For the synset representing "banana," an attribute might be "yellow."
+* **causes**: This relationship indicates that one synset brings about or results in another. *Example*: "Tickling" (synset) causes "laughter" (synset).
+* **entailments**: Primarily used for verbs, this relationship means that one action logically necessitates another. *Example*: If someone is "snoring," it entails that they are "sleeping."
+* **hypernyms**: A hypernym is a more general term that encompasses more specific instances. *Example*: "Vehicle" is a hypernym of "car."
+* **hyponyms**: A hyponym is a more specific term within a broader category. *Example*: "Poodle" is a hyponym of "dog."
+* **in_region_domains**: This denotes the regional usage of a synset, indicating where a term is commonly used. *Example*: The term "biscuit" in British English refers to what Americans call a "cookie."
+* **in_topic_domains**: This shows the subject area or field to which a synset belongs. *Example*: The term "quantum" belongs to the domain of physics.
+* **in_usage_domains**: This indicates the context or manner in which a term is used. *Example*: "LOL" is used in informal, internet communication.
+* **instance_hypernyms**: This relationship links a specific instance to its general category. *Example*: "Einstein" is an instance of the hypernym "physicist."
+* **instance_hyponyms**: This connects a general category to its specific instances. *Example*: "Physicist" has instance hyponyms like "Einstein" and "Newton."
+* **member_holonyms**: This indicates the whole to which a member belongs. *Example*: A "tree" is a member of the holonym "forest."
+* **member_meronyms**: This shows the members that constitute a collective whole. *Example*: "Player" is a member meronym of "team."
+* **part_holonyms**: This denotes the whole object that a part belongs to. *Example*: A "wheel" is part of the holonym "car."
+* **part_meronyms**: This indicates the parts that make up a whole object. *Example*: "Keyboard" is a part meronym of "computer."
+* **region_domains**: This specifies the geographical area where a term is used. *Example*: "G'day" is used in the region domain of Australia.
+* **root_hypernyms**: This refers to the most general term in a hierarchy. *Example*: For "poodle," the root hypernym might be "entity."
+* **similar_tos**: This indicates synsets that are similar in meaning. *Example*: "Big" is similar to "large."
+* **substance_holonyms**: This shows the whole that a substance is part of. *Example*: "Flour" is a substance holonym of "bread."
+* **substance_meronyms**: This indicates the substances that make up a whole. *Example*: "Alcohol" is a substance meronym of "wine."
+* **topic_domains**: This denotes the subject area a term is associated with. *Example*: "Molecule" belongs to the topic domain of chemistry.
+* **usage_domains**: This specifies the context in which a term is appropriately used. *Example*: "Thou" is used in archaic or poetic contexts.
+* **verb_groups**: This links verbs that are similar in meaning or usage. *Example*: "Run" and "jog" might be in the same verb group.
+
 """
 
 import os
+import re
 from collections.abc import Sized, Iterable
 from functools import cached_property
+from collections import defaultdict
 
 import pandas as pd
 from dol import cache_this
@@ -15,6 +55,53 @@ from tabled import DfFiles
 from nltk.corpus import wordnet as wn  # pip install nltk
 
 DFLT_ROOTDIR = os.getenv('WORDNET_WORDS')
+
+
+_WORD_RE = re.compile(r"[A-Za-z]+")
+
+
+def _words_mentioned_in_text(
+    text: str,
+    words_set: set[str],
+    *,
+    max_ngram: int = 1,
+    match_policy: str = 'longest_per_span',
+) -> set[str]:
+    """Extract words (and optional underscore-joined ngrams) mentioned in text.
+
+    >>> ws = {'new', 'york', 'new_york'}
+    >>> _words_mentioned_in_text('New York is big', ws, max_ngram=2, match_policy='longest_per_span')
+    {'new_york'}
+    >>> _words_mentioned_in_text('New York is big', ws, max_ngram=2, match_policy='all') == {'new', 'york', 'new_york'}
+    True
+    """
+    if not text:
+        return set()
+
+    tokens = [t.casefold() for t in _WORD_RE.findall(text.replace('-', ' '))]
+    if not tokens:
+        return set()
+
+    max_ngram = max(1, int(max_ngram))
+    candidates: list[tuple[int, int, str]] = []
+    for i in range(len(tokens)):
+        for n in range(1, min(max_ngram, len(tokens) - i) + 1):
+            w = '_'.join(tokens[i : i + n]) if n > 1 else tokens[i]
+            if w in words_set:
+                candidates.append((i, i + n, w))
+
+    if match_policy == 'all':
+        return {w for _, _, w in candidates}
+    if match_policy != 'longest_per_span':
+        raise ValueError(f"Unknown {match_policy=}. Use 'longest_per_span' or 'all'.")
+
+    # Greedy longest-non-overlapping selection.
+    candidates.sort(key=lambda t: (-(t[1] - t[0]), t[0], t[1], t[2]))
+    chosen: list[tuple[int, int, str]] = []
+    for a, b, w in candidates:
+        if all(b <= aa or a >= bb for aa, bb, _ in chosen):
+            chosen.append((a, b, w))
+    return {w for _, _, w in chosen}
 
 
 class WordsDacc:
@@ -89,8 +176,145 @@ class WordsDacc:
         # merge the two dataframes
         df = word_and_synset_df.merge(synsets_metadata, on='synset')
 
+        # Derived adjacency: link to synsets whose words are mentioned in the definition.
+        word_to_synsets = defaultdict(set)
+        for word, synset in (
+            self.word_and_synset[['word', 'synset']]
+            .drop_duplicates()
+            .itertuples(index=False)
+        ):
+            word_to_synsets[word].add(synset)
+
+        def _definition_mentions(row):
+            mentioned = _words_mentioned_in_text(
+                row.get('definition', '') or '',
+                self.words_set,
+                max_ngram=2,
+                match_policy='longest_per_span',
+            )
+            mentioned.discard(row.get('word', None))
+            targets = set()
+            for w in mentioned:
+                targets.update(word_to_synsets.get(w, ()))
+            targets.discard(row.get('synset', None))
+            return sorted(targets)
+
+        df['definition_mentions'] = df.apply(_definition_mentions, axis=1)
+
         df = _deduplicate_lemmas_and_make_it_the_index(df)
         return df
+
+    @cache_this(
+        cache='df_files',
+        key=lambda self, *, max_ngram=2, match_policy='longest_per_span', include_self_loops=False: (
+            f"synset_definition_links.ng{int(max_ngram)}.{match_policy}.self{int(include_self_loops)}.parquet"
+        ),
+    )
+    def synset_definition_links(
+        self,
+        *,
+        max_ngram: int = 2,
+        match_policy: str = 'longest_per_span',
+        include_self_loops: bool = False,
+    ):
+        """Synset->synset edges when source definition mentions a target word."""
+
+        word_to_synsets = defaultdict(set)
+        for word, synset in (
+            self.word_and_synset[['word', 'synset']]
+            .drop_duplicates()
+            .itertuples(index=False)
+        ):
+            word_to_synsets[word].add(synset)
+
+        synset_def = (
+            self.wordnet_metadata[['synset', 'definition']]
+            .drop_duplicates('synset')
+            .set_index('synset')['definition']
+        )
+
+        seen = set()
+        rows = []
+        for source_word, source_synset in (
+            self.word_and_synset[['word', 'synset']]
+            .drop_duplicates()
+            .itertuples(index=False)
+        ):
+            definition = synset_def.get(source_synset, '')
+            mentioned = _words_mentioned_in_text(
+                definition,
+                self.words_set,
+                max_ngram=max_ngram,
+                match_policy=match_policy,
+            )
+            if not include_self_loops:
+                mentioned.discard(source_word)
+
+            for target_word in mentioned:
+                for target_synset in word_to_synsets.get(
+                    target_word, ()
+                ):  # restrict to dataset
+                    if not include_self_loops and target_synset == source_synset:
+                        continue
+                    k = (source_synset, target_synset, source_word, target_word)
+                    if k in seen:
+                        continue
+                    seen.add(k)
+                    rows.append(
+                        {
+                            'source_synset': source_synset,
+                            'target_synset': target_synset,
+                            'source_word': source_word,
+                            'target_word': target_word,
+                        }
+                    )
+
+        return pd.DataFrame(rows)
+
+    @cache_this(cache='df_files', key='words_used_in_definition_of_words.parquet')
+    def words_used_in_definition_of_words(self):
+        """
+        Create (source, target) pairs where source words link to target words used in their definitions.
+
+        This is different from synset_definition_links as it operates purely on words (not synsets/lemmas).
+        Each word has a single definition (chosen by smallest lexicographic synset name), and we
+        create edges from each word to all words mentioned in its definition (filtered to words
+        that have their own definitions).
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame with columns ['source', 'target'] where:
+            - source: the word being defined
+            - target: a word mentioned in the source word's definition
+        """
+        # Get unique word metadata
+        unique_words_df = self.word_indexed_metadata
+
+        # Get the set of valid words (words that have definitions)
+        valid_words = set(unique_words_df.index)
+
+        def tokenize_definition(definition):
+            """Extract words from definition, keeping only alphanumeric tokens"""
+            tokens = re.findall(r'\b[a-z]+\b', str(definition).lower())
+            return tokens
+
+        # Build list of (source, target) pairs
+        pairs = []
+
+        for word, row in unique_words_df.iterrows():
+            source_word = word
+            definition = row['definition']
+
+            # Tokenize and filter
+            tokens = tokenize_definition(definition)
+            filtered_tokens = [t for t in tokens if t in valid_words and t != source_word]
+
+            # Create pairs
+            for target_word in filtered_tokens:
+                pairs.append({'source': source_word, 'target': target_word})
+
+        return pd.DataFrame(pairs)
 
     @property
     def word_frequencies(self):
@@ -114,6 +338,22 @@ class WordsDacc:
         non_wordnet_features = ['word', 'frequency']
         embedding_features = ['umap_x', 'umap_y']
         return t[non_wordnet_features + wordnet_feature_attr_names + embedding_features]
+
+    @cache_this(cache='df_files', key='word_indexed_metadata.parquet')
+    def word_indexed_metadata(self):
+        """
+        Word-indexed metadata with unique words (using smallest lexicographic synset name).
+
+        Unlike wordnet_feature_meta which is lemma-indexed and has multiple rows per word,
+        this dataframe has one row per word, indexed by word, using the first (smallest
+        lexicographic) synset name for each word.
+        """
+        df = self.wordnet_feature_meta.copy()
+
+        # Sort by word and name (lexicographically), then take first occurrence of each word
+        unique_words_df = df.sort_values(['word', 'name']).groupby('word', as_index=True).first()
+
+        return unique_words_df
 
     @cache_this(cache='df_files', key='wordnet_collection_meta.parquet')
     def wordnet_collection_meta(self):
@@ -255,7 +495,16 @@ def synsets_metadatas(synsets):
 
     for synset in synsets:
         if isinstance(synset, str):
-            synset = wn.synset(synset)
+            try:
+                synset = wn.synset(synset)
+            except Exception as e:
+                raise type(e)(
+                    f"Failed to resolve synset name {synset!r}. "
+                    "This often happens when cached synset ids were produced with a different WordNet version. "
+                    "Try deleting the old cached parquet files (e.g. word_and_synset.parquet / wordnet_metadata.parquet) "
+                    "or let the new versioned cache keys recompute fresh. "
+                    f"Original error: {e}"
+                ) from e
 
         d = {
             "synset": synset.name(),  # Synset identifier (e.g., "salt.n.03")
@@ -264,6 +513,8 @@ def synsets_metadatas(synsets):
         for attr_name in wordnet_feature_attr_names:
             d[attr_name] = getattr(synset, attr_name)()
         for attr_name in wordnet_collection_attr_names:
+            if attr_name == 'definition_mentions':
+                continue
             val = getattr(synset, attr_name)()
             try:
                 d[attr_name] = [synset.name() for synset in val]
@@ -451,6 +702,142 @@ wordnet_collection_attr_names = sorted(
         and isinstance(wordnet_attrs_example[name], Sized)
     ]
 )
+
+# Derived relationship columns (not native Synset methods)
+wordnet_collection_attr_names = sorted(
+    set(wordnet_collection_attr_names) | {'definition_mentions'}
+)
 wordnet_feature_attr_names = sorted(
     set(wordnet_attr_names) - set(wordnet_collection_attr_names)
 )
+
+
+# --------------------------------------------------------------------------------------
+# Misc utils
+# TODO: Perhaps move to some general graph/network utils (e.g. move to linked)
+
+
+def thin_links_by_frequency(
+    links,
+    node_frequency,
+    *,
+    max_frequency=None,
+    max_links=None,
+    method='max',  # 'max' or 'sum'
+    verbose=False,
+):
+    """
+    Thin out link data by filtering based on node frequency.
+
+    Parameters
+    ----------
+    links : pd.DataFrame
+        DataFrame with 'source' and 'target' columns containing node IDs
+    node_frequency : pd.DataFrame or pd.Series
+        DataFrame/Series with node IDs as index and 'frequency' column/values
+    max_frequency : float, optional
+        If provided, filters out links where either source or target has frequency > max_frequency
+    max_links : int, optional
+        If provided, uses binary search to find the max_frequency threshold that gives
+        approximately this many links (as large as possible under this constraint)
+    method : str, default 'max'
+        How to combine source and target frequencies:
+        - 'max': Remove link if max(source_freq, target_freq) > threshold
+        - 'sum': Remove link if source_freq + target_freq > threshold
+    verbose : bool, default True
+        Print progress information
+
+    Returns
+    -------
+    pd.DataFrame
+        Filtered links dataframe
+    """
+    # Convert to Series if needed
+    if isinstance(node_frequency, pd.DataFrame):
+        node_freq_series = node_frequency['frequency']
+    else:
+        node_freq_series = node_frequency
+
+    # Create lookup dictionary for faster access
+    freq_dict = node_freq_series.to_dict()
+
+    def filter_links_by_threshold(threshold):
+        """Helper to filter links given a threshold."""
+        # Map frequencies to source and target
+        source_freq = links['source'].map(freq_dict).fillna(0)
+        target_freq = links['target'].map(freq_dict).fillna(0)
+
+        # Apply filtering based on method
+        if method == 'max':
+            mask = (source_freq <= threshold) & (target_freq <= threshold)
+        elif method == 'sum':
+            mask = (source_freq + target_freq) <= threshold
+        else:
+            raise ValueError(f"Unknown method: {method}")
+
+        return links[mask]
+
+    # If max_frequency is directly provided
+    if max_frequency is not None:
+        if verbose:
+            print(f"Filtering with max_frequency={max_frequency:.6f}")
+        filtered = filter_links_by_threshold(max_frequency)
+        if verbose:
+            print(
+                f"Result: {len(links)} -> {len(filtered)} links ({100*len(filtered)/len(links):.2f}%)"
+            )
+        return filtered
+
+    # If max_links is provided, use binary search
+    if max_links is not None:
+        if verbose:
+            print(f"Using binary search to find threshold for ~{max_links:,} links...")
+
+        # Get frequency range for binary search
+        min_freq = node_freq_series.min()
+        max_freq = node_freq_series.max()
+
+        if method == 'sum':
+            # For sum method, max threshold is 2x max_freq
+            max_freq = max_freq * 2
+
+        # Binary search
+        left, right = min_freq, max_freq
+        best_threshold = max_freq
+        best_filtered = links
+
+        iterations = 0
+        max_iterations = 50
+
+        while iterations < max_iterations and right - left > 1e-8:
+            mid = (left + right) / 2
+            filtered = filter_links_by_threshold(mid)
+            n_links = len(filtered)
+
+            if verbose and iterations % 5 == 0:
+                print(
+                    f"  Iteration {iterations}: threshold={mid:.6f}, n_links={n_links:,}"
+                )
+
+            if n_links <= max_links:
+                # We're under the limit, this is a candidate
+                if n_links > len(best_filtered) or len(best_filtered) > max_links:
+                    best_threshold = mid
+                    best_filtered = filtered
+                # Try to increase threshold to get more links
+                left = mid
+            else:
+                # Too many links, decrease threshold
+                right = mid
+
+            iterations += 1
+
+        if verbose:
+            print(f"\nFinal result: threshold={best_threshold:.6f}")
+            print(
+                f"Links: {len(links):,} -> {len(best_filtered):,} ({100*len(best_filtered)/len(links):.2f}%)"
+            )
+
+        return best_filtered
+
+    raise ValueError("Must provide either max_frequency or max_links")
