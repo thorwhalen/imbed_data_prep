@@ -120,6 +120,9 @@ def _words_mentioned_in_text(
 
 class WordsDacc:
     word_frequency_data_url = 'https://github.com/thorwhalen/content/raw/refs/heads/master/tables/csv/zip/english-word-frequency.csv.zip'
+    wordnet_glosstag_data_url = (
+        'https://wordnetcode.princeton.edu/glosstag-files/WordNet-3.0-glosstag.zip'
+    )
 
     def __init__(self, rootdir=DFLT_ROOTDIR, *, word_list=None, verbose=True):
         self.rootdir = rootdir
@@ -141,7 +144,8 @@ class WordsDacc:
     def words_set(self):
         return set(self.word_list)
 
-    @cache_this  # to RAM
+    # @cache_this(cache='df_files', key='word_counts.csv')
+    @cache_this
     def word_counts(self):
         # Note: The (..., keep_default_na=False, na_values=[]) is to avoid words "null" and "nan" being interpretted as NaN
         #    see https://www.skytowner.com/explore/preventing_strings_from_getting_parsed_as_nan_for_read_csv_in_pandas
@@ -149,7 +153,7 @@ class WordsDacc:
             self.word_frequency_data_url, keep_default_na=False, na_values=[]
         ).set_index('word')['count']
 
-    @cache_this
+    @cache_this(cache='df_files', key='wordnet_words.parquet')
     def wordnet_words(self):
         return sorted(list(wn.all_lemma_names()))
 
