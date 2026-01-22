@@ -74,6 +74,129 @@ DFLT_ROOTDIR = os.getenv('WORDNET_WORDS')
 _WORD_RE = re.compile(r"[A-Za-z]+")
 
 
+# --------------------------------------------------------------------------------------
+# GlossTag utilities
+#
+# GlossTag provides sense-tagged versions of WordNet glosses, where each content word
+# has been annotated with its correct WordNet sense key. This enables building a clean
+# synset→synset definitional reference graph instead of a lemma→lemma graph.
+
+
+def synset_to_glosstag(synset) -> str:
+    """
+    Convert a Synset (or synset name like 'entity.n.01') to a GlossTag id like 'n00001740'.
+
+    Examples
+    --------
+    >>> synset_to_glosstag('dog.n.01')
+    'n02084071'
+    """
+    if isinstance(synset, str):
+        synset = wn.synset(synset)
+
+    pos = synset.pos()
+    if pos == "s":  # adjective satellite → treat as adjective
+        pos = "a"
+
+    offset = synset.offset()
+    return f"{pos}{offset:08d}"
+
+
+def glosstag_to_synset(glosstag: str) -> str:
+    """
+    Convert GlossTag id like 'n00001740' to a synset name like 'entity.n.01'.
+
+    Examples
+    --------
+    >>> glosstag_to_synset('n02084071')
+    'dog.n.01'
+    """
+    pos = glosstag[0]
+    offset = int(glosstag[1:])
+    return wn.synset_from_pos_and_offset(pos, offset).name()
+
+
+def sense_key_to_synset(sense_key: str) -> str:
+    """
+    Resolve a WordNet sense key to a synset name.
+
+    Examples
+    --------
+    >>> sense_key_to_synset("dog%1:05:00::")
+    'dog.n.01'
+    """
+    lemma = wn.lemma_from_key(sense_key)
+    return lemma.synset().name()
+
+
+def _iter_synset_gloss_sense_keys(xml_file, *, include_examples: bool = False):
+    """
+    Stream-parse a GlossTag merged XML file and yield (source_glosstag_id, sense_keys).
+
+    Parameters
+    ----------
+    xml_file : file-like object
+        An open file or file-like object for the merged XML (e.g., noun.xml).
+    include_examples : bool, default False
+        If True, extract sense keys from both <def> and <ex> sections.
+        If False, extract only from <def>.
+
+    Yields
+    ------
+    tuple[str, list[str]]
+        (source_id, sense_keys) where source_id is a GlossTag id like "n00003553"
+        and sense_keys is a list of WordNet sense keys found in the WSD gloss.
+    """
+    import xml.etree.ElementTree as ET
+
+    context = ET.iterparse(xml_file, events=("start", "end"))
+    _, root = next(context)
+
+    current_source = None
+    in_wsd_gloss = False
+    capture_section = False
+    sense_keys = []
+
+    for event, elem in context:
+        tag = elem.tag
+
+        if event == "start":
+            if tag == "synset":
+                current_source = elem.attrib.get("id")
+                sense_keys = []
+                in_wsd_gloss = False
+                capture_section = False
+
+            elif tag == "gloss":
+                if elem.attrib.get("desc") == "wsd":
+                    in_wsd_gloss = True
+
+            elif in_wsd_gloss and tag in {"def", "ex"}:
+                if tag == "def":
+                    capture_section = True
+                elif tag == "ex":
+                    capture_section = bool(include_examples)
+
+            elif capture_section and tag == "id":
+                sk = elem.attrib.get("sk")
+                if sk:
+                    sense_keys.append(sk)
+
+        elif event == "end":
+            if tag in {"def", "ex"} and in_wsd_gloss:
+                capture_section = False
+
+            elif tag == "gloss" and in_wsd_gloss:
+                in_wsd_gloss = False
+
+            elif tag == "synset":
+                if current_source is not None:
+                    yield current_source, sense_keys
+
+                elem.clear()
+                root.clear()
+
+
 def _words_mentioned_in_text(
     text: str,
     words_set: set[str],
@@ -149,26 +272,91 @@ class WordsDacc:
         return pd.read_csv(
             self.word_frequency_data_url, keep_default_na=False, na_values=[]
         )
-    
+
     @cache_this  # keep in RAM
     def word_counts(self):
         # Note: The (..., keep_default_na=False, na_values=[]) is to avoid words "null" and "nan" being interpretted as NaN
         #    see https://www.skytowner.com/explore/preventing_strings_from_getting_parsed_as_nan_for_read_csv_in_pandas
         return self._word_counts.set_index('word')['count']
-    
 
     @cache_this(cache='df_files', key='_wordnet_words.parquet')
     def _wordnet_words(self):
         return sorted(list(wn.all_lemma_names()))
-    
+
     @cache_this
     def wordnet_words(self):
         return self._wordnet_words.values[:, 0]
-    
+
     @property
     def glosstag_zip_file(self):
-        from graze import graze 
+        from graze import graze
+
         return graze(self.glosstag_data_url, return_filepaths=True)
+
+    @cache_this(cache='df_files', key='glosstag_edges.parquet')
+    def glosstag_edges(
+        self,
+        *,
+        include_examples: bool = False,
+        dedup_edges: bool = True,
+    ):
+        """
+        Build synset→synset edges from GlossTag sense-tagged glosses.
+
+        This uses the Princeton GlossTag corpus which provides word sense disambiguation
+        for WordNet glosses. Each content word in a gloss has been annotated with its
+        correct WordNet sense key, allowing us to build a clean synset→synset
+        definitional reference graph.
+
+        Parameters
+        ----------
+        include_examples : bool, default False
+            If True, also include sense keys from <ex> (example) sections.
+        dedup_edges : bool, default True
+            If True, drop duplicate (source, target) rows.
+
+        Returns
+        -------
+        pd.DataFrame
+            DataFrame with columns ['source', 'target'] containing synset names.
+        """
+        import zipfile
+        import xml.etree.ElementTree as ET
+
+        self.log('computing glosstag_edges...')
+
+        zip_path = self.glosstag_zip_file
+        merged_path_prefix = 'WordNet-3.0/glosstag/merged/'
+        filenames = ['noun.xml', 'verb.xml', 'adj.xml', 'adv.xml']
+
+        rows = []
+
+        with zipfile.ZipFile(zip_path, 'r') as zf:
+            for filename in filenames:
+                xml_path = merged_path_prefix + filename
+                self.log(f'  processing {filename}...')
+
+                with zf.open(xml_path) as xml_file:
+                    for source_glosstag, sense_keys in _iter_synset_gloss_sense_keys(
+                        xml_file, include_examples=include_examples
+                    ):
+                        for sk in sense_keys:
+                            try:
+                                target_synset = sense_key_to_synset(sk)
+                                source_synset = glosstag_to_synset(source_glosstag)
+                            except Exception:
+                                # If a sense key cannot be resolved, skip it
+                                continue
+                            rows.append(
+                                {'source': source_synset, 'target': target_synset}
+                            )
+
+        df = pd.DataFrame(rows)
+
+        if dedup_edges and len(df) > 0:
+            df = df.drop_duplicates(['source', 'target']).reset_index(drop=True)
+
+        return df
 
     @cache_this(cache='df_files', key='word_and_synset.parquet')
     def word_and_synset(self):
@@ -454,6 +642,12 @@ class WordsDacc:
 
     @cache_this(cache='df_files', key='wordnet_collection_meta.parquet')
     def wordnet_collection_meta(self):
+        """
+        Synset-indexed collection metadata (relationships like hypernyms, hyponyms, etc.).
+
+        Returns a DataFrame indexed by synset name with columns containing lists of
+        related synset names.
+        """
         return self.wordnet_metadata[wordnet_collection_attr_names]
 
     def compute_and_save_all_link_data(self):
