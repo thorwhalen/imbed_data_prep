@@ -120,7 +120,7 @@ def _words_mentioned_in_text(
 
 class WordsDacc:
     word_frequency_data_url = 'https://github.com/thorwhalen/content/raw/refs/heads/master/tables/csv/zip/english-word-frequency.csv.zip'
-    wordnet_glosstag_data_url = (
+    glosstag_data_url = (
         'https://wordnetcode.princeton.edu/glosstag-files/WordNet-3.0-glosstag.zip'
     )
 
@@ -164,6 +164,11 @@ class WordsDacc:
     @cache_this
     def wordnet_words(self):
         return self._wordnet_words.values[:, 0]
+    
+    @property
+    def glosstag_zip_file(self):
+        from graze import graze 
+        return graze(self.glosstag_data_url, return_filepaths=True)
 
     @cache_this(cache='df_files', key='word_and_synset.parquet')
     def word_and_synset(self):
