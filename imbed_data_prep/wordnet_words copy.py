@@ -7,25 +7,11 @@ The steps are:
 * Get planar projections for these embeddings
 * Link the words in various ways (i.e make the link data)
 
-## Architecture: Synset-Based Indexing
+Many of the metadata items we have are lists of synsets (often empty).
+These have been accessed via the `wordnet_collection_meta` dataframe
+and can be used to connect some synsets to other synsets, therefore some words to other words.
 
-This module uses **synsets as the primary index** for metadata and link data, avoiding the
-edge explosion that comes from replicating concept→concept edges across all lemma combinations.
-
-In WordNet, a **synset** (short for "synonym set") is a group of words that share the same
-meaning or concept. Think of it as a cluster of synonyms that can be used interchangeably
-in certain contexts without changing the overall meaning. For example, the words "happy,"
-"joyful," and "elated" might belong to the same synset because they convey similar emotions.
-
-### Key Data Structures
-
-- `wordnet_metadata`: Synset-indexed DataFrame with a 'lemmas' column (list of words)
-- `word_and_synset`: Bipartite mapping between words and synsets
-- `synset_definition_links`: Synset→synset edges (concept graph backbone)
-- `word_indexed_metadata`: Word-indexed view with one representative synset per word
-
-This design keeps the concept graph clean and scalable, while still supporting word-level
-queries through the bipartite word↔synset layer.
+In WordNet, a **synset** (short for "synonym set") is a group of words that share the same meaning or concept. Think of it as a cluster of synonyms that can be used interchangeably in certain contexts without changing the overall meaning. For example, the words "happy," "joyful," and "elated" might belong to the same synset because they convey similar emotions.
 
 The synset relationships are as follows:
 
@@ -155,34 +141,21 @@ class WordsDacc:
 
     @cache_this(cache='df_files', key='word_and_synset.parquet')
     def word_and_synset(self):
-        """
-        Map words to their synsets.
-
-        Returns a DataFrame with columns ['word', 'synset'] showing which synsets
-        each word participates in. Multiple rows per word (one per synset).
-        """
-
         def gen():
             for word in self.word_list:
                 for synset in wn.synsets(word):
                     yield {
                         'word': word,
                         'synset': synset.name(),
+                        'lemma': f"{synset.name()}.{word}",
                     }
 
         df = pd.DataFrame(gen())
+        df = _deduplicate_lemmas_and_make_it_the_index(df)
         return df
 
     @cache_this(cache='df_files', key='wordnet_metadata.parquet')
     def wordnet_metadata(self):
-        """
-        Synset-indexed metadata with lemmas as a column.
-
-        Returns a DataFrame indexed by synset name, with columns including:
-        - lemmas: list of lemma strings (words) associated with this synset
-        - definition, pos, lexname, etc.: synset attributes
-        - definition_mentions: list of synsets mentioned in the definition
-        """
         self.log('computing wordnet_metadata...')
 
         word_and_synset_df = self.word_and_synset
@@ -200,22 +173,13 @@ class WordsDacc:
         }
         synsets_metadata['pos'] = synsets_metadata['pos'].map(part_of_speech)
 
-        # Add lemmas column: list of words (lemmas) for each synset
-        synset_to_lemmas = defaultdict(list)
-        for word, synset in word_and_synset_df[['word', 'synset']].itertuples(
-            index=False
-        ):
-            if word not in synset_to_lemmas[synset]:
-                synset_to_lemmas[synset].append(word)
-
-        synsets_metadata['lemmas'] = synsets_metadata['synset'].map(
-            lambda s: synset_to_lemmas.get(s, [])
-        )
+        # merge the two dataframes
+        df = word_and_synset_df.merge(synsets_metadata, on='synset')
 
         # Derived adjacency: link to synsets whose words are mentioned in the definition.
         word_to_synsets = defaultdict(set)
         for word, synset in (
-            word_and_synset_df[['word', 'synset']]
+            self.word_and_synset[['word', 'synset']]
             .drop_duplicates()
             .itertuples(index=False)
         ):
@@ -228,23 +192,17 @@ class WordsDacc:
                 max_ngram=2,
                 match_policy='longest_per_span',
             )
+            mentioned.discard(row.get('word', None))
             targets = set()
             for w in mentioned:
                 targets.update(word_to_synsets.get(w, ()))
             targets.discard(row.get('synset', None))
             return sorted(targets)
 
-        synsets_metadata['definition_mentions'] = synsets_metadata.apply(
-            _definition_mentions, axis=1
-        )
+        df['definition_mentions'] = df.apply(_definition_mentions, axis=1)
 
-        # Set synset as index
-        synsets_metadata = synsets_metadata.set_index('synset')
-        assert not any(
-            synsets_metadata.index.duplicated()
-        ), "There were duplicate synsets in the index"
-
-        return synsets_metadata
+        df = _deduplicate_lemmas_and_make_it_the_index(df)
+        return df
 
     @cache_this(
         cache='df_files',
@@ -259,26 +217,7 @@ class WordsDacc:
         match_policy: str = 'longest_per_span',
         include_self_loops: bool = False,
     ):
-        """
-        Synset-to-synset edges when source definition mentions words that map to target synsets.
-
-        Returns a DataFrame with columns ['source', 'target'] where both are synset names.
-        This creates a clean concept graph without exploding edges across all lemma combinations.
-
-        Parameters
-        ----------
-        max_ngram : int, default 2
-            Maximum n-gram length to extract from definitions
-        match_policy : str, default 'longest_per_span'
-            How to handle overlapping matches ('longest_per_span' or 'all')
-        include_self_loops : bool, default False
-            Whether to include edges where source == target
-
-        Returns
-        -------
-        pd.DataFrame
-            DataFrame with columns ['source', 'target'] containing synset names
-        """
+        """Synset->synset edges when source definition mentions a target word."""
 
         word_to_synsets = defaultdict(set)
         for word, synset in (
@@ -288,11 +227,19 @@ class WordsDacc:
         ):
             word_to_synsets[word].add(synset)
 
-        synset_def = self.wordnet_metadata['definition']
+        synset_def = (
+            self.wordnet_metadata[['synset', 'definition']]
+            .drop_duplicates('synset')
+            .set_index('synset')['definition']
+        )
 
         seen = set()
         rows = []
-        for source_synset in synset_def.index:
+        for source_word, source_synset in (
+            self.word_and_synset[['word', 'synset']]
+            .drop_duplicates()
+            .itertuples(index=False)
+        ):
             definition = synset_def.get(source_synset, '')
             mentioned = _words_mentioned_in_text(
                 definition,
@@ -300,19 +247,25 @@ class WordsDacc:
                 max_ngram=max_ngram,
                 match_policy=match_policy,
             )
+            if not include_self_loops:
+                mentioned.discard(source_word)
 
-            for mentioned_word in mentioned:
-                for target_synset in word_to_synsets.get(mentioned_word, ()):
+            for target_word in mentioned:
+                for target_synset in word_to_synsets.get(
+                    target_word, ()
+                ):  # restrict to dataset
                     if not include_self_loops and target_synset == source_synset:
                         continue
-                    k = (source_synset, target_synset)
+                    k = (source_synset, target_synset, source_word, target_word)
                     if k in seen:
                         continue
                     seen.add(k)
                     rows.append(
                         {
-                            'source': source_synset,
-                            'target': target_synset,
+                            'source_synset': source_synset,
+                            'target_synset': target_synset,
+                            'source_word': source_word,
+                            'target_word': target_word,
                         }
                     )
 
@@ -374,91 +327,41 @@ class WordsDacc:
 
     @cache_this(cache='df_files', key='wordnet_feature_meta.parquet')
     def wordnet_feature_meta(self):
-        """
-        Synset-indexed feature metadata.
-
-        Returns a DataFrame indexed by synset with feature columns including:
-        - definition, pos, lexname, etc. (synset attributes)
-        - lemmas: list of words associated with this synset
-
-        Note: This is now synset-indexed. For word-indexed metadata, use word_indexed_metadata.
-        """
-        # Start with synset-indexed metadata
-        df = self.wordnet_metadata.copy()
-
-        # Select only the feature attributes (not collection attributes)
-        feature_cols = [col for col in wordnet_feature_attr_names if col in df.columns]
-        feature_cols.append('lemmas')  # Include lemmas column
-
-        return df[feature_cols]
+        t = self.wordnet_metadata[wordnet_feature_attr_names]
+        t = self.word_frequencies.loc[self.word_list].to_frame()
+        t = t.merge(self.umap_embeddings, left_on="word", right_index=True, how="left")
+        t = t.merge(
+            self.wordnet_metadata[['word'] + wordnet_feature_attr_names],
+            right_on='word',
+            left_index=True,
+            # right_index=True,
+            how="left",
+        )
+        non_wordnet_features = ['word', 'frequency']
+        embedding_features = ['umap_x', 'umap_y']
+        return t[non_wordnet_features + wordnet_feature_attr_names + embedding_features]
 
     @cache_this(cache='df_files', key='word_indexed_metadata.parquet')
     def word_indexed_metadata(self):
         """
         Word-indexed metadata with unique words (using smallest lexicographic synset name).
 
-        For each word, selects the synset with the smallest lexicographic name and returns
-        a DataFrame indexed by word with columns including:
-        - synset: the chosen synset name
-        - definition, pos, lexname, etc.: synset attributes
-        - frequency: word frequency
-        - umap_x, umap_y: embedding coordinates
-
-        This provides a single representative synset per word, useful for word-level analysis.
+        Unlike wordnet_feature_meta which is lemma-indexed and has multiple rows per word,
+        this dataframe has one row per word, indexed by word, using the first (smallest
+        lexicographic) synset name for each word.
         """
-        # Get word-to-synsets mapping
-        word_synset_df = self.word_and_synset.copy()
+        df = self.wordnet_feature_meta.copy()
 
-        # For each word, choose the synset with smallest lexicographic name
-        word_synset_df = word_synset_df.sort_values(['word', 'synset'])
-        chosen_synsets = word_synset_df.groupby('word').first()['synset']
-
-        # Get metadata for chosen synsets
-        metadata = self.wordnet_metadata.copy()
-
-        # Create word-indexed dataframe
-        result = pd.DataFrame(index=chosen_synsets.index)
-        result['synset'] = chosen_synsets
-
-        # Add synset metadata
-        for col in metadata.columns:
-            if col != 'lemmas':  # Don't need lemmas list in word view
-                result[col] = result['synset'].map(metadata[col])
-
-        # Add word frequency
-        result['frequency'] = self.word_frequencies
-
-        # Add embeddings
-        result = result.merge(
-            self.umap_embeddings, left_index=True, right_index=True, how='left'
+        # Sort by word and name (lexicographically), then take first occurrence of each word
+        unique_words_df = (
+            df.sort_values(['word', 'name']).groupby('word', as_index=True).first()
         )
 
-        return result
+        return unique_words_df
 
     @cache_this(cache='df_files', key='wordnet_collection_meta.parquet')
     def wordnet_collection_meta(self):
         return self.wordnet_metadata[wordnet_collection_attr_names]
-
-    def compute_and_save_all_link_data(self):
-        """
-        Compute and save link data for all wordnet relationships of wordnet_collection_meta.
-
-        :param self: Description
-        """
-        for relationship_name in self.wordnet_collection_meta.columns:
-            adjacencies = self.wordnet_collection_meta[relationship_name]
-
-            link_data = pd.DataFrame(
-                [
-                    {'source': src, 'target': tgt}
-                    for src, targets in adjacencies.items()
-                    for tgt in targets
-                ]
-            )
-            link_data = link_data.sort_values(['source', 'target']).reset_index(
-                drop=True
-            )
-            self.df_files[f"link_data/{relationship_name}.parquet"] = link_data
 
     @cache_this(cache='df_files', key='words_embeddings.parquet')
     def words_embeddings(self):
@@ -487,44 +390,65 @@ class WordsDacc:
         )
 
     @cache_this
-    def synset_to_lemmas(self):
+    def lemmas_of_synset(self):
         """
-        Get mapping from synset names to lists of lemmas (words).
+        Precompute synset_to_lemmas: mapping from synset to all lemmas that share that synset
+        """
+        from collections import defaultdict
 
-        Returns
-        -------
-        dict
-            Dictionary mapping synset name (str) to list of lemma strings
-        """
-        return self.wordnet_metadata['lemmas'].to_dict()
+        synset_to_lemmas = defaultdict(set)
+
+        for lemma, row in self.word_and_synset.iterrows():
+            syn = row['synset']
+            synset_to_lemmas[syn].add(lemma)
+        return synset_to_lemmas
 
     @cache_this
-    def word_to_synsets(self):
+    def word_of_lemma(self):
         """
-        Get mapping from words to lists of synset names.
-
-        Returns
-        -------
-        dict
-            Dictionary mapping word (str) to set of synset names
+        Precompute synset_to_lemmas: mapping from synset to all lemmas that share that synset
         """
-        word_to_synsets = defaultdict(set)
-        for word, synset in self.word_and_synset[['word', 'synset']].itertuples(
-            index=False
-        ):
-            word_to_synsets[word].add(synset)
-        return dict(word_to_synsets)
 
-    # DEPRECATED: Use word_indexed_metadata instead
-    # This method is kept for backward compatibility but may be removed in future versions
+        # Precompute lemma_to_word: mapping from lemma to word (a lemma can be used as a key to find its word)
+
+        # word_and_synset is a dataframe indexed by lemma, with columns: word, synset
+        lemma_to_word = {}
+
+        for lemma, row in self.word_and_synset.iterrows():
+            lemma_to_word[lemma] = row['word']
+
+        return lemma_to_word
+
+    def lemma_graph_edges(self, adjacency):
+        # For each source lemma in adjacency, find the target synsets.
+        # For each target synset, gather its associated lemmas.
+        # Yield a dict with "source" and "target" keys for each resulting lemma-to-lemma edge.
+
+        # TODO: Can be optimized
+        for source_lemma, target_synsets in adjacency.items():
+            # target_synsets are synset identifiers
+            for target_syn in target_synsets:
+                for target_lemma in self.lemmas_of_synset.get(target_syn, []):
+                    if (
+                        source_lemma in self.word_of_lemma
+                        and target_lemma in self.word_of_lemma
+                    ):
+                        yield {
+                            "source": source_lemma,
+                            "target": target_lemma,
+                        }
+
+    # @cache_this(cache='df_files', key='words_and_features.parquet')
     def words_and_features(self):
-        """
-        DEPRECATED: Use word_indexed_metadata instead.
+        t = self.word_counts
+        word_frequencies = t / t.sum()
+        word_frequencies.name = "frequency"
 
-        This method provided word-level features but has been superseded by
-        word_indexed_metadata which provides a cleaner word-indexed view.
-        """
-        return self.word_indexed_metadata
+        t = self.wordnet_feature_meta.merge(
+            word_frequencies, left_on="word", right_index=True, how="left"
+        )
+        t = t.merge(self.umap_embeddings, left_on="word", right_index=True, how="left")
+        return t
 
     # @property
     # def synset_details(self):
@@ -563,17 +487,13 @@ class WordsDacc:
 
 def synsets_metadatas(synsets):
     """
-    Generate metadata dictionaries for WordNet synsets.
+    A generator that takes a list of words and yields details for each word and synset.
 
     Args:
-        synsets: Iterable of synset objects or synset name strings
+        words (list): A list of words (strings) to query WordNet.
 
     Yields:
-        dict: A dictionary with synset metadata including:
-            - synset: synset name (e.g., "dog.n.01")
-            - definition, pos, lexname, etc.: synset attributes
-            - lemmas: list of lemma strings (words) in this synset
-            - hypernyms, hyponyms, etc.: list of related synset names
+        dict: A dictionary with information about the word, synset, and associated features.
     """
     from nltk.corpus import wordnet as wn
 
@@ -593,9 +513,6 @@ def synsets_metadatas(synsets):
         d = {
             "synset": synset.name(),  # Synset identifier (e.g., "salt.n.03")
             "example": next(iter(synset.examples()), ''),
-            "lemmas": [
-                lemma.name() for lemma in synset.lemmas()
-            ],  # List of word strings
         }
         for attr_name in wordnet_feature_attr_names:
             d[attr_name] = getattr(synset, attr_name)()
@@ -612,6 +529,21 @@ def synsets_metadatas(synsets):
 
 
 import pandas as pd
+
+
+def _deduplicate_lemmas_and_make_it_the_index(df):
+    # get rid of duplicate lemma names
+    df['lemma'] = (
+        df['synset'] + '.' + df['word']
+    )  # note: didn't find an attribute for this
+    df = df.drop_duplicates(
+        subset='lemma'
+    )  # drop duplicates (don't know why they're there, but they are)
+    df = df.set_index('lemma')
+    assert not any(
+        df.index.duplicated()
+    ), "There were some duplicates lemmas in the index"
+    return df
 
 
 # --------------------------------------------------------------------------------------
