@@ -645,10 +645,23 @@ class WordsDacc:
         """
         Synset-indexed collection metadata (relationships like hypernyms, hyponyms, etc.).
 
-        Returns a DataFrame indexed by synset name with columns containing lists of
-        related synset names.
+        Returns a DataFrame indexed by synset name with columns containing:
+        - Lists of related synset names (hypernyms, hyponyms, etc.)
+        - frequency: sum of word frequencies for all lemmas in the synset
         """
-        return self.wordnet_metadata[wordnet_collection_attr_names]
+        df = self.wordnet_metadata[wordnet_collection_attr_names].copy()
+
+        # Add frequency column: sum of frequencies for all lemmas in each synset
+        freq_dict = self.word_frequencies.to_dict()
+        lemmas_series = self.wordnet_metadata['lemmas']
+
+        def _synset_frequency(synset):
+            lemmas = lemmas_series.get(synset, [])
+            return sum(freq_dict.get(lemma, 0) for lemma in lemmas)
+
+        df['frequency'] = pd.Series(df.index).apply(_synset_frequency).values
+
+        return df
 
     def compute_and_save_all_link_data(self):
         """
@@ -725,6 +738,47 @@ class WordsDacc:
         ):
             word_to_synsets[word].add(synset)
         return dict(word_to_synsets)
+
+    @cache_this(cache='df_files', key='synsets_and_lemmas_links.parquet')
+    def synsets_and_lemmas_links(self):
+        """
+        Bipartite graph linking synsets to their lemmas (words).
+
+        Returns a DataFrame with columns ['source', 'target'] where:
+        - source: synset name (e.g., "dog.n.01")
+        - target: lemma/word (e.g., "dog")
+
+        This represents the bipartite relationship between concepts (synsets)
+        and their surface forms (lemmas/words).
+        """
+        rows = []
+        for synset, lemmas in self.synset_to_lemmas.items():
+            for lemma in lemmas:
+                rows.append({'source': synset, 'target': lemma})
+        return pd.DataFrame(rows)
+
+    @cache_this(cache='df_files', key='synsets_and_lemmas_meta.parquet')
+    def synsets_and_lemmas_meta(self):
+        """
+        Metadata for the bipartite synset-lemma graph nodes.
+
+        Returns a DataFrame with columns:
+        - item: the synset name or lemma/word
+        - kind: "synset" or "lemma" indicating the node type
+
+        This provides node metadata for the bipartite graph returned by
+        synsets_and_lemmas_links.
+        """
+        synsets = list(self.wordnet_metadata.index)
+        lemmas = list(self.words_set)
+
+        rows = []
+        for synset in synsets:
+            rows.append({'item': synset, 'kind': 'synset'})
+        for lemma in lemmas:
+            rows.append({'item': lemma, 'kind': 'lemma'})
+
+        return pd.DataFrame(rows)
 
     # DEPRECATED: Use word_indexed_metadata instead
     # This method is kept for backward compatibility but may be removed in future versions
