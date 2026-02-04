@@ -1053,6 +1053,37 @@ wordnet_feature_attr_names = sorted(
 # Misc utils
 # TODO: Perhaps move to some general graph/network utils (e.g. move to linked)
 
+def nhop_links(links, nodes, n_hops=1):
+    """
+    Get n-hop links from a set of nodes.
+
+    Parameters
+    ----------
+    links : pd.DataFrame
+        DataFrame with 'source' and 'target' columns containing node IDs
+    nodes : set
+        Set of node IDs to start from
+    n_hops : int, default 1
+        Number of hops to traverse
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with 'source' and 'target' columns containing n-hop links
+    """
+    current_nodes = set(nodes)
+    all_links = pd.DataFrame(columns=['source', 'target'])
+
+    for hop in range(n_hops):
+        mask = links['source'].isin(current_nodes) | links['target'].isin(current_nodes)
+        new_links = links[mask]
+        all_links = pd.concat([all_links, new_links]).drop_duplicates().reset_index(
+            drop=True
+        )
+        current_nodes = set(new_links['source']).union(set(new_links['target']))
+
+    return all_links
+
 
 def thin_links_by_frequency(
     links,
