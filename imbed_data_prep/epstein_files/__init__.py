@@ -79,7 +79,217 @@ def _get_clog(verbose):
     return (lambda *args: print(*args)) if verbose else (lambda *args: None)
 
 
-def _load_tables(data_dir, table_names, verbose=True):
+# ---------------------------------------------------------------------------
+# Column type coercion utilities
+# ---------------------------------------------------------------------------
+
+
+def coerce_series_conditionally(
+    series: "pd.Series",
+    condition: callable,
+    transform: callable,
+    *,
+    sample_size: int = 100,
+    threshold: float = 0.8,
+):
+    """
+    Conditionally transform a pandas Series based on sampled values.
+
+    This function samples non-null values to check if the condition holds,
+    and if so, applies the transform to all non-null values.
+
+    Parameters
+    ----------
+    series : pd.Series
+        The series to potentially transform.
+    condition : callable
+        A function (value -> bool) that tests whether a value should be
+        transformed. Applied to a sample to determine if transformation
+        should occur for the whole series.
+    transform : callable
+        A function (value -> new_value) to apply to each non-null value
+        if the condition threshold is met.
+    sample_size : int
+        Maximum number of non-null values to sample for condition testing.
+    threshold : float
+        Fraction of sampled values that must satisfy condition (0.0 to 1.0)
+        for the transform to be applied to the series.
+
+    Returns
+    -------
+    pd.Series
+        The original series if condition not met, otherwise transformed series.
+
+    Example
+    -------
+    >>> import pandas as pd
+    >>> import ast
+    >>> s = pd.Series(['[1, 2]', '[3, 4]', None, '[5]'])
+    >>> is_json_list = lambda x: isinstance(x, str) and x.startswith('[')
+    >>> coerce_series_conditionally(s, is_json_list, ast.literal_eval)
+    0    [1, 2]
+    1    [3, 4]
+    2      None
+    3       [5]
+    dtype: object
+    """
+    import pandas as pd
+
+    # Get non-null values
+    non_null_mask = series.notna()
+    non_null = series[non_null_mask]
+
+    if len(non_null) == 0:
+        return series
+
+    # Sample for condition testing
+    actual_sample_size = min(sample_size, len(non_null))
+    sample = non_null.sample(n=actual_sample_size, random_state=42)
+
+    # Check if condition holds for enough sampled values
+    condition_met = sample.apply(condition).sum() / len(sample) >= threshold
+
+    if not condition_met:
+        return series
+
+    # Apply transform to non-null values only
+    result = series.copy()
+    result.loc[non_null_mask] = non_null.apply(transform)
+    return result
+
+
+def is_json_list_string(value) -> bool:
+    """Check if a value looks like a JSON list encoded as a string."""
+    if not isinstance(value, str):
+        return False
+    stripped = value.strip()
+    return stripped.startswith('[') and stripped.endswith(']')
+
+
+def parse_json_safe(value):
+    """Parse a JSON string, returning original value if parsing fails."""
+    import json
+
+    try:
+        return json.loads(value)
+    except (json.JSONDecodeError, TypeError):
+        return value
+
+
+# Pre-configured coercer for JSON list columns
+def coerce_json_list_column(series: "pd.Series", **kwargs) -> "pd.Series":
+    """
+    Coerce a column of JSON list strings to actual Python lists.
+
+    This is a convenience wrapper around coerce_series_conditionally
+    configured for the common case of JSON list string columns.
+    """
+    return coerce_series_conditionally(
+        series,
+        condition=is_json_list_string,
+        transform=parse_json_safe,
+        **kwargs,
+    )
+
+
+def coerce_dataframe_json_columns(
+    df: "pd.DataFrame",
+    columns: list = None,
+    *,
+    verbose: bool = False,
+) -> "pd.DataFrame":
+    """
+    Coerce JSON list string columns in a DataFrame to actual lists.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame to process.
+    columns : list or None
+        Specific columns to check. If None, checks all object-dtype columns.
+    verbose : bool
+        If True, print which columns were transformed.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame with JSON list columns coerced to actual lists.
+    """
+    clog = _get_clog(verbose)
+    df = df.copy()
+
+    if columns is None:
+        # Only check object columns (strings)
+        columns = df.select_dtypes(include=['object']).columns.tolist()
+
+    for col in columns:
+        if col not in df.columns:
+            continue
+
+        original = df[col]
+        coerced = coerce_json_list_column(original)
+
+        # Check if any transformation occurred
+        if not original.equals(coerced):
+            df[col] = coerced
+            clog(f"  Coerced column '{col}' from JSON strings to lists")
+
+    return df
+
+
+# Known columns that contain JSON list strings in the Epstein data
+EPSTEIN_JSON_LIST_COLUMNS = {
+    'documents': ['content_tags'],
+    'rdf_triples': ['triple_tags', 'top_cluster_ids'],
+    'relationships_edges': ['triple_tags', 'top_cluster_ids'],
+    'tag_embeddings': ['embedding'],
+}
+
+
+def normalize_epstein_tables(
+    tables: dict,
+    *,
+    save_to_store=None,
+    verbose: bool = True,
+) -> dict:
+    """
+    Normalize Epstein data tables by coercing JSON string columns to lists.
+
+    Parameters
+    ----------
+    tables : dict[str, pd.DataFrame]
+        Dictionary of table name -> DataFrame.
+    save_to_store : MutableMapping or None
+        If provided, save the normalized tables back to this store.
+    verbose : bool
+        If True, print which columns were transformed.
+
+    Returns
+    -------
+    dict[str, pd.DataFrame]
+        Normalized tables.
+    """
+    clog = _get_clog(verbose)
+    clog("Normalizing tables (coercing JSON string columns)...")
+
+    result = {}
+    for name, df in tables.items():
+        # Get columns to coerce for this table (if known)
+        columns = EPSTEIN_JSON_LIST_COLUMNS.get(name)
+
+        if columns:
+            df = coerce_dataframe_json_columns(df, columns=columns, verbose=verbose)
+
+        result[name] = df
+
+        if save_to_store is not None:
+            save_to_store[name] = df
+
+    clog("Done normalizing.")
+    return result
+
+
+def _load_tables(data_dir, table_names, verbose=True, *, normalize=True):
     """
     Load parquet tables from a directory.
 
@@ -91,6 +301,8 @@ def _load_tables(data_dir, table_names, verbose=True):
         Names of tables to load (without .parquet extension).
     verbose : bool
         Whether to print progress messages.
+    normalize : bool
+        If True, coerce known JSON string columns to actual lists.
 
     Returns
     -------
@@ -110,7 +322,15 @@ def _load_tables(data_dir, table_names, verbose=True):
 
     tables = {}
     for name in table_names:
-        tables[name] = pd.read_parquet(data_dir / f'{name}.parquet')
+        df = pd.read_parquet(data_dir / f'{name}.parquet')
+
+        # Normalize JSON string columns if requested
+        if normalize:
+            columns = EPSTEIN_JSON_LIST_COLUMNS.get(name)
+            if columns:
+                df = coerce_dataframe_json_columns(df, columns=columns, verbose=False)
+
+        tables[name] = df
 
     return tables
 
