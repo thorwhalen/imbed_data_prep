@@ -1,8 +1,159 @@
 """Preparing Epstein Files Data"""
 
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Union, Literal
 from pathlib import Path
 from collections import Counter
+from itertools import combinations
+import functools
+
+
+# ---------------------------------------------------------------------------
+# Common utilities
+# ---------------------------------------------------------------------------
+
+
+def cached_graph_prep(cache_name: str):
+    """
+    Decorator to cache graph prep functions to a tables store.
+
+    The decorated function gains `tables` and `force_recompute` parameters.
+    If `tables` is provided and cache exists, returns cached data.
+    Otherwise computes, caches (if tables provided), and returns.
+
+    Parameters
+    ----------
+    cache_name : str
+        Base name for cache files (e.g., 'entity_graph' creates
+        'prepped/{cache_name}_points' and 'prepped/{cache_name}_links')
+
+    Example
+    -------
+    >>> @cached_graph_prep('entity_graph')
+    ... def prepare_entity_graph_data(data_dir=None, ...):
+    ...     ...
+    ...     return {'points': points_df, 'links': links_df}
+    ...
+    >>> # First call computes and caches:
+    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables)
+    >>> # Second call loads from cache:
+    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables)
+    >>> # Force recompute:
+    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables, force_recompute=True)
+    """
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, tables=None, force_recompute=False, **kwargs):
+            points_key = f'prepped/{cache_name}_points'
+            links_key = f'prepped/{cache_name}_links'
+
+            # Check cache (if tables provided and not forcing recompute)
+            if tables is not None and not force_recompute:
+                try:
+                    if points_key in tables and links_key in tables:
+                        return {
+                            'points': tables[points_key],
+                            'links': tables[links_key],
+                        }
+                except Exception:
+                    pass  # Cache miss or error, proceed to compute
+
+            # Compute (pass through tables for input data loading if function uses it)
+            result = func(*args, **kwargs)
+
+            # Save to cache if tables provided
+            if tables is not None:
+                tables[points_key] = result['points']
+                tables[links_key] = result['links']
+
+            return result
+
+        # Expose cache info on wrapper
+        wrapper._cache_name = cache_name
+        return wrapper
+
+    return decorator
+
+def _get_clog(verbose):
+    """Return a logging function based on verbosity setting."""
+    return (lambda *args: print(*args)) if verbose else (lambda *args: None)
+
+
+def _load_tables(data_dir, table_names, verbose=True):
+    """
+    Load parquet tables from a directory.
+
+    Parameters
+    ----------
+    data_dir : Path or str or None
+        Directory containing parquet files. If None, uses default imbed saves.
+    table_names : list of str
+        Names of tables to load (without .parquet extension).
+    verbose : bool
+        Whether to print progress messages.
+
+    Returns
+    -------
+    dict[str, pd.DataFrame]
+        Loaded tables keyed by name.
+    """
+    import pandas as pd
+
+    clog = _get_clog(verbose)
+
+    if data_dir is None:
+        from imbed.util import DFLT_SAVES_DIR, process_path
+        data_dir = process_path(DFLT_SAVES_DIR, 'epstein_files')
+    data_dir = Path(data_dir)
+
+    clog(f"Reading parquet files from {data_dir}")
+
+    tables = {}
+    for name in table_names:
+        tables[name] = pd.read_parquet(data_dir / f'{name}.parquet')
+
+    return tables
+
+
+def _resolve_aliases(edges, alias_map, src_col='source', tgt_col='target'):
+    """
+    Apply alias resolution to source and target columns of an edges DataFrame.
+
+    Returns a copy with resolved names.
+    """
+    edges = edges.copy()
+    edges[src_col] = edges[src_col].map(lambda x: alias_map.get(x, x))
+    edges[tgt_col] = edges[tgt_col].map(lambda x: alias_map.get(x, x))
+    return edges
+
+
+def _compute_degree_counts(edges, src_col='source', tgt_col='target'):
+    """Compute degree counts for nodes from an edges DataFrame."""
+    degree = Counter()
+    for src, tgt in zip(edges[src_col], edges[tgt_col]):
+        degree[src] += 1
+        degree[tgt] += 1
+    return degree
+
+
+def _deduplicate_edges(edges, src_col, tgt_col, verbose=True):
+    """
+    Collapse multiple edges between same (source, target) into one with weight.
+    """
+    clog = _get_clog(verbose)
+    clog("Deduplicating edges...")
+
+    metadata_cols = [c for c in edges.columns if c not in (src_col, tgt_col)]
+    deduped = (
+        edges.groupby([src_col, tgt_col], sort=False)
+        .agg(
+            weight=(src_col, 'size'),
+            **{col: (col, 'first') for col in metadata_cols},
+        )
+        .reset_index()
+    )
+    clog(f"  {len(deduped)} unique directed edges")
+    return deduped
 
 
 def acquire_epstein_data(
@@ -50,8 +201,7 @@ def acquire_epstein_data(
     import urllib.request
     import shutil
 
-    # Verbose logging helper
-    clog = (lambda *args: print(*args)) if verbose else (lambda *args: None)
+    clog = _get_clog(verbose)
 
     DEFAULT_DB_URL = (
         "https://github.com/maxandrews/Epstein-doc-explorer/"
@@ -172,16 +322,18 @@ def acquire_epstein_data(
         return final_out_dir
 
 
-def prepare_cosmograph_data(
+@cached_graph_prep('entity_graph')
+def prepare_entity_graph_data(
     data_dir=None,
     *,
-    tables=None,
+    source_tables=None,
     deduplicate_edges=True,
+    include_extended_info=False,
     verbose=True,
 ):
     """
-    Transform raw Epstein parquet tables into Cosmograph-ready points and links
-    DataFrames.
+    Prepare entity-based graph data where nodes are people/entities and edges
+    are relationships between them.
 
     This resolves entity aliases (so "Jeff Epstein" -> "Jeffrey Epstein"),
     builds a nodes DataFrame with degree counts and hop distance from
@@ -191,94 +343,112 @@ def prepare_cosmograph_data(
     ----------
     data_dir : str or Path or None
         Directory containing the parquet files. If None, uses the default
-        imbed saves location. Ignored if ``tables`` is provided.
-    tables : dict[str, pd.DataFrame] or None
+        imbed saves location. Ignored if ``source_tables`` is provided.
+    source_tables : dict[str, pd.DataFrame] or None
         Pre-loaded DataFrames keyed by table name. Expected keys:
         'relationships_edges' (or 'rdf_triples'), 'entity_aliases',
         'canonical_entities'. If None, tables are read from ``data_dir``.
     deduplicate_edges : bool
         If True, collapse multiple edges between the same (source, target)
         pair into one row and add a ``weight`` column with the count.
+    include_extended_info : bool
+        If True, include additional columns in points: in_degree, out_degree,
+        doc_count (number of unique documents mentioning entity).
     verbose : bool
         Controls printing of progress messages.
+    tables : MutableMapping or None
+        (Added by @cached_graph_prep) Cache store for saving/loading results.
+        If provided and cache exists, returns cached data instead of recomputing.
+    force_recompute : bool
+        (Added by @cached_graph_prep) If True, recompute even if cache exists.
 
     Returns
     -------
     dict with keys:
         'points' : pd.DataFrame
             Columns: canonical_name, degree, hop_distance
+            (plus in_degree, out_degree, doc_count if include_extended_info)
         'links' : pd.DataFrame
             Columns: source, target, action, [weight], plus original metadata
     """
     import pandas as pd
 
-    clog = (lambda *args: print(*args)) if verbose else (lambda *args: None)
+    clog = _get_clog(verbose)
 
     # ---- Load tables --------------------------------------------------------
-    if tables is None:
-        if data_dir is None:
-            from imbed.util import DFLT_SAVES_DIR, process_path
-
-            data_dir = process_path(DFLT_SAVES_DIR, 'epstein_files')
-        data_dir = Path(data_dir)
-        clog(f"Reading parquet files from {data_dir}")
-        edges = pd.read_parquet(data_dir / 'relationships_edges.parquet')
-        aliases = pd.read_parquet(data_dir / 'entity_aliases.parquet')
-        entities = pd.read_parquet(data_dir / 'canonical_entities.parquet')
+    if source_tables is None:
+        loaded = _load_tables(
+            data_dir,
+            ['relationships_edges', 'entity_aliases', 'canonical_entities'],
+            verbose=verbose,
+        )
+        edges = loaded['relationships_edges']
+        aliases = loaded['entity_aliases']
+        entities = loaded['canonical_entities']
     else:
-        edges = tables.get('relationships_edges', tables.get('rdf_triples'))
-        aliases = tables['entity_aliases']
-        entities = tables['canonical_entities']
+        edges = source_tables.get('relationships_edges', source_tables.get('rdf_triples'))
+        aliases = source_tables['entity_aliases']
+        entities = source_tables['canonical_entities']
 
     # ---- Resolve aliases ----------------------------------------------------
     clog("Resolving entity aliases...")
     alias_map = dict(zip(aliases['original_name'], aliases['canonical_name']))
 
-    # Figure out which column names to use for source/target
     src_col = 'source' if 'source' in edges.columns else 'actor'
     tgt_col = 'target'
 
-    edges = edges.copy()
-    edges[src_col] = edges[src_col].map(lambda x: alias_map.get(x, x))
-    edges[tgt_col] = edges[tgt_col].map(lambda x: alias_map.get(x, x))
+    edges = _resolve_aliases(edges, alias_map, src_col, tgt_col)
 
     # ---- Deduplicate edges (optionally) ------------------------------------
     if deduplicate_edges:
-        clog("Deduplicating edges...")
-        # Keep first occurrence's metadata, add weight
-        metadata_cols = [
-            c for c in edges.columns if c not in (src_col, tgt_col)
-        ]
-        deduped = (
-            edges.groupby([src_col, tgt_col], sort=False)
-            .agg(
-                weight=(src_col, 'size'),  # count of edges per pair
-                **{col: (col, 'first') for col in metadata_cols},
-            )
-            .reset_index()
-        )
-        edges = deduped
-        clog(f"  {len(edges)} unique directed edges")
+        edges = _deduplicate_edges(edges, src_col, tgt_col, verbose=verbose)
 
     # ---- Build nodes -------------------------------------------------------
     clog("Building nodes...")
-    degree = Counter()
-    for src, tgt in zip(edges[src_col], edges[tgt_col]):
-        degree[src] += 1
-        degree[tgt] += 1
 
     hop_map = dict(
         zip(entities['canonical_name'], entities['hop_distance_from_principal'])
     )
 
-    points = pd.DataFrame([
-        {
-            'canonical_name': name,
-            'degree': deg,
-            'hop_distance': hop_map.get(name),
-        }
-        for name, deg in degree.items()
-    ])
+    if include_extended_info:
+        # Compute in/out degree and doc counts
+        in_degree = Counter(edges[tgt_col])
+        out_degree = Counter(edges[src_col])
+        all_names = set(in_degree.keys()) | set(out_degree.keys())
+
+        # Count unique documents per entity
+        doc_counts = Counter()
+        for _, row in edges.iterrows():
+            doc_id = row.get('doc_id')
+            if doc_id:
+                doc_counts[(row[src_col], doc_id)] = 1
+                doc_counts[(row[tgt_col], doc_id)] = 1
+        entity_doc_count = Counter()
+        for (entity, _), _ in doc_counts.items():
+            entity_doc_count[entity] += 1
+
+        points = pd.DataFrame([
+            {
+                'canonical_name': name,
+                'degree': in_degree.get(name, 0) + out_degree.get(name, 0),
+                'in_degree': in_degree.get(name, 0),
+                'out_degree': out_degree.get(name, 0),
+                'hop_distance': hop_map.get(name),
+                'doc_count': entity_doc_count.get(name, 0),
+            }
+            for name in all_names
+        ])
+    else:
+        degree = _compute_degree_counts(edges, src_col, tgt_col)
+        points = pd.DataFrame([
+            {
+                'canonical_name': name,
+                'degree': deg,
+                'hop_distance': hop_map.get(name),
+            }
+            for name, deg in degree.items()
+        ])
+
     points = points.sort_values('degree', ascending=False).reset_index(drop=True)
 
     n_with_hop = points['hop_distance'].notna().sum()
@@ -288,9 +458,396 @@ def prepare_cosmograph_data(
         f"{len(points) - n_with_hop} without)"
     )
 
-    # ---- Rename edge columns for Cosmograph --------------------------------
+    # ---- Rename edge columns for consistency --------------------------------
     if src_col == 'actor':
         edges = edges.rename(columns={'actor': 'source'})
 
     clog("Done.")
     return {'points': points, 'links': edges}
+
+
+# Backward compatibility alias
+prepare_cosmograph_data = prepare_entity_graph_data
+
+
+# ---------------------------------------------------------------------------
+# Document-based graph functions
+# ---------------------------------------------------------------------------
+
+DocumentLinkStrategy = Literal['shared_entities', 'shared_tags', 'shared_topics']
+
+
+@cached_graph_prep('document_graph')
+def prepare_document_graph_data(
+    data_dir=None,
+    *,
+    source_tables=None,
+    link_by: DocumentLinkStrategy = 'shared_entities',
+    min_shared: int = 1,
+    verbose=True,
+):
+    """
+    Prepare document-based graph data where nodes are documents and edges
+    connect documents that share entities, tags, or topics.
+
+    Parameters
+    ----------
+    data_dir : str or Path or None
+        Directory containing the parquet files. If None, uses the default
+        imbed saves location. Ignored if ``source_tables`` is provided.
+    source_tables : dict[str, pd.DataFrame] or None
+        Pre-loaded DataFrames keyed by table name. If None, tables are read
+        from ``data_dir``.
+    link_by : {'shared_entities', 'shared_tags', 'shared_topics'}
+        Strategy for creating links between documents:
+        - 'shared_entities': Link docs that mention the same entity
+        - 'shared_tags': Link docs whose triples share tags (from triple_tags)
+        - 'shared_topics': Link docs with same explicit_topic or implicit_topic
+    min_shared : int
+        Minimum number of shared items required to create a link.
+    verbose : bool
+        Controls printing of progress messages.
+    tables : MutableMapping or None
+        (Added by @cached_graph_prep) Cache store for saving/loading results.
+        If provided and cache exists, returns cached data instead of recomputing.
+    force_recompute : bool
+        (Added by @cached_graph_prep) If True, recompute even if cache exists.
+
+    Returns
+    -------
+    dict with keys:
+        'points' : pd.DataFrame
+            Columns: doc_id, entity_count, triple_count, plus document metadata
+        'links' : pd.DataFrame
+            Columns: source, target, weight, shared_items
+    """
+    import pandas as pd
+    import json
+
+    clog = _get_clog(verbose)
+
+    # ---- Load tables --------------------------------------------------------
+    if source_tables is None:
+        loaded = _load_tables(
+            data_dir,
+            ['relationships_edges', 'documents', 'entity_aliases'],
+            verbose=verbose,
+        )
+        edges = loaded['relationships_edges']
+        documents = loaded['documents']
+        aliases = loaded['entity_aliases']
+    else:
+        edges = source_tables.get('relationships_edges', source_tables.get('rdf_triples'))
+        documents = source_tables['documents']
+        aliases = source_tables.get('entity_aliases')
+
+    # Resolve aliases if available
+    if aliases is not None:
+        clog("Resolving entity aliases...")
+        alias_map = dict(zip(aliases['original_name'], aliases['canonical_name']))
+        src_col = 'source' if 'source' in edges.columns else 'actor'
+        edges = _resolve_aliases(edges, alias_map, src_col, 'target')
+    else:
+        src_col = 'source' if 'source' in edges.columns else 'actor'
+
+    # ---- Build doc -> items mapping based on strategy -----------------------
+    clog(f"Building document links by '{link_by}'...")
+
+    doc_items = {}  # doc_id -> set of items
+
+    if link_by == 'shared_entities':
+        for _, row in edges.iterrows():
+            doc_id = row['doc_id']
+            if doc_id not in doc_items:
+                doc_items[doc_id] = set()
+            doc_items[doc_id].add(row[src_col])
+            doc_items[doc_id].add(row['target'])
+
+    elif link_by == 'shared_tags':
+        for _, row in edges.iterrows():
+            doc_id = row['doc_id']
+            if doc_id not in doc_items:
+                doc_items[doc_id] = set()
+            tags_raw = row.get('triple_tags', '[]')
+            if isinstance(tags_raw, str):
+                try:
+                    tags = json.loads(tags_raw)
+                except (json.JSONDecodeError, TypeError):
+                    tags = []
+            else:
+                tags = tags_raw if tags_raw else []
+            doc_items[doc_id].update(tags)
+
+    elif link_by == 'shared_topics':
+        for _, row in edges.iterrows():
+            doc_id = row['doc_id']
+            if doc_id not in doc_items:
+                doc_items[doc_id] = set()
+            explicit = row.get('explicit_topic')
+            implicit = row.get('implicit_topic')
+            if explicit and pd.notna(explicit):
+                doc_items[doc_id].add(f"explicit:{explicit}")
+            if implicit and pd.notna(implicit):
+                doc_items[doc_id].add(f"implicit:{implicit}")
+    else:
+        raise ValueError(f"Unknown link_by strategy: {link_by}")
+
+    # ---- Build links between documents --------------------------------------
+    clog("Computing document pairs...")
+
+    # Invert: item -> set of doc_ids
+    item_docs = {}
+    for doc_id, items in doc_items.items():
+        for item in items:
+            if item not in item_docs:
+                item_docs[item] = set()
+            item_docs[item].add(doc_id)
+
+    # Count shared items between doc pairs
+    doc_pair_shared = Counter()
+    for item, docs in item_docs.items():
+        if len(docs) > 1:
+            for d1, d2 in combinations(sorted(docs), 2):
+                doc_pair_shared[(d1, d2)] += 1
+
+    # Filter by min_shared and build links DataFrame
+    links_data = []
+    for (d1, d2), count in doc_pair_shared.items():
+        if count >= min_shared:
+            links_data.append({
+                'source': d1,
+                'target': d2,
+                'weight': count,
+            })
+
+    links = pd.DataFrame(links_data)
+    clog(f"  {len(links)} document pairs with >= {min_shared} shared {link_by}")
+
+    # ---- Build points (documents) -------------------------------------------
+    clog("Building document points...")
+
+    # Compute per-doc stats
+    doc_entity_count = Counter()
+    doc_triple_count = Counter()
+    for _, row in edges.iterrows():
+        doc_id = row['doc_id']
+        doc_triple_count[doc_id] += 1
+        doc_entity_count[doc_id] += 2  # source and target
+
+    # Merge with document metadata
+    doc_ids_in_graph = set(doc_items.keys())
+    points_data = []
+    doc_info = documents.set_index('doc_id')
+
+    for doc_id in doc_ids_in_graph:
+        row = {'doc_id': doc_id}
+        row['entity_count'] = len(doc_items.get(doc_id, set()))
+        row['triple_count'] = doc_triple_count.get(doc_id, 0)
+
+        # Add document metadata if available
+        if doc_id in doc_info.index:
+            doc_row = doc_info.loc[doc_id]
+            row['one_sentence_summary'] = doc_row.get('one_sentence_summary', '')
+            row['category'] = doc_row.get('category', '')
+            row['date_range_earliest'] = doc_row.get('date_range_earliest')
+            row['date_range_latest'] = doc_row.get('date_range_latest')
+
+        points_data.append(row)
+
+    points = pd.DataFrame(points_data)
+    points = points.sort_values('triple_count', ascending=False).reset_index(drop=True)
+
+    clog(f"  {len(points)} document nodes")
+    clog("Done.")
+
+    return {'points': points, 'links': links}
+
+
+# ---------------------------------------------------------------------------
+# Tag-based graph functions
+# ---------------------------------------------------------------------------
+
+TagLinkStrategy = Literal['co_occurrence', 'embedding_similarity']
+
+
+@cached_graph_prep('tag_graph')
+def prepare_tag_graph_data(
+    data_dir=None,
+    *,
+    source_tables=None,
+    link_by: TagLinkStrategy = 'co_occurrence',
+    min_co_occurrence: int = 2,
+    similarity_threshold: float = 0.7,
+    verbose=True,
+):
+    """
+    Prepare tag-based graph data where nodes are unique tags and edges
+    connect tags that co-occur or are semantically similar.
+
+    Parameters
+    ----------
+    data_dir : str or Path or None
+        Directory containing the parquet files. If None, uses the default
+        imbed saves location. Ignored if ``source_tables`` is provided.
+    source_tables : dict[str, pd.DataFrame] or None
+        Pre-loaded DataFrames keyed by table name. If None, tables are read
+        from ``data_dir``.
+    link_by : {'co_occurrence', 'embedding_similarity'}
+        Strategy for creating links between tags:
+        - 'co_occurrence': Link tags that appear together in the same triple
+        - 'embedding_similarity': Link tags with similar embeddings
+    min_co_occurrence : int
+        For 'co_occurrence': minimum times tags must co-occur to create link.
+    similarity_threshold : float
+        For 'embedding_similarity': minimum cosine similarity to create link.
+    verbose : bool
+        Controls printing of progress messages.
+    tables : MutableMapping or None
+        (Added by @cached_graph_prep) Cache store for saving/loading results.
+        If provided and cache exists, returns cached data instead of recomputing.
+    force_recompute : bool
+        (Added by @cached_graph_prep) If True, recompute even if cache exists.
+
+    Returns
+    -------
+    dict with keys:
+        'points' : pd.DataFrame
+            Columns: tag, occurrence_count, doc_count
+        'links' : pd.DataFrame
+            Columns: source, target, weight (co-occurrence count or similarity)
+    """
+    import pandas as pd
+    import json
+
+    clog = _get_clog(verbose)
+
+    # ---- Load tables --------------------------------------------------------
+    table_names = ['relationships_edges']
+    if link_by == 'embedding_similarity':
+        table_names.append('tag_embeddings')
+
+    if source_tables is None:
+        loaded = _load_tables(data_dir, table_names, verbose=verbose)
+        edges = loaded['relationships_edges']
+        tag_embeddings = loaded.get('tag_embeddings')
+    else:
+        edges = source_tables.get('relationships_edges', source_tables.get('rdf_triples'))
+        tag_embeddings = source_tables.get('tag_embeddings')
+
+    # ---- Parse tags from triples --------------------------------------------
+    clog("Parsing tags from triples...")
+
+    tag_occurrences = Counter()  # tag -> total count
+    tag_doc_count = Counter()  # tag -> unique doc count
+    tag_docs = {}  # tag -> set of doc_ids
+    triple_tags_list = []  # list of (doc_id, set of tags) for each triple
+
+    for _, row in edges.iterrows():
+        doc_id = row['doc_id']
+        tags_raw = row.get('triple_tags', '[]')
+        if isinstance(tags_raw, str):
+            try:
+                tags = json.loads(tags_raw)
+            except (json.JSONDecodeError, TypeError):
+                tags = []
+        else:
+            tags = tags_raw if tags_raw else []
+
+        tags_set = set(tags)
+        triple_tags_list.append((doc_id, tags_set))
+
+        for tag in tags_set:
+            tag_occurrences[tag] += 1
+            if tag not in tag_docs:
+                tag_docs[tag] = set()
+            tag_docs[tag].add(doc_id)
+
+    for tag, docs in tag_docs.items():
+        tag_doc_count[tag] = len(docs)
+
+    clog(f"  {len(tag_occurrences)} unique tags found")
+
+    # ---- Build links based on strategy --------------------------------------
+    if link_by == 'co_occurrence':
+        clog("Computing tag co-occurrences...")
+
+        co_occurrence = Counter()
+        for doc_id, tags_set in triple_tags_list:
+            if len(tags_set) > 1:
+                for t1, t2 in combinations(sorted(tags_set), 2):
+                    co_occurrence[(t1, t2)] += 1
+
+        links_data = []
+        for (t1, t2), count in co_occurrence.items():
+            if count >= min_co_occurrence:
+                links_data.append({
+                    'source': t1,
+                    'target': t2,
+                    'weight': count,
+                })
+
+        links = pd.DataFrame(links_data)
+        clog(f"  {len(links)} tag pairs with >= {min_co_occurrence} co-occurrences")
+
+    elif link_by == 'embedding_similarity':
+        clog("Computing tag embedding similarities...")
+
+        if tag_embeddings is None:
+            raise ValueError(
+                "tag_embeddings table required for 'embedding_similarity' strategy"
+            )
+
+        import numpy as np
+
+        # Build tag -> embedding mapping
+        tag_to_emb = {}
+        for _, row in tag_embeddings.iterrows():
+            tag = row['tag']
+            emb_raw = row['embedding']
+            if isinstance(emb_raw, str):
+                emb = np.array(json.loads(emb_raw))
+            else:
+                emb = np.array(emb_raw)
+            tag_to_emb[tag] = emb / np.linalg.norm(emb)  # normalize
+
+        # Only consider tags that appear in our data
+        tags_with_emb = [t for t in tag_occurrences if t in tag_to_emb]
+        clog(f"  {len(tags_with_emb)} tags have embeddings")
+
+        links_data = []
+        for i, t1 in enumerate(tags_with_emb):
+            for t2 in tags_with_emb[i + 1:]:
+                sim = np.dot(tag_to_emb[t1], tag_to_emb[t2])
+                if sim >= similarity_threshold:
+                    links_data.append({
+                        'source': t1,
+                        'target': t2,
+                        'weight': float(sim),
+                    })
+
+        links = pd.DataFrame(links_data)
+        clog(f"  {len(links)} tag pairs with similarity >= {similarity_threshold}")
+
+    else:
+        raise ValueError(f"Unknown link_by strategy: {link_by}")
+
+    # ---- Build points (tags) ------------------------------------------------
+    clog("Building tag points...")
+
+    points_data = []
+    for tag, count in tag_occurrences.items():
+        points_data.append({
+            'tag': tag,
+            'occurrence_count': count,
+            'doc_count': tag_doc_count.get(tag, 0),
+        })
+
+    points = pd.DataFrame(points_data)
+    points = points.sort_values('occurrence_count', ascending=False).reset_index(
+        drop=True
+    )
+
+    clog(f"  {len(points)} tag nodes")
+    clog("Done.")
+
+    return {'points': points, 'links': links}
