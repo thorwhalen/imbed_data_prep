@@ -132,6 +132,13 @@ enabled = false
 enabled = false
 
 [tool.wads.ci.testing]
+# Disabled: this package is a collection of dataset-acquisition scripts.
+# `pytest --doctest-modules` import-executes every submodule, and several
+# authenticate to external APIs / download data at import time (e.g. the
+# `kaggle` package calls exit(1) on missing credentials). The doctests
+# remain visible in the source and runnable locally; they are just not run
+# in CI. Lint still runs.
+enabled = false
 python_versions = [
     "3.10",
     "3.12",

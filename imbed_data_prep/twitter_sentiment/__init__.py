@@ -62,8 +62,11 @@ def embed_segments_one_by_one(segments: Mapping[str, str]) -> KeyVectorPairs:
 
 
 import pandas as pd
-from haggle import KaggleDatasets
 from imbed import extension_based_wrap
+
+# Note: `from haggle import KaggleDatasets` is done lazily inside raw_data()
+# below, because importing `haggle` pulls in `kaggle`, which authenticates
+# (and calls exit(1) on missing credentials) at import time.
 
 
 @dataclass
@@ -88,6 +91,7 @@ class Dacc(LocalSavesMixin, ImbedArtifactsMixin):
         """The purpose of this function is to return the data that the user would
         have manually place in the saved_dir, so the method should never actually
         be called."""
+        from haggle import KaggleDatasets
 
         kaggle = KaggleDatasets()
 
