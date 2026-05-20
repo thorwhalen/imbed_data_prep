@@ -1,0 +1,629 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.mcdonalds_reviews &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/embeddings_of_aggregations.html">imbed_data_prep.embeddings_of_aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/epstein_files.html">imbed_data_prep.epstein_files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/github_repos.html">imbed_data_prep.github_repos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/lmsys_ai_conversations.html">imbed_data_prep.lmsys_ai_conversations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html">imbed_data_prep.mcdonalds_reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.mcdonalds_reviews</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed_data_prep.mcdonalds_reviews</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;McDonald&#39;s reviews data accessor&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">KW_ONLY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">oa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_this</span><span class="p">,</span> <span class="n">add_extension</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LocalSavesMixin</span><span class="p">,</span>
+    <span class="n">DFLT_SAVES_DIR</span><span class="p">,</span>
+    <span class="n">DFLT_EMBEDDING_MODEL</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.data_prep</span><span class="w"> </span><span class="kn">import</span> <span class="n">ImbedArtifactsMixin</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">planar_embeddings</span><span class="p">,</span>
+    <span class="n">planar_embeddings_dict_to_df</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;mcdonalds_reviews&#39;</span>
+
+
+<div class="viewcode-block" id="McdonaldsReviewsDacc">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">McdonaldsReviewsDacc</span><span class="p">(</span><span class="n">LocalSavesMixin</span><span class="p">,</span> <span class="n">ImbedArtifactsMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Data accessor for McDonald&#39;s reviews</span>
+
+<span class="sd">    Usage:</span>
+<span class="sd">        &gt;&gt;&gt; dacc = McdonaldsReviewsDacc(datadir=&#39;.&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; df = dacc.raw_data  # Loads CSV  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; embeddings = dacc.embeddings_df  # Computes/loads embeddings  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; planar = dacc.planar_embeddings  # 2D projections  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; clusters = dacc.clusters_df  # Cluster assignments  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt; merged = dacc.merged_artifacts  # Everything together  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data_name</span>
+    <span class="n">_</span><span class="p">:</span> <span class="n">KW_ONLY</span>
+    <span class="n">datadir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+    <span class="n">saves_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">raw_data_filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;McDonalds_Reviews_Cleaned.csv&#39;</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_EMBEDDING_MODEL</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Use datadir as saves_dir if not specified</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadir</span><span class="p">)</span>
+
+    <span class="c1"># @cache_this(cache=&#39;saves&#39;, key=add_extension(&#39;.csv&#39;))</span>
+    <span class="nd">@cache_this</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">raw_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load raw CSV data</span>
+
+<span class="sd">        Replaces:</span>
+<span class="sd">            f = djoin(&#39;McDonalds_Reviews_Cleaned.csv&#39;)</span>
+<span class="sd">            df = pd.read_csv(f)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data_filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading raw data from </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        <span class="c1"># strip all whitespace from column names</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embeddable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare data for embedding</span>
+
+<span class="sd">        Extracts review text and adds it as &#39;segment&#39; column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;segment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;review&#39;</span><span class="p">]</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;id_&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Prepared </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> reviews for embedding&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embeddings_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute embeddings for reviews</span>
+
+<span class="sd">        Replaces the manual pattern:</span>
+<span class="sd">            if save_key in store:</span>
+<span class="sd">                vectors = store[save_key]</span>
+<span class="sd">            else:</span>
+<span class="sd">                vectors = oa.embeddings(reviews)</span>
+<span class="sd">                store[save_key] = vectors</span>
+
+<span class="sd">        Now just call: dacc.embeddings_df</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing embeddings...&quot;</span><span class="p">)</span>
+
+        <span class="n">reviews</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddable</span><span class="p">[</span><span class="s1">&#39;review&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">vectors</span> <span class="o">=</span> <span class="n">oa</span><span class="o">.</span><span class="n">embeddings</span><span class="p">(</span><span class="n">reviews</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;embedding&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">vectors</span><span class="p">)},</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddable</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computed </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span><span class="si">}</span><span class="s2"> embeddings&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span>
+
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">planar_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute 2D planar embeddings for visualization&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing planar embeddings...&quot;</span><span class="p">)</span>
+
+        <span class="n">embeddings_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_df</span><span class="p">[</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">planar_dict</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="p">(</span><span class="n">embeddings_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">planar_embeddings_dict_to_df</span><span class="p">(</span><span class="n">planar_dict</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">segments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get segments as a dictionary (required by ImbedArtifactsMixin)&quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddable</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">segment</span><span class="p">))</span>
+
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clusters_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute cluster assignments</span>
+
+<span class="sd">        Uses the parent class method which applies clustering to embeddings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Computing clusters...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clusters_df</span><span class="p">()</span>
+
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">merged_artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Merge all computed artifacts into one dataframe</span>
+
+<span class="sd">        Combines:</span>
+<span class="sd">        - Original review data</span>
+<span class="sd">        - Embeddings</span>
+<span class="sd">        - Planar (2D) embeddings</span>
+<span class="sd">        - Cluster assignments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Merging all artifacts...&quot;</span><span class="p">)</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddable</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clusters_df</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">t</span></div>
+
+
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="sd">&quot;&quot;&quot;Extended McDonald&#39;s reviews data accessor with mood modeling capabilities&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">dol</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_this</span><span class="p">,</span> <span class="n">add_extension</span>
+
+
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">McdonaldsReviewsMoodModeling</span><span class="p">(</span><span class="n">McdonaldsReviewsDacc</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extended data accessor with mood modeling and analysis capabilities</span>
+<span class="sd">    </span>
+<span class="sd">    This class extends McdonaldsReviewsDacc to support:</span>
+<span class="sd">    - Semantic attribute dataset management</span>
+<span class="sd">    - Embeddings computation for training data</span>
+<span class="sd">    - Model training and evaluation across categories</span>
+<span class="sd">    - Results persistence and analysis</span>
+<span class="sd">    </span>
+<span class="sd">    Usage:</span>
+<span class="sd">        &gt;&gt;&gt; dacc = McdonaldsReviewsMoodModeling(  # doctest: +SKIP</span>
+<span class="sd">        ...     datadir=&#39;.&#39;,</span>
+<span class="sd">        ...     semantic_attributes_path=&#39;semantic_attributes.json&#39;</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Access semantic attributes</span>
+<span class="sd">        &gt;&gt;&gt; attrs = dacc.semantic_attributes  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Get embeddings for a category</span>
+<span class="sd">        &gt;&gt;&gt; embeddings = dacc.category_embeddings(&#39;food_quality_presentation&#39;)  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Train models for all categories</span>
+<span class="sd">        &gt;&gt;&gt; results = dacc.all_category_results()  # doctest: +SKIP</span>
+<span class="sd">        &gt;&gt;&gt;</span>
+<span class="sd">        &gt;&gt;&gt; # Get model summary for a specific category</span>
+<span class="sd">        &gt;&gt;&gt; summary = dacc.category_model_summary(&#39;food_quality_presentation&#39;)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Paths for semantic attributes and modeling</span>
+    <span class="n">semantic_attributes_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="s1">&#39;semantic_attributes.json&#39;</span>
+    <span class="n">semantic_attributes_dataset_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">embeddings_folder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">results_folder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    
+    <span class="c1"># Modeling parameters</span>
+    <span class="n">cv_splits</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+        
+        <span class="c1"># Set default paths relative to saves_dir</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">semantic_attributes_dataset_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">semantic_attributes_dataset_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="p">,</span> <span class="s1">&#39;semantic_attributes&#39;</span>
+            <span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_folder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="p">,</span> <span class="s1">&#39;embeddings&#39;</span>
+            <span class="p">)</span>
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="p">,</span> <span class="s1">&#39;mood_modeling_results&#39;</span>
+            <span class="p">)</span>
+        
+        <span class="c1"># Ensure directories exist</span>
+        <span class="k">for</span> <span class="n">dirpath</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">semantic_attributes_dataset_dir</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_folder</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span>
+        <span class="p">]:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">dirpath</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="nd">@cache_this</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">semantic_attributes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load semantic attributes from JSON file</span>
+<span class="sd">        </span>
+<span class="sd">        Returns dictionary mapping attribute names to descriptions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datadir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">semantic_attributes_path</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2"> not found, returning empty dict&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">{}</span>
+        
+        <span class="n">json_store</span> <span class="o">=</span> <span class="n">dol</span><span class="o">.</span><span class="n">JsonFiles</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">filepath</span><span class="p">))</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading semantic attributes from </span><span class="si">{</span><span class="n">filepath</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">json_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_segments_store</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal: Create store for accessing category segments&quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">dol</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mood.dataset_makers</span><span class="w"> </span><span class="kn">import</span> <span class="n">parsed_lines</span>
+        
+        <span class="n">mk_segments_store</span> <span class="o">=</span> <span class="n">dol</span><span class="o">.</span><span class="n">Pipe</span><span class="p">(</span>
+            <span class="n">dol</span><span class="o">.</span><span class="n">TextFiles</span><span class="p">,</span>
+            <span class="n">dol</span><span class="o">.</span><span class="n">filt_iter</span><span class="p">(</span><span class="n">filt</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">)),</span>
+            <span class="n">dol</span><span class="o">.</span><span class="n">KeyCodecs</span><span class="o">.</span><span class="n">suffixed</span><span class="p">(</span><span class="s1">&#39;.txt&#39;</span><span class="p">),</span>
+            <span class="n">dol</span><span class="o">.</span><span class="n">wrap_kvs</span><span class="p">(</span><span class="n">value_decoder</span><span class="o">=</span><span class="n">dol</span><span class="o">.</span><span class="n">Pipe</span><span class="p">(</span><span class="n">parsed_lines</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)),</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">mk_segments_store</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">semantic_attributes_dataset_dir</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_embeddings_store</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal: Create store for accessing category embeddings&quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">tabled</span>
+        <span class="k">return</span> <span class="n">tabled</span><span class="o">.</span><span class="n">DfFiles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings_folder</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_results_store</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Internal: Create store for accessing modeling results&quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">dill</span>
+        
+        <span class="n">DillFiles</span> <span class="o">=</span> <span class="n">dol</span><span class="o">.</span><span class="n">wrap_kvs</span><span class="p">(</span>
+            <span class="n">dol</span><span class="o">.</span><span class="n">Files</span><span class="p">,</span>
+            <span class="n">value_decoder</span><span class="o">=</span><span class="n">dill</span><span class="o">.</span><span class="n">loads</span><span class="p">,</span>
+            <span class="n">value_encoder</span><span class="o">=</span><span class="n">dill</span><span class="o">.</span><span class="n">dumps</span>
+        <span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">DillFiles</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_folder</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.category_segments">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_segments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">category_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get segments and scores for a category</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (segments, scores) as pandas Series</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segments_store</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data_table</span><span class="p">[</span><span class="s1">&#39;segment&#39;</span><span class="p">],</span> <span class="n">data_table</span><span class="p">[</span><span class="s1">&#39;score&#39;</span><span class="p">]</span></div>
+
+    
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;_embeddings_store&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cat</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cat</span><span class="si">}</span><span class="s1">.parquet&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">category_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute or load embeddings for a category&#39;s segments</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame with embeddings column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">oa</span>
+        
+        <span class="n">segments</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_segments</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing embeddings for </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span><span class="si">}</span><span class="s2"> segments)&quot;</span><span class="p">)</span>
+        
+        <span class="n">embeddings</span> <span class="o">=</span> <span class="n">oa</span><span class="o">.</span><span class="n">embeddings</span><span class="p">(</span><span class="n">segments</span><span class="o">.</span><span class="n">to_list</span><span class="p">(),</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;embedding&#39;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)})</span>
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.category_xy">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_xy">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">category_xy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get X, y arrays for model training</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (X, y) as numpy arrays where:</span>
+<span class="sd">            - X: (n_samples, embedding_dim) embedding vectors</span>
+<span class="sd">            - y: (n_samples,) score labels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_segments</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">embeddings_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_embeddings</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">embeddings_df</span><span class="p">[</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span></div>
+
+    
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;_results_store&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">cat</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">cat</span><span class="si">}</span><span class="s1">.p&#39;</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">category_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train and evaluate models for a category</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary containing:</span>
+<span class="sd">            - results: Single train/test split results</span>
+<span class="sd">            - cv_results: Cross-validation results</span>
+<span class="sd">            - summary: Performance summary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mood.mood_modeling</span><span class="w"> </span><span class="kn">import</span> <span class="n">MoodModelingManager</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training models for </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_xy</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        <span class="n">manager</span> <span class="o">=</span> <span class="n">MoodModelingManager</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="n">manager</span><span class="o">.</span><span class="n">train_and_evaluate</span><span class="p">(),</span>
+            <span class="s1">&#39;cv_results&#39;</span><span class="p">:</span> <span class="n">manager</span><span class="o">.</span><span class="n">cross_validate_models</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cv_splits</span><span class="p">),</span>
+            <span class="s1">&#39;summary&#39;</span><span class="p">:</span> <span class="n">manager</span><span class="o">.</span><span class="n">get_model_summary</span><span class="p">(</span><span class="n">use_cv</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+        <span class="p">}</span>
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.all_category_results">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.all_category_results">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_category_results</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train and evaluate models for all categories</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary mapping category names to their results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segments_store</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Processing category: </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="n">results</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_results</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">results</span></div>
+
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.category_model_summary">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">category_model_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get model performance summary for a category</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame with model performance metrics</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_results</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;summary&#39;</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.category_model_config">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_config">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">category_model_config</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+        <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;logistic_high_vs_low&#39;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get configuration for a specific model</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">            model_name: Name of the model to get config for</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with model configuration including class and parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_results</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">model_name</span><span class="p">][</span><span class="s1">&#39;config&#39;</span><span class="p">]</span></div>
+
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.train_model">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.train_model">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_model</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;logistic_high_vs_low&#39;</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Train and return a fitted model instance</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">            model_name: Name of the model to train</span>
+<span class="sd">            </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            Fitted model instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_model_config</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">model_name</span><span class="p">)</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_xy</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+        
+        <span class="n">learner</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;model_class&#39;</span><span class="p">](</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model_params&#39;</span><span class="p">])</span>
+        <span class="n">learner</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">learner</span></div>
+
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.dataset_statistics">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.dataset_statistics">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataset_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get statistics about all semantic attribute datasets</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DataFrame with category names and example counts</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_segments_store</span><span class="p">:</span>
+            <span class="n">segments</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_segments</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+            <span class="n">stats</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;semantic_attribute&#39;</span><span class="p">:</span> <span class="n">category</span><span class="p">,</span>
+                <span class="s1">&#39;number_of_examples&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+            <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">stats</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.list_categories">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.list_categories">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List all available semantic attribute categories</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            List of category names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_segments_store</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="McdonaldsReviewsMoodModeling.clear_category_cache">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.clear_category_cache">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear_category_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear cached data for a category</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">            category: Name of the semantic attribute category</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Clear embeddings</span>
+        <span class="n">embeddings_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s1">.parquet&#39;</span>
+        <span class="k">if</span> <span class="n">embeddings_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_store</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embeddings_store</span><span class="p">[</span><span class="n">embeddings_key</span><span class="p">]</span>
+        
+        <span class="c1"># Clear results</span>
+        <span class="n">results_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s1">.p&#39;</span>
+        <span class="k">if</span> <span class="n">results_key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_results_store</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_results_store</span><span class="p">[</span><span class="n">results_key</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cleared cache for </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

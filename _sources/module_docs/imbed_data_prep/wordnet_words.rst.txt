@@ -1,0 +1,4 @@
+imbed_data_prep.wordnet_words
+=============================
+.. automodule:: imbed_data_prep.wordnet_words
+   :members:

@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.wildchat &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/embeddings_of_aggregations.html">imbed_data_prep.embeddings_of_aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/epstein_files.html">imbed_data_prep.epstein_files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/github_repos.html">imbed_data_prep.github_repos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/lmsys_ai_conversations.html">imbed_data_prep.lmsys_ai_conversations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html">imbed_data_prep.mcdonalds_reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.wildchat</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed_data_prep.wildchat</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Data prep for Github Repositories data.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">KW_ONLY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_this</span> <span class="k">as</span> <span class="n">_cache_this</span><span class="p">,</span> <span class="n">Files</span><span class="p">,</span> <span class="n">Pipe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">graze</span><span class="w"> </span><span class="kn">import</span> <span class="n">url_to_file_download</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">graze.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">return_filepath</span><span class="p">,</span>
+    <span class="n">return_contents</span><span class="p">,</span>
+    <span class="n">key_egress_print_downloading_message_with_size</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol.caching</span><span class="w"> </span><span class="kn">import</span> <span class="n">cache_property_method</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">saves_join</span><span class="p">,</span>
+    <span class="n">get_config</span><span class="p">,</span>
+    <span class="n">planar_embeddings</span><span class="p">,</span>
+    <span class="n">PlanarEmbeddingSpec</span><span class="p">,</span>
+    <span class="n">planar_embeddings_dict_to_df</span><span class="p">,</span>
+    <span class="n">DFLT_PLANAR_EMBEDDING_KIND</span><span class="p">,</span>
+    <span class="n">ensure_fullpath</span><span class="p">,</span>
+    <span class="n">ensure_cache</span><span class="p">,</span>
+    <span class="n">add_extension</span><span class="p">,</span>
+    <span class="n">CacheSpec</span><span class="p">,</span>
+    <span class="n">log_calls</span><span class="p">,</span>
+    <span class="n">log_method_calls</span><span class="p">,</span>
+    <span class="n">counts</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.data_prep</span><span class="w"> </span><span class="kn">import</span> <span class="n">kmeans_cluster_indices</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">extension_based_wrap</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;wildchat&#39;</span>
+<span class="n">huggingface_data_stub</span> <span class="o">=</span> <span class="s2">&quot;allenai/WildChat-1M&quot;</span>
+<span class="c1"># raw_data_name = &#39;github_repos.parquet&#39;</span>
+
+<span class="c1"># TODO: Use config2py tools to use and save default values</span>
+<span class="c1"># TODO: Use config2py tools to include a message containing the default values</span>
+<span class="n">_DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">saves_join</span><span class="p">(</span><span class="n">data_name</span><span class="p">)</span>
+
+<span class="n">DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;WILDCHAT_CACHE_DIR&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_CACHE_DIR</span><span class="p">)</span>
+<span class="c1"># # For a more flexible configs getter (that will ask user for missing keys):</span>
+<span class="c1"># DFLT_CACHE_DIR = get_config(&#39;WILDCHAT_CACHE_DIR&#39;, default=_DFLT_CACHE_DIR)</span>
+
+<span class="c1"># _DFLT_RAW_DATA_FILEPATH = os.path.join(DFLT_CACHE_DIR, raw_data_name)</span>
+<span class="c1"># DFLT_RAW_DATA_FILEPATH = get_config(</span>
+<span class="c1">#     &#39;GITHUB_REPOS_RAW_DATA_FILEPATH&#39;, default=_DFLT_RAW_DATA_FILEPATH</span>
+<span class="c1"># )</span>
+<span class="n">DFLT_N_CLUSTERS</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
+
+
+<span class="c1"># TODO: _cache_this doesn&#39;t work well with partial</span>
+<span class="c1"># cache_this = partial(_cache_this, cache=&#39;cache&#39;)</span>
+<span class="n">cache_this</span> <span class="o">=</span> <span class="n">_cache_this</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">oa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">KW_ONLY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">HugfaceDaccBase</span><span class="p">,</span>
+    <span class="n">DFLT_SAVES_DIR</span><span class="p">,</span>
+    <span class="n">add_token_info_to_df</span><span class="p">,</span>
+    <span class="n">DFLT_EMBEDDING_MODEL</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabled</span><span class="w"> </span><span class="kn">import</span> <span class="n">expand_rows</span><span class="p">,</span> <span class="n">expand_columns</span>
+
+
+<div class="viewcode-block" id="WildchatDacc">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/wildchat.html#imbed_data_prep.wildchat.WildchatDacc">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">WildchatDacc</span><span class="p">(</span><span class="n">HugfaceDaccBase</span><span class="p">):</span>
+    <span class="n">huggingface_data_stub</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">huggingface_data_stub</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">data_name</span>
+    <span class="n">_</span><span class="p">:</span> <span class="n">KW_ONLY</span>
+    <span class="n">saves_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">root_saves_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_SAVES_DIR</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_EMBEDDING_MODEL</span>
+
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;parquet&#39;</span><span class="p">))</span>
+    <span class="nd">@log_method_calls</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expanded_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">expand_wildchat_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">expanded_en</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="o">.</span><span class="n">language</span> <span class="o">==</span> <span class="s1">&#39;English&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">language_conversation_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">language_turn_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
+
+    <span class="c1"># @cache_this(cache=&#39;saves&#39;, key=add_extension(&#39;.parquet&#39;))</span>
+    <span class="c1"># @log_method_calls</span>
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="nd">@log_method_calls</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embeddable_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;id_&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;segment_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;conversation.content&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">add_token_info_to_df</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">,</span>
+            <span class="n">segments_col</span><span class="o">=</span><span class="s1">&#39;conversation.content&#39;</span><span class="p">,</span>
+            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+        <span class="p">)</span>  <span class="c1"># takes 10mn</span>
+        <span class="c1"># then keep only those conversations (grouped by hash) that have all valid segments</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;conversation_hash&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;segment_is_valid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="expand_wildchat_data">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/wildchat.html#imbed_data_prep.wildchat.expand_wildchat_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">expand_wildchat_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Expand columns and rows of raw wildchat data, to get a more flattened dataframe.</span>
+
+<span class="sd">    The raw data contains several columns that have nested data. More specifically,</span>
+<span class="sd">    the columns -- &#39;conversation&#39;, &#39;openai_moderation&#39;, and &#39;detoxify_moderation&#39; --</span>
+<span class="sd">    which contain (aligned) lists of dicts, where each dict of a list corresponds to</span>
+<span class="sd">    a &quot;part&quot; of the conversation conversation: Either the &quot;user&quot;, or the &quot;assistant&quot;</span>
+<span class="sd">    role -- the size of this list should be the number of &quot;turns&quot; times two (user part,</span>
+<span class="sd">    followed with assistant response).</span>
+
+<span class="sd">    So we expand the lists, thus expanding the rows to contain exactly a part each.</span>
+<span class="sd">    Then we expand the dicts, thus expanding the colums, to contain a field of the dict</span>
+<span class="sd">    each.</span>
+<span class="sd">    Finally, there&#39;s one more level of nested dicts in the</span>
+<span class="sd">    &#39;openai_moderation.categories&#39; and &#39;openai_moderation.category_scores&#39; columns,</span>
+<span class="sd">    which we also flatten by expanding columns.</span>
+<span class="sd">    Note that before we do this, we drop rows that have null openai_moderation values.</span>
+<span class="sd">    There were 16996 such rows in the (row-expanded) raw data.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># for each (aligned) item of conversation and moderation, make a new row</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">expand_rows</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;conversation&#39;</span><span class="p">,</span> <span class="s1">&#39;openai_moderation&#39;</span><span class="p">,</span> <span class="s1">&#39;detoxify_moderation&#39;</span><span class="p">])</span>
+    <span class="c1"># These items are dicts, so expand their fields into columns</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span>
+        <span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;conversation&#39;</span><span class="p">,</span> <span class="s1">&#39;openai_moderation&#39;</span><span class="p">,</span> <span class="s1">&#39;detoxify_moderation&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># openai_moderation has yet one more level of nesting so flatten that too</span>
+    <span class="n">openai_moderation_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;openai_moderation.categories&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;openai_moderation.category_scores&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="c1">#   some 16996 rows have null openai_moderation values: drop them before expanding</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">openai_moderation_cols</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">openai_moderation_cols</span><span class="p">)</span>
+    <span class="c1"># remove all columns that have a / in them (because they have duplicates)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">c</span><span class="p">]]</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+
+<span class="c1"># @dataclass</span>
+<span class="c1"># class GithubReposData:</span>
+<span class="c1">#     _: KW_ONLY</span>
+<span class="c1">#     raw_data_src: str = (</span>
+<span class="c1">#         &#39;https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1&#39;</span>
+<span class="c1">#     )</span>
+<span class="c1">#     cache: CacheSpec = DFLT_CACHE_DIR</span>
+<span class="c1">#     raw_data_local_path: str = DFLT_RAW_DATA_FILEPATH</span>
+<span class="c1">#     planar_compute_chk_size: int = 1000</span>
+<span class="c1">#     embeddings_column: str = &#39;embedding&#39;</span>
+<span class="c1">#     text_segments_column: str = &#39;text&#39;</span>
+<span class="c1">#     planar_embeddings_func: PlanarEmbeddingSpec = &#39;ncvis&#39;</span>
+<span class="c1">#     drop_duplicates: bool = True</span>
+<span class="c1">#     n_clusters: Sequence[int] = DFLT_N_CLUSTERS</span>
+<span class="c1">#     mk_cluster_learner: Callable = kmeans_cluster_indices</span>
+<span class="c1">#     verbose: int = 1</span>
+
+<span class="c1">#     def __post_init__(self):</span>
+<span class="c1">#         self.raw_data_local_path = ensure_fullpath(</span>
+<span class="c1">#             self.raw_data_local_path, conditional_rootdir=self.cache</span>
+<span class="c1">#         )</span>
+<span class="c1">#         self.cache = extension_based_wrap(ensure_cache(self.cache))</span>
+<span class="c1">#         self.log = clog(self.verbose)</span>
+
+<span class="c1">#         # TODO: Why do I need to do this?</span>
+<span class="c1">#         self.mk_cluster_learner = staticmethod(self.mk_cluster_learner)</span>
+
+<span class="c1">#     @property</span>
+<span class="c1">#     @log_calls</span>
+<span class="c1">#     def _raw_data_bytes(self):</span>
+<span class="c1">#         r = url_to_file_download(</span>
+<span class="c1">#             self.raw_data_src,</span>
+<span class="c1">#             filepath=self.raw_data_local_path,</span>
+<span class="c1">#             overwrite=False,</span>
+<span class="c1">#             url_egress=key_egress_print_downloading_message_with_size,</span>
+<span class="c1">#             return_func=return_contents,</span>
+<span class="c1">#         )</span>
+<span class="c1">#         return r</span>
+
+<span class="c1">#     @cache_this(cache=None)</span>
+<span class="c1">#     @log_calls</span>
+<span class="c1">#     def raw_data(self):</span>
+<span class="c1">#         df = pd.read_parquet(BytesIO(self._raw_data_bytes))</span>
+<span class="c1">#         if self.drop_duplicates:</span>
+<span class="c1">#             n_rows_before = len(df)</span>
+<span class="c1">#             self.log(f&quot;Dropping duplicate nameWithOwner (github stub)...&quot;)</span>
+<span class="c1">#             df = df.drop_duplicates(subset=[&#39;nameWithOwner&#39;])</span>
+<span class="c1">#             n_rows_after = len(df)</span>
+<span class="c1">#             self.log(f&quot;... Dropped {n_rows_before - n_rows_after} duplicates&quot;)</span>
+<span class="c1">#         assert df.nameWithOwner.is_unique, f&quot;Duplicate nameWithOwner in df&quot;</span>
+<span class="c1">#         df = df.set_index(&quot;nameWithOwner&quot;, drop=False)</span>
+<span class="c1">#         return df</span>
+
+<span class="c1">#     @property</span>
+<span class="c1">#     def text_segments(self):</span>
+<span class="c1">#         return self.raw_data[self.text_segments_column]</span>
+
+<span class="c1">#     @property</span>
+<span class="c1">#     def embeddings(self):</span>
+<span class="c1">#         return self.raw_data[self.embeddings_column]</span>
+
+<span class="c1">#     @property</span>
+<span class="c1">#     def embeddings_matrix(self):</span>
+<span class="c1">#         # Note: NOT the same as self.embeddings.to_numpy()!!</span>
+<span class="c1">#         return np.array(self.embeddings.to_list())</span>
+
+<span class="c1">#     segment_vectors = embeddings  # alias</span>
+
+<span class="c1">#     @cache_this(cache=&#39;cache&#39;, key=add_extension(&#39;.parquet&#39;))</span>
+<span class="c1">#     @log_calls</span>
+<span class="c1">#     def planar_embeddings(self):</span>
+<span class="c1">#         self.log(</span>
+<span class="c1">#             &quot;Computing and saving planar embeddings with {self.planar_embeddings_func}&quot;</span>
+<span class="c1">#         )</span>
+<span class="c1">#         r = planar_embeddings_dict_to_df(planar_embeddings(self.segment_vectors))</span>
+<span class="c1">#         return r</span>
+
+<span class="c1">#     def data_with_planar_embeddings(self):</span>
+<span class="c1">#         # join self.raw_data with self.planar_embeddings over the indices</span>
+<span class="c1">#         return pd.merge(</span>
+<span class="c1">#             self.raw_data, self.planar_embeddings, left_index=True, right_index=True</span>
+<span class="c1">#         )</span>
+
+<span class="c1">#     @cache_this(cache=&#39;cache&#39;, key=add_extension(&#39;.parquet&#39;))</span>
+<span class="c1">#     @log_calls</span>
+<span class="c1">#     def cluster_indices(self):</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         Make a dataframe containing kmeans cluster indices for the original embeddings.</span>
+<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         self.log(f&quot;Computing cluster indices for num of clusters: {self.n_clusters}&quot;)</span>
+
+<span class="c1">#         def compute_cluster_indices():</span>
+<span class="c1">#             for n_clusters in self.n_clusters:</span>
+<span class="c1">#                 yield self.mk_cluster_learner(</span>
+<span class="c1">#                     self.embeddings_matrix, n_clusters=n_clusters</span>
+<span class="c1">#                 )</span>
+
+<span class="c1">#         cluster_columns = (</span>
+<span class="c1">#             f&quot;clusters_{n_clusters:02.0f}&quot; for n_clusters in self.n_clusters</span>
+<span class="c1">#         )</span>
+
+<span class="c1">#         r = pd.DataFrame(</span>
+<span class="c1">#             dict(zip(cluster_columns, compute_cluster_indices())),</span>
+<span class="c1">#             index=self.raw_data.index,</span>
+<span class="c1">#         )</span>
+<span class="c1">#         return r</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.github_repos &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed_data_prep.hcp" href="hcp.html" />
+    <link rel="prev" title="imbed_data_prep.eurovis" href="eurovis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embeddings_of_aggregations.html">imbed_data_prep.embeddings_of_aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="epstein_files.html">imbed_data_prep.epstein_files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed_data_prep.github_repos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.github_repos.GithubReposData"><code class="docutils literal notranslate"><span class="pre">GithubReposData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.github_repos.GithubReposData.cluster_indices"><code class="docutils literal notranslate"><span class="pre">GithubReposData.cluster_indices</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.github_repos.GithubReposData.mk_cluster_learner"><code class="docutils literal notranslate"><span class="pre">GithubReposData.mk_cluster_learner()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmsys_ai_conversations.html">imbed_data_prep.lmsys_ai_conversations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcdonalds_reviews.html">imbed_data_prep.mcdonalds_reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.github_repos</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed_data_prep/github_repos.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed_data_prep.github_repos">
+<span id="imbed-data-prep-github-repos"></span><h1>imbed_data_prep.github_repos<a class="headerlink" href="#module-imbed_data_prep.github_repos" title="Link to this heading"></a></h1>
+<p>Data prep for Github Repositories data.</p>
+<p>Data source:
+- [GitHub Public Repository Metadata](<a class="reference external" href="https://www.kaggle.com/datasets/pelmers/github-repository-metadata-with-5-stars?resource=download">https://www.kaggle.com/datasets/pelmers/github-repository-metadata-with-5-stars?resource=download</a>)
+- ([Dropbox link to parquet file](<a class="reference external" href="https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=0">https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=0</a>))</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="imbed_data_prep.github_repos.GithubReposData">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">imbed_data_prep.github_repos.</span></span><span class="sig-name descname"><span class="pre">GithubReposData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">*,</span> <span class="pre">raw_data_src:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1',</span> <span class="pre">cache:</span> <span class="pre">Union[str,</span> <span class="pre">collections.abc.MutableMapping]</span> <span class="pre">=</span> <span class="pre">'/home/runner/.config/imbed/saves/github_repos',</span> <span class="pre">raw_data_local_path:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'/home/runner/.config/imbed/saves/github_repos/github_repos.parquet',</span> <span class="pre">planar_compute_chk_size:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1000,</span> <span class="pre">embeddings_column:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'embedding',</span> <span class="pre">text_segments_column:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'text',</span> <span class="pre">planar_embeddings_func:</span> <span class="pre">Union[Literal['umap',</span> <span class="pre">'ncvis',</span> <span class="pre">'tsne',</span> <span class="pre">'pca'],</span> <span class="pre">collections.abc.Callable[[collections.abc.Iterable[collections.abc.Sequence[float]]],</span> <span class="pre">collections.abc.Iterable[tuple[float,</span> <span class="pre">float]]]]</span> <span class="pre">=</span> <span class="pre">'ncvis',</span> <span class="pre">drop_duplicates:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">n_clusters:</span> <span class="pre">collections.abc.Sequence[int]</span> <span class="pre">=</span> <span class="pre">(5,</span> <span class="pre">8,</span> <span class="pre">13,</span> <span class="pre">21,</span> <span class="pre">34),</span> <span class="pre">mk_cluster_learner:</span> <span class="pre">collections.abc.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">kmeans_cluster_indices</span> <span class="pre">at</span> <span class="pre">0x7efbdca6c360&gt;,</span> <span class="pre">verbose:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/github_repos.html#GithubReposData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.github_repos.GithubReposData" title="Link to this definition"></a></dt>
+<dd><dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.github_repos.GithubReposData.cluster_indices">
+<span class="sig-name descname"><span class="pre">cluster_indices</span></span><a class="headerlink" href="#imbed_data_prep.github_repos.GithubReposData.cluster_indices" title="Link to this definition"></a></dt>
+<dd><p>Make a dataframe containing kmeans cluster indices for the original embeddings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.github_repos.GithubReposData.mk_cluster_learner">
+<span class="sig-name descname"><span class="pre">mk_cluster_learner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">learner_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imbed_data_prep.github_repos.GithubReposData.mk_cluster_learner" title="Link to this definition"></a></dt>
+<dd><p>Cluster data using KMeans or MiniBatchKMeans depending on the input type.</p>
+<p>If <cite>data_src</cite> is a numpy array, uses <cite>KMeans</cite>. If <cite>data_src</cite> is an iterable
+of numpy arrays, uses <cite>MiniBatchKMeans</cite> and processes the batches iteratively.</p>
+<p>Parameters:
+- data_src: A numpy array, an iterable of numpy arrays (batches), or a factory thereof.
+- n_clusters: Number of clusters for KMeans.
+- learner_kwargs: Additional arguments for KMeans or MiniBatchKMeans.</p>
+<p>Returns:
+- <a href="#id1"><span class="problematic" id="id2">labels_</span></a>: Cluster labels for the data.</p>
+<p>Example:
+&gt;&gt;&gt; np.random.seed(0)  # Set seed for reproducibility
+&gt;&gt;&gt; data = np.array([[1, 2], [1, 4], [1, 0], [1, 1], [10, 4], [10, 0]])
+&gt;&gt;&gt; labels = kmeans_cluster_indices(data, n_clusters=2, random_state=42)
+&gt;&gt;&gt; [sorted(data[labels == i].tolist()) for i in np.unique(labels)]
+[[[1, 0], [1, 1], [1, 2], [1, 4]], [[10, 0], [10, 4]]]</p>
+<p>For MiniBatchKMeans case:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Set seed for reproducibility</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_data_batches</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans_cluster_indices</span><span class="p">(</span><span class="n">get_data_batches</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
+<span class="go">[[[1, 0], [1, 1], [1, 2], [1, 4]], [[10, 0], [10, 4]]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="eurovis.html" class="btn btn-neutral float-left" title="imbed_data_prep.eurovis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hcp.html" class="btn btn-neutral float-right" title="imbed_data_prep.hcp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

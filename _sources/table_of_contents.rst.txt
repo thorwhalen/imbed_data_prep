@@ -1,0 +1,20 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/imbed_data_prep
+   module_docs/imbed_data_prep/arxiv
+   module_docs/imbed_data_prep/embeddings_of_aggregations
+   module_docs/imbed_data_prep/epstein_files
+   module_docs/imbed_data_prep/eurovis
+   module_docs/imbed_data_prep/github_repos
+   module_docs/imbed_data_prep/hcp
+   module_docs/imbed_data_prep/jersey_laws
+   module_docs/imbed_data_prep/lmsys_ai_conversations
+   module_docs/imbed_data_prep/mcdonalds_reviews
+   module_docs/imbed_data_prep/prompt_injections
+   module_docs/imbed_data_prep/trump_vs_zelenskyy
+   module_docs/imbed_data_prep/twitter_sentiment
+   module_docs/imbed_data_prep/ultra_chat
+   module_docs/imbed_data_prep/wildchat
+   module_docs/imbed_data_prep/wordnet_words

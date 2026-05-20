@@ -1,0 +1,4 @@
+imbed_data_prep.embeddings_of_aggregations
+==========================================
+.. automodule:: imbed_data_prep.embeddings_of_aggregations
+   :members:

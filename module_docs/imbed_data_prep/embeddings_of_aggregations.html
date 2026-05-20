@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.embeddings_of_aggregations &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed_data_prep.epstein_files" href="epstein_files.html" />
+    <link rel="prev" title="imbed_data_prep.arxiv" href="arxiv.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed_data_prep.embeddings_of_aggregations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.embeddings_of_aggregations.aggregated_embeddings_for_sample"><code class="docutils literal notranslate"><span class="pre">aggregated_embeddings_for_sample()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.embeddings_of_aggregations.get_n_unique_permutations"><code class="docutils literal notranslate"><span class="pre">get_n_unique_permutations()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="epstein_files.html">imbed_data_prep.epstein_files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_repos.html">imbed_data_prep.github_repos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmsys_ai_conversations.html">imbed_data_prep.lmsys_ai_conversations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcdonalds_reviews.html">imbed_data_prep.mcdonalds_reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.embeddings_of_aggregations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed_data_prep/embeddings_of_aggregations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed_data_prep.embeddings_of_aggregations">
+<span id="imbed-data-prep-embeddings-of-aggregations"></span><h1>imbed_data_prep.embeddings_of_aggregations<a class="headerlink" href="#module-imbed_data_prep.embeddings_of_aggregations" title="Link to this heading"></a></h1>
+<p>Tools to analyze the embeddings of aggregations</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.embeddings_of_aggregations.aggregated_embeddings_for_sample">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.embeddings_of_aggregations.</span></span><span class="sig-name descname"><span class="pre">aggregated_embeddings_for_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">graph:</span> <span class="pre">~collections.abc.Mapping[~imbed.util.Node,</span> <span class="pre">list[~imbed.util.Node]],</span> <span class="pre">n_nodes:</span> <span class="pre">int,</span> <span class="pre">n_permutations:</span> <span class="pre">int,</span> <span class="pre">*,</span> <span class="pre">node_to_text:</span> <span class="pre">~collections.abc.Callable[[~imbed.util.Node],</span> <span class="pre">str],</span> <span class="pre">aggregate_texts:</span> <span class="pre">callable</span> <span class="pre">=</span> <span class="pre">&lt;built-in</span> <span class="pre">method</span> <span class="pre">join</span> <span class="pre">of</span> <span class="pre">str</span> <span class="pre">object&gt;,</span> <span class="pre">text_to_embedding:</span> <span class="pre">callable</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">max_permutations:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">100,</span> <span class="pre">seed:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/embeddings_of_aggregations.html#aggregated_embeddings_for_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.embeddings_of_aggregations.aggregated_embeddings_for_sample" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Get a (without replacement) sample of n_nodes items of the citation_graph
+and for each, take n_permutations permutations of the cited_ids,
+aggregate the titles of the cited_ids and compute its embedding.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>graph (dict): The citation graph.
+n_nodes (int): The number of nodes to sample.
+n_permutations (int): The number of permutations to take for each cited_ids list.
+node_to_text (callable): A function that takes a node (ID) and returns the text to embed.
+aggregate_texts (callable): A function that takes a list of texts and returns a single aggregated text.
+text_to_embedding (callable): A function that takes a text and returns an embedding.
+max_permutations (int): The maximum number of permutations to take.
+seed (int): The random seed for reproducibility.</p>
+</dd>
+<dt>Returns:</dt><dd><p>An iterable of dicts with aggregated embeddings for each sample.</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper2&#39;</span><span class="p">,</span> <span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper1&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">node_titles</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 1&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 2&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 3&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 4&#39;</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_permutations</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">aggregated_embeddings_for_sample</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">graph</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_permutations</span><span class="p">,</span> <span class="n">node_to_text</span><span class="o">=</span><span class="n">node_titles</span><span class="o">.</span><span class="n">get</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">text_to_embedding</span><span class="o">=</span><span class="n">simple_semantic_features</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
+<span class="gp">... </span><span class="p">))</span>
+<span class="go">[{&#39;citing_id&#39;: &#39;paper2&#39;,</span>
+<span class="go">&#39;permutation_index&#39;: 0,</span>
+<span class="go">&#39;aggregated_title&#39;: &#39;Title of Paper 2</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="simple">
+<dt>Title of Paper 3’,</dt><dd><p>‘embedding’: (8, 26, 0)},
+{‘citing_id’: ‘paper1’,
+‘permutation_index’: 0,
+‘aggregated_title’: ‘Title of Paper 1</p>
+</dd>
+</dl>
+<p>Title of Paper 2</p>
+<dl class="simple">
+<dt>Title of Paper 3’,</dt><dd><p>‘embedding’: (12, 39, 0)},
+{‘citing_id’: ‘paper1’,
+‘permutation_index’: 1,
+‘aggregated_title’: ‘Title of Paper 1</p>
+</dd>
+</dl>
+<p>Title of Paper 3</p>
+<dl class="simple">
+<dt>Title of Paper 2’,</dt><dd><p>‘embedding’: (12, 39, 0)}]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.embeddings_of_aggregations.get_n_unique_permutations">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.embeddings_of_aggregations.</span></span><span class="sig-name descname"><span class="pre">get_n_unique_permutations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/embeddings_of_aggregations.html#get_n_unique_permutations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.embeddings_of_aggregations.get_n_unique_permutations" title="Link to this definition"></a></dt>
+<dd><p>Get n unique permutations of an array, with a random seed fixed, and
+raise an error if n is larger than the number of possible permutations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>list</em>) – The list to permute.</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – The number of unique permutations to generate.</p></li>
+<li><p><strong>seed</strong> (<em>int</em>) – The random seed for reproducibility.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of unique permutations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If n is larger than the number of possible permutations.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>The exact permutations selected/ordered depend on the RNG, which is
+not stable across Python/NumPy versions, so these examples are not
+run as doctests (see test_get_n_unique_permutations for a stable,
+contract-based check).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_n_unique_permutations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">[(3, 2, 1), (3, 1, 2)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_n_unique_permutations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">[(3, 2, 1), (3, 1, 2)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_n_unique_permutations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">[(2, 3, 1), (1, 3, 2)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_n_unique_permutations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">6</span><span class="p">)</span>
+<span class="go">[(1, 3, 2), (1, 2, 3), (2, 1, 3), (3, 2, 1), (3, 1, 2), (2, 3, 1)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_n_unique_permutations</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="mi">7</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">n (=7) is larger than the number of possible permutations: 6</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="arxiv.html" class="btn btn-neutral float-left" title="imbed_data_prep.arxiv" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="epstein_files.html" class="btn btn-neutral float-right" title="imbed_data_prep.epstein_files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

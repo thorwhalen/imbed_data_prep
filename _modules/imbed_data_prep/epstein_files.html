@@ -1,0 +1,1178 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.epstein_files &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/embeddings_of_aggregations.html">imbed_data_prep.embeddings_of_aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/epstein_files.html">imbed_data_prep.epstein_files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/github_repos.html">imbed_data_prep.github_repos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/lmsys_ai_conversations.html">imbed_data_prep.lmsys_ai_conversations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/mcdonalds_reviews.html">imbed_data_prep.mcdonalds_reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed_data_prep/wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.epstein_files</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed_data_prep.epstein_files</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Epstein Files Data Preparation Module.</span>
+
+<span class="sd">This module provides tools for acquiring, normalizing, and preparing graph data</span>
+<span class="sd">from the Epstein document corpus for visualization and analysis.</span>
+
+<span class="sd">Data Source</span>
+<span class="sd">-----------</span>
+<span class="sd">The data originates from the Jeffrey Epstein case legal documents released by</span>
+<span class="sd">the House Oversight Committee. This module sources data from a SQLite database</span>
+<span class="sd">in the GitHub project:</span>
+
+<span class="sd">    https://github.com/maxandrews/Epstein-doc-explorer</span>
+
+<span class="sd">The project&#39;s document_analysis.db contains AI-extracted entities, relationships,</span>
+<span class="sd">and semantic tags from ~25,000 legal documents. The original document corpus was</span>
+<span class="sd">sourced from:</span>
+
+<span class="sd">    https://huggingface.co/datasets/tensonaut/EPSTEIN_FILES_20K/tree/main</span>
+
+<span class="sd">At the time of writing, processed documents are also available at:</span>
+
+<span class="sd">    https://drive.google.com/drive/folders/1ldncvdqIf6miiskDp_EDuGSDAaI_fJx8</span>
+
+<span class="sd">Database Structure</span>
+<span class="sd">------------------</span>
+<span class="sd">The source SQLite database contains these main tables:</span>
+
+<span class="sd">- **documents**: Document metadata, AI-generated summaries, categories, content</span>
+<span class="sd">  tags, date ranges, and full text (~25K documents)</span>
+<span class="sd">- **rdf_triples**: Extracted relationships as subject-action-object triples with</span>
+<span class="sd">  context (location, timestamp), classifications (actor type, tags, topics),</span>
+<span class="sd">  and cluster assignments (~107K triples)</span>
+<span class="sd">- **entity_aliases**: Deduplication mappings from variant names to canonical</span>
+<span class="sd">  forms (e.g., &quot;Jeff Epstein&quot; → &quot;Jeffrey Epstein&quot;) with LLM-generated reasoning</span>
+<span class="sd">- **canonical_entities**: Unique entity names with hop distance from Jeffrey</span>
+<span class="sd">  Epstein (the &quot;principal&quot; entity)</span>
+<span class="sd">- **tag_embeddings**: Vector embeddings for ~30K unique tags extracted from</span>
+<span class="sd">  triples, using a 32-dimensional model</span>
+
+<span class="sd">Key Functions</span>
+<span class="sd">-------------</span>
+<span class="sd">- acquire_epstein_data: Download and export SQLite data to parquet files</span>
+<span class="sd">- prepare_entity_graph_data: Entity network (people/orgs as nodes)</span>
+<span class="sd">- prepare_document_graph_data: Document network (docs as nodes)</span>
+<span class="sd">- prepare_tag_graph_data: Tag/topic network (tags as nodes)</span>
+
+<span class="sd">All prep functions support caching via the @cached_graph_prep decorator.</span>
+
+<span class="sd">Example</span>
+<span class="sd">-------</span>
+<span class="sd">&gt;&gt;&gt; from imbed_data_prep.epstein_files import acquire_epstein_data, prepare_entity_graph_data  # doctest: +SKIP</span>
+<span class="sd">&gt;&gt;&gt; data_dir = acquire_epstein_data()  # downloads and exports to parquet  # doctest: +SKIP</span>
+<span class="sd">&gt;&gt;&gt; graph = prepare_entity_graph_data(data_dir)  # doctest: +SKIP</span>
+<span class="sd">&gt;&gt;&gt; graph[&#39;points&#39;]  # entity nodes with degree and hop distance  # doctest: +SKIP</span>
+<span class="sd">&gt;&gt;&gt; graph[&#39;links&#39;]   # relationship edges between entities  # doctest: +SKIP</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabled.coerce</span><span class="w"> </span><span class="kn">import</span> <span class="n">coerce_json_columns</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Common utilities</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+
+<div class="viewcode-block" id="cached_graph_prep">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/epstein_files.html#imbed_data_prep.epstein_files.cached_graph_prep">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">cached_graph_prep</span><span class="p">(</span><span class="n">cache_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Decorator to cache graph prep functions to a tables store.</span>
+
+<span class="sd">    The decorated function gains `tables` and `force_recompute` parameters.</span>
+<span class="sd">    If `tables` is provided and cache exists, returns cached data.</span>
+<span class="sd">    Otherwise computes, caches (if tables provided), and returns.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cache_name : str</span>
+<span class="sd">        Base name for cache files (e.g., &#39;entity_graph&#39; creates</span>
+<span class="sd">        &#39;prepped/{cache_name}_points&#39; and &#39;prepped/{cache_name}_links&#39;)</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; @cached_graph_prep(&#39;entity_graph&#39;)  # doctest: +SKIP</span>
+<span class="sd">    ... def prepare_entity_graph_data(data_dir=None, ...):</span>
+<span class="sd">    ...     ...</span>
+<span class="sd">    ...     return {&#39;points&#39;: points_df, &#39;links&#39;: links_df}</span>
+<span class="sd">    ...</span>
+<span class="sd">    &gt;&gt;&gt; # First call computes and caches:</span>
+<span class="sd">    &gt;&gt;&gt; data = prepare_entity_graph_data(data_dir=path, tables=tables)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; # Second call loads from cache:</span>
+<span class="sd">    &gt;&gt;&gt; data = prepare_entity_graph_data(data_dir=path, tables=tables)  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; # Force recompute:</span>
+<span class="sd">    &gt;&gt;&gt; data = prepare_entity_graph_data(data_dir=path, tables=tables, force_recompute=True)  # doctest: +SKIP</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">tables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">force_recompute</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">points_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;prepped/</span><span class="si">{</span><span class="n">cache_name</span><span class="si">}</span><span class="s1">_points&#39;</span>
+            <span class="n">links_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;prepped/</span><span class="si">{</span><span class="n">cache_name</span><span class="si">}</span><span class="s1">_links&#39;</span>
+
+            <span class="c1"># Check cache (if tables provided and not forcing recompute)</span>
+            <span class="k">if</span> <span class="n">tables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">force_recompute</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">points_key</span> <span class="ow">in</span> <span class="n">tables</span> <span class="ow">and</span> <span class="n">links_key</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="p">{</span>
+                            <span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="n">tables</span><span class="p">[</span><span class="n">points_key</span><span class="p">],</span>
+                            <span class="s1">&#39;links&#39;</span><span class="p">:</span> <span class="n">tables</span><span class="p">[</span><span class="n">links_key</span><span class="p">],</span>
+                        <span class="p">}</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c1"># Cache miss or error, proceed to compute</span>
+
+            <span class="c1"># Compute (pass through tables for input data loading if function uses it)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="c1"># Save to cache if tables provided</span>
+            <span class="k">if</span> <span class="n">tables</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">tables</span><span class="p">[</span><span class="n">points_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span>
+                <span class="n">tables</span><span class="p">[</span><span class="n">links_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="n">result</span>
+
+        <span class="c1"># Expose cache info on wrapper</span>
+        <span class="n">wrapper</span><span class="o">.</span><span class="n">_cache_name</span> <span class="o">=</span> <span class="n">cache_name</span>
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a logging function based on verbosity setting.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="p">(</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Data normalization configuration</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="c1"># Known columns that contain JSON list strings in the Epstein data</span>
+<span class="n">EPSTEIN_JSON_LIST_COLUMNS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;documents&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;content_tags&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;rdf_triples&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;triple_tags&#39;</span><span class="p">,</span> <span class="s1">&#39;top_cluster_ids&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;relationships_edges&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;triple_tags&#39;</span><span class="p">,</span> <span class="s1">&#39;top_cluster_ids&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;tag_embeddings&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;embedding&#39;</span><span class="p">],</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="normalize_epstein_tables">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/epstein_files.html#imbed_data_prep.epstein_files.normalize_epstein_tables">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">normalize_epstein_tables</span><span class="p">(</span>
+    <span class="n">tables</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">save_to_store</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Normalize Epstein data tables by coercing JSON string columns to lists.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tables : dict[str, pd.DataFrame]</span>
+<span class="sd">        Dictionary of table name -&gt; DataFrame.</span>
+<span class="sd">    save_to_store : MutableMapping or None</span>
+<span class="sd">        If provided, save the normalized tables back to this store.</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        If True, print which columns were transformed.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict[str, pd.DataFrame]</span>
+<span class="sd">        Normalized tables.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">clog</span> <span class="o">=</span> <span class="n">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Normalizing tables (coercing JSON string columns)...&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">tables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># Get columns to coerce for this table (if known)</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">EPSTEIN_JSON_LIST_COLUMNS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">coerce_json_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+        <span class="n">result</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+
+        <span class="k">if</span> <span class="n">save_to_store</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">save_to_store</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Done normalizing.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_load_tables</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">table_names</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load parquet tables from a directory.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_dir : Path or str or None</span>
+<span class="sd">        Directory containing parquet files. If None, uses default imbed saves.</span>
+<span class="sd">    table_names : list of str</span>
+<span class="sd">        Names of tables to load (without .parquet extension).</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Whether to print progress messages.</span>
+<span class="sd">    normalize : bool</span>
+<span class="sd">        If True, coerce known JSON string columns to actual lists.</span>
+<span class="sd">        This is mainly for backward compatibility with older parquet files</span>
+<span class="sd">        that weren&#39;t normalized during acquisition. Files created by</span>
+<span class="sd">        acquire_epstein_data(normalize=True) are already normalized.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict[str, pd.DataFrame]</span>
+<span class="sd">        Loaded tables keyed by name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+    <span class="n">clog</span> <span class="o">=</span> <span class="n">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">DFLT_SAVES_DIR</span><span class="p">,</span> <span class="n">process_path</span>
+        <span class="n">data_dir</span> <span class="o">=</span> <span class="n">process_path</span><span class="p">(</span><span class="n">DFLT_SAVES_DIR</span><span class="p">,</span> <span class="s1">&#39;epstein_files&#39;</span><span class="p">)</span>
+    <span class="n">data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+
+    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reading parquet files from </span><span class="si">{</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">tables</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">table_names</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">data_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.parquet&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Normalize JSON string columns if requested</span>
+        <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+            <span class="n">columns</span> <span class="o">=</span> <span class="n">EPSTEIN_JSON_LIST_COLUMNS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">columns</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">coerce_json_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">tables</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span>
+
+    <span class="k">return</span> <span class="n">tables</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_resolve_aliases</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">alias_map</span><span class="p">,</span> <span class="n">src_col</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">tgt_col</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Apply alias resolution to source and target columns of an edges DataFrame.</span>
+
+<span class="sd">    Returns a copy with resolved names.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">edges</span><span class="p">[</span><span class="n">src_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">src_col</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">alias_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+    <span class="n">edges</span><span class="p">[</span><span class="n">tgt_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">edges</span><span class="p">[</span><span class="n">tgt_col</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">alias_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">edges</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_compute_degree_counts</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">src_col</span><span class="o">=</span><span class="s1">&#39;source&#39;</span><span class="p">,</span> <span class="n">tgt_col</span><span class="o">=</span><span class="s1">&#39;target&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute degree counts for nodes from an edges DataFrame.&quot;&quot;&quot;</span>
+    <span class="n">degree</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">src</span><span class="p">,</span> <span class="n">tgt</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">src_col</span><span class="p">],</span> <span class="n">edges</span><span class="p">[</span><span class="n">tgt_col</span><span class="p">]):</span>
+        <span class="n">degree</span><span class="p">[</span><span class="n">src</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">degree</span><span class="p">[</span><span class="n">tgt</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">degree</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_deduplicate_edges</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">src_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Collapse multiple edges between same (source, target) into one with weight.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">clog</span> <span class="o">=</span> <span class="n">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Deduplicating edges...&quot;</span><span class="p">)</span>
+
+    <span class="n">metadata_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="n">src_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">)]</span>
+    <span class="n">deduped</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">edges</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">src_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">],</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">agg</span><span class="p">(</span>
+            <span class="n">weight</span><span class="o">=</span><span class="p">(</span><span class="n">src_col</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">),</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="s1">&#39;first&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">metadata_cols</span><span class="p">},</span>
+        <span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">deduped</span><span class="p">)</span><span class="si">}</span><span class="s2"> unique directed edges&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">deduped</span>
+
+
+<div class="viewcode-block" id="acquire_epstein_data">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/epstein_files.html#imbed_data_prep.epstein_files.acquire_epstein_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">acquire_epstein_data</span><span class="p">(</span>
+    <span class="n">out_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">sqlite_db_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">export_relationships</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">return_dataframes</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Path</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="s2">&quot;pd.DataFrame&quot;</span><span class="p">],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Path</span><span class="p">]]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Download (if needed) the Epstein document SQLite DB, read it with DuckDB,</span>
+<span class="sd">    and export all tables to Parquet files and/or return as DataFrames.</span>
+
+<span class="sd">    This function handles the full data acquisition pipeline: downloading the</span>
+<span class="sd">    SQLite database from GitHub (if not provided), exporting all tables to</span>
+<span class="sd">    parquet format, optionally normalizing JSON string columns, and creating</span>
+<span class="sd">    a convenient relationships_edges view.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    out_dir : str or Path or None</span>
+<span class="sd">        Output directory for parquet files. Defaults to:</span>
+<span class="sd">        ~/Downloads/epstein_doc_explorer_parquet</span>
+<span class="sd">        If None and return_dataframes=True, no files are saved.</span>
+<span class="sd">    sqlite_db_file : str or Path or None</span>
+<span class="sd">        Path to the SQLite database file. If None, the DB is downloaded</span>
+<span class="sd">        to a temporary file from the official GitHub source.</span>
+<span class="sd">    export_relationships : bool</span>
+<span class="sd">        Whether to create the extra relationships_edges.parquet file.</span>
+<span class="sd">        This is a convenient view of rdf_triples with renamed columns</span>
+<span class="sd">        (actor→source) for graph processing.</span>
+<span class="sd">    normalize : bool</span>
+<span class="sd">        If True, coerce known JSON string columns (like content_tags,</span>
+<span class="sd">        triple_tags, embedding) to actual Python lists before saving.</span>
+<span class="sd">        This makes the parquet files ready to use without post-processing.</span>
+<span class="sd">    return_dataframes : bool</span>
+<span class="sd">        If True, return (dataframes_dict, out_dir_path).</span>
+<span class="sd">        If False, return just out_dir_path (original behavior).</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Controls printing of progress messages.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Union[Path, tuple[Dict[str, pd.DataFrame], Optional[Path]]]</span>
+<span class="sd">        If return_dataframes=False: Path to output directory</span>
+<span class="sd">        If return_dataframes=True: (dataframes_dict, output_directory_or_none)</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    The source SQLite database is cached locally using the graze library,</span>
+<span class="sd">    so subsequent calls won&#39;t re-download unless the cache is cleared.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">tabled.sqlite_tools</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+        <span class="n">export_sqlite_to_parquet</span><span class="p">,</span>
+        <span class="n">export_sqlite_to_dataframes_and_parquet</span><span class="p">,</span>
+        <span class="n">export_sqlite_query_to_parquet</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">clog</span> <span class="o">=</span> <span class="n">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="n">DEFAULT_DB_URL</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;https://github.com/maxandrews/Epstein-doc-explorer/&quot;</span>
+        <span class="s2">&quot;raw/refs/heads/main/document_analysis.db&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Resolve output directory</span>
+    <span class="k">if</span> <span class="n">out_dir</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">return_dataframes</span><span class="p">:</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;Downloads&quot;</span> <span class="o">/</span> <span class="s2">&quot;epstein_doc_explorer_parquet&quot;</span>
+    <span class="k">elif</span> <span class="n">out_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">out_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">out_dir</span><span class="p">)</span>
+
+    <span class="c1"># Handle SQLite DB acquisition</span>
+    <span class="k">if</span> <span class="n">sqlite_db_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Note: Cached download using graze</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">graze</span>  <span class="c1"># pip install graze</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">print_and_return</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+            <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Downloading Epstein DB from </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">url</span>
+
+        <span class="n">sqlite_db_file</span> <span class="o">=</span> <span class="n">graze</span><span class="o">.</span><span class="n">graze</span><span class="p">(</span>
+            <span class="n">DEFAULT_DB_URL</span><span class="p">,</span>
+            <span class="n">return_filepaths</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">key_ingress</span><span class="o">=</span><span class="n">print_and_return</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sqlite_db_file</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sqlite_db_file</span><span class="p">)</span>
+
+    <span class="c1"># Choose the appropriate export method based on requirements</span>
+    <span class="k">if</span> <span class="n">return_dataframes</span><span class="p">:</span>
+        <span class="c1"># Get both DataFrames and optionally save to Parquet</span>
+        <span class="n">dataframes</span><span class="p">,</span> <span class="n">final_out_dir</span> <span class="o">=</span> <span class="n">export_sqlite_to_dataframes_and_parquet</span><span class="p">(</span>
+            <span class="n">sqlite_db_file</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Normalize JSON string columns if requested</span>
+        <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+            <span class="n">dataframes</span> <span class="o">=</span> <span class="n">normalize_epstein_tables</span><span class="p">(</span>
+                <span class="n">dataframes</span><span class="p">,</span> <span class="n">save_to_store</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+            <span class="p">)</span>
+            <span class="c1"># Re-save normalized tables to parquet if we have an output directory</span>
+            <span class="k">if</span> <span class="n">final_out_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">dataframes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">EPSTEIN_JSON_LIST_COLUMNS</span><span class="p">:</span>
+                        <span class="n">parquet_path</span> <span class="o">=</span> <span class="n">final_out_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.parquet&quot;</span>
+                        <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Re-saving normalized </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">parquet_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">parquet_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zstd&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Add custom relationships edge list if requested</span>
+        <span class="k">if</span> <span class="n">export_relationships</span><span class="p">:</span>
+            <span class="n">relationships_query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                SELECT </span>
+<span class="s2">                    actor AS source,</span>
+<span class="s2">                    target AS target,</span>
+<span class="s2">                    action AS action,</span>
+<span class="s2">                    timestamp,</span>
+<span class="s2">                    location,</span>
+<span class="s2">                    doc_id,</span>
+<span class="s2">                    sequence_order,</span>
+<span class="s2">                    actor_likely_type,</span>
+<span class="s2">                    triple_tags,</span>
+<span class="s2">                    explicit_topic,</span>
+<span class="s2">                    implicit_topic,</span>
+<span class="s2">                    top_cluster_ids</span>
+<span class="s2">                FROM </span><span class="si">{schema}</span><span class="s2">.rdf_triples</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+
+            <span class="c1"># Import duckdb for this custom query</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">duckdb</span>
+
+            <span class="n">con</span> <span class="o">=</span> <span class="n">duckdb</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;LOAD sqlite_scanner;&quot;</span><span class="p">)</span>
+                <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ATTACH &#39;</span><span class="si">{</span><span class="n">sqlite_db_file</span><span class="si">}</span><span class="s2">&#39; AS src (TYPE sqlite);&quot;</span><span class="p">)</span>
+
+                <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Creating relationships edge DataFrame...&quot;</span><span class="p">)</span>
+                <span class="n">relationships_df</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                    <span class="n">relationships_query</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">schema</span><span class="o">=</span><span class="s2">&quot;src&quot;</span><span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">df</span><span class="p">()</span>
+
+                <span class="c1"># Normalize relationships_edges if requested</span>
+                <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+                    <span class="n">rel_cols</span> <span class="o">=</span> <span class="n">EPSTEIN_JSON_LIST_COLUMNS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">rel_cols</span><span class="p">:</span>
+                        <span class="n">relationships_df</span> <span class="o">=</span> <span class="n">coerce_json_columns</span><span class="p">(</span>
+                            <span class="n">relationships_df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">rel_cols</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+                        <span class="p">)</span>
+
+                <span class="n">dataframes</span><span class="p">[</span><span class="s2">&quot;relationships_edges&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">relationships_df</span>
+
+                <span class="c1"># Also save to parquet if we have an output directory</span>
+                <span class="k">if</span> <span class="n">final_out_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">relationships_path</span> <span class="o">=</span> <span class="n">final_out_dir</span> <span class="o">/</span> <span class="s2">&quot;relationships_edges.parquet&quot;</span>
+                    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving relationships_edges -&gt; </span><span class="si">{</span><span class="n">relationships_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">relationships_df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">relationships_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zstd&quot;</span><span class="p">)</span>
+
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+        <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dataframes</span><span class="p">,</span> <span class="n">final_out_dir</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Original behavior: just save to Parquet</span>
+        <span class="n">final_out_dir</span> <span class="o">=</span> <span class="n">export_sqlite_to_parquet</span><span class="p">(</span>
+            <span class="n">sqlite_db_file</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Normalize JSON string columns if requested</span>
+        <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+            <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Normalizing JSON string columns...&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">table_name</span><span class="p">,</span> <span class="n">columns</span> <span class="ow">in</span> <span class="n">EPSTEIN_JSON_LIST_COLUMNS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">parquet_path</span> <span class="o">=</span> <span class="n">final_out_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2">.parquet&quot;</span>
+                <span class="k">if</span> <span class="n">parquet_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">parquet_path</span><span class="p">)</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">coerce_json_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+                    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Re-saving normalized </span><span class="si">{</span><span class="n">table_name</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">parquet_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">parquet_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zstd&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Add custom relationships edge list if requested</span>
+        <span class="k">if</span> <span class="n">export_relationships</span><span class="p">:</span>
+            <span class="n">relationships_path</span> <span class="o">=</span> <span class="n">final_out_dir</span> <span class="o">/</span> <span class="s2">&quot;relationships_edges.parquet&quot;</span>
+            <span class="n">relationships_query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                SELECT </span>
+<span class="s2">                    actor AS source,</span>
+<span class="s2">                    target AS target,</span>
+<span class="s2">                    action AS action,</span>
+<span class="s2">                    timestamp,</span>
+<span class="s2">                    location,</span>
+<span class="s2">                    doc_id,</span>
+<span class="s2">                    sequence_order,</span>
+<span class="s2">                    actor_likely_type,</span>
+<span class="s2">                    triple_tags,</span>
+<span class="s2">                    explicit_topic,</span>
+<span class="s2">                    implicit_topic,</span>
+<span class="s2">                    top_cluster_ids</span>
+<span class="s2">                FROM </span><span class="si">{schema}</span><span class="s2">.rdf_triples</span>
+<span class="s2">            &quot;&quot;&quot;</span>
+
+            <span class="kn">from</span><span class="w"> </span><span class="nn">tabled.sqlite_tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_sqlite_query_to_parquet</span>
+
+            <span class="n">export_sqlite_query_to_parquet</span><span class="p">(</span>
+                <span class="n">sqlite_db_file</span><span class="p">,</span>
+                <span class="n">relationships_path</span><span class="p">,</span>
+                <span class="n">query</span><span class="o">=</span><span class="n">relationships_query</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Normalize relationships_edges if requested</span>
+            <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+                <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+                <span class="n">rel_cols</span> <span class="o">=</span> <span class="n">EPSTEIN_JSON_LIST_COLUMNS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">rel_cols</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">relationships_path</span><span class="p">)</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">coerce_json_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">rel_cols</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+                    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Re-saving normalized relationships_edges -&gt; </span><span class="si">{</span><span class="n">relationships_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">relationships_path</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zstd&quot;</span><span class="p">)</span>
+
+        <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Done. Output folder: </span><span class="si">{</span><span class="n">final_out_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">final_out_dir</span></div>
+
+
+
+<div class="viewcode-block" id="prepare_entity_graph_data">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/epstein_files.html#imbed_data_prep.epstein_files.prepare_entity_graph_data">[docs]</a>
+<span class="nd">@cached_graph_prep</span><span class="p">(</span><span class="s1">&#39;entity_graph&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_entity_graph_data</span><span class="p">(</span>
+    <span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">source_tables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">deduplicate_edges</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">include_extended_info</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepare entity-based graph data where nodes are people/entities and edges</span>
+<span class="sd">    are relationships between them.</span>
+
+<span class="sd">    This resolves entity aliases (so &quot;Jeff Epstein&quot; -&gt; &quot;Jeffrey Epstein&quot;),</span>
+<span class="sd">    builds a nodes DataFrame with degree counts and hop distance from</span>
+<span class="sd">    Jeffrey Epstein, and returns cleaned edges.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_dir : str or Path or None</span>
+<span class="sd">        Directory containing the parquet files. If None, uses the default</span>
+<span class="sd">        imbed saves location. Ignored if ``source_tables`` is provided.</span>
+<span class="sd">    source_tables : dict[str, pd.DataFrame] or None</span>
+<span class="sd">        Pre-loaded DataFrames keyed by table name. Expected keys:</span>
+<span class="sd">        &#39;relationships_edges&#39; (or &#39;rdf_triples&#39;), &#39;entity_aliases&#39;,</span>
+<span class="sd">        &#39;canonical_entities&#39;. If None, tables are read from ``data_dir``.</span>
+<span class="sd">    deduplicate_edges : bool</span>
+<span class="sd">        If True, collapse multiple edges between the same (source, target)</span>
+<span class="sd">        pair into one row and add a ``weight`` column with the count.</span>
+<span class="sd">    include_extended_info : bool</span>
+<span class="sd">        If True, include additional columns in points: in_degree, out_degree,</span>
+<span class="sd">        doc_count (number of unique documents mentioning entity).</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Controls printing of progress messages.</span>
+<span class="sd">    tables : MutableMapping or None</span>
+<span class="sd">        (Added by @cached_graph_prep) Cache store for saving/loading results.</span>
+<span class="sd">        If provided and cache exists, returns cached data instead of recomputing.</span>
+<span class="sd">    force_recompute : bool</span>
+<span class="sd">        (Added by @cached_graph_prep) If True, recompute even if cache exists.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict with keys:</span>
+<span class="sd">        &#39;points&#39; : pd.DataFrame</span>
+<span class="sd">            Columns: canonical_name, degree, hop_distance</span>
+<span class="sd">            (plus in_degree, out_degree, doc_count if include_extended_info)</span>
+<span class="sd">        &#39;links&#39; : pd.DataFrame</span>
+<span class="sd">            Columns: source, target, action, [weight], plus original metadata</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+    <span class="n">clog</span> <span class="o">=</span> <span class="n">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="c1"># ---- Load tables --------------------------------------------------------</span>
+    <span class="k">if</span> <span class="n">source_tables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loaded</span> <span class="o">=</span> <span class="n">_load_tables</span><span class="p">(</span>
+            <span class="n">data_dir</span><span class="p">,</span>
+            <span class="p">[</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">,</span> <span class="s1">&#39;entity_aliases&#39;</span><span class="p">,</span> <span class="s1">&#39;canonical_entities&#39;</span><span class="p">],</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">loaded</span><span class="p">[</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">]</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="n">loaded</span><span class="p">[</span><span class="s1">&#39;entity_aliases&#39;</span><span class="p">]</span>
+        <span class="n">entities</span> <span class="o">=</span> <span class="n">loaded</span><span class="p">[</span><span class="s1">&#39;canonical_entities&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">,</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rdf_triples&#39;</span><span class="p">))</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="n">source_tables</span><span class="p">[</span><span class="s1">&#39;entity_aliases&#39;</span><span class="p">]</span>
+        <span class="n">entities</span> <span class="o">=</span> <span class="n">source_tables</span><span class="p">[</span><span class="s1">&#39;canonical_entities&#39;</span><span class="p">]</span>
+
+    <span class="c1"># ---- Resolve aliases ----------------------------------------------------</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Resolving entity aliases...&quot;</span><span class="p">)</span>
+    <span class="n">alias_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;original_name&#39;</span><span class="p">],</span> <span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;canonical_name&#39;</span><span class="p">]))</span>
+
+    <span class="n">src_col</span> <span class="o">=</span> <span class="s1">&#39;source&#39;</span> <span class="k">if</span> <span class="s1">&#39;source&#39;</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">columns</span> <span class="k">else</span> <span class="s1">&#39;actor&#39;</span>
+    <span class="n">tgt_col</span> <span class="o">=</span> <span class="s1">&#39;target&#39;</span>
+
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">_resolve_aliases</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">alias_map</span><span class="p">,</span> <span class="n">src_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">)</span>
+
+    <span class="c1"># ---- Deduplicate edges (optionally) ------------------------------------</span>
+    <span class="k">if</span> <span class="n">deduplicate_edges</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">_deduplicate_edges</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">src_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="c1"># ---- Build nodes -------------------------------------------------------</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Building nodes...&quot;</span><span class="p">)</span>
+
+    <span class="n">hop_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="nb">zip</span><span class="p">(</span><span class="n">entities</span><span class="p">[</span><span class="s1">&#39;canonical_name&#39;</span><span class="p">],</span> <span class="n">entities</span><span class="p">[</span><span class="s1">&#39;hop_distance_from_principal&#39;</span><span class="p">])</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">include_extended_info</span><span class="p">:</span>
+        <span class="c1"># Compute in/out degree and doc counts</span>
+        <span class="n">in_degree</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">tgt_col</span><span class="p">])</span>
+        <span class="n">out_degree</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">edges</span><span class="p">[</span><span class="n">src_col</span><span class="p">])</span>
+        <span class="n">all_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">in_degree</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span><span class="n">out_degree</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="c1"># Count unique documents per entity</span>
+        <span class="n">doc_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;doc_id&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">doc_id</span><span class="p">:</span>
+                <span class="n">doc_counts</span><span class="p">[(</span><span class="n">row</span><span class="p">[</span><span class="n">src_col</span><span class="p">],</span> <span class="n">doc_id</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">doc_counts</span><span class="p">[(</span><span class="n">row</span><span class="p">[</span><span class="n">tgt_col</span><span class="p">],</span> <span class="n">doc_id</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">entity_doc_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">doc_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">entity_doc_count</span><span class="p">[</span><span class="n">entity</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">points</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;canonical_name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="n">in_degree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">out_degree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="s1">&#39;in_degree&#39;</span><span class="p">:</span> <span class="n">in_degree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="s1">&#39;out_degree&#39;</span><span class="p">:</span> <span class="n">out_degree</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="s1">&#39;hop_distance&#39;</span><span class="p">:</span> <span class="n">hop_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+                <span class="s1">&#39;doc_count&#39;</span><span class="p">:</span> <span class="n">entity_doc_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">all_names</span>
+        <span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">degree</span> <span class="o">=</span> <span class="n">_compute_degree_counts</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">src_col</span><span class="p">,</span> <span class="n">tgt_col</span><span class="p">)</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+            <span class="p">{</span>
+                <span class="s1">&#39;canonical_name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;degree&#39;</span><span class="p">:</span> <span class="n">deg</span><span class="p">,</span>
+                <span class="s1">&#39;hop_distance&#39;</span><span class="p">:</span> <span class="n">hop_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">),</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">deg</span> <span class="ow">in</span> <span class="n">degree</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">])</span>
+
+    <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;degree&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">n_with_hop</span> <span class="o">=</span> <span class="n">points</span><span class="p">[</span><span class="s1">&#39;hop_distance&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">clog</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2"> nodes &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">n_with_hop</span><span class="si">}</span><span class="s2"> with hop distance, &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n_with_hop</span><span class="si">}</span><span class="s2"> without)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># ---- Rename edge columns for consistency --------------------------------</span>
+    <span class="k">if</span> <span class="n">src_col</span> <span class="o">==</span> <span class="s1">&#39;actor&#39;</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;actor&#39;</span><span class="p">:</span> <span class="s1">&#39;source&#39;</span><span class="p">})</span>
+
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="n">points</span><span class="p">,</span> <span class="s1">&#39;links&#39;</span><span class="p">:</span> <span class="n">edges</span><span class="p">}</span></div>
+
+
+
+<span class="c1"># Backward compatibility alias</span>
+<span class="n">prepare_cosmograph_data</span> <span class="o">=</span> <span class="n">prepare_entity_graph_data</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Document-based graph functions</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="n">DocumentLinkStrategy</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;shared_entities&#39;</span><span class="p">,</span> <span class="s1">&#39;shared_tags&#39;</span><span class="p">,</span> <span class="s1">&#39;shared_topics&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="prepare_document_graph_data">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/epstein_files.html#imbed_data_prep.epstein_files.prepare_document_graph_data">[docs]</a>
+<span class="nd">@cached_graph_prep</span><span class="p">(</span><span class="s1">&#39;document_graph&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_document_graph_data</span><span class="p">(</span>
+    <span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">source_tables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">link_by</span><span class="p">:</span> <span class="n">DocumentLinkStrategy</span> <span class="o">=</span> <span class="s1">&#39;shared_entities&#39;</span><span class="p">,</span>
+    <span class="n">min_shared</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepare document-based graph data where nodes are documents and edges</span>
+<span class="sd">    connect documents that share entities, tags, or topics.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_dir : str or Path or None</span>
+<span class="sd">        Directory containing the parquet files. If None, uses the default</span>
+<span class="sd">        imbed saves location. Ignored if ``source_tables`` is provided.</span>
+<span class="sd">    source_tables : dict[str, pd.DataFrame] or None</span>
+<span class="sd">        Pre-loaded DataFrames keyed by table name. If None, tables are read</span>
+<span class="sd">        from ``data_dir``.</span>
+<span class="sd">    link_by : {&#39;shared_entities&#39;, &#39;shared_tags&#39;, &#39;shared_topics&#39;}</span>
+<span class="sd">        Strategy for creating links between documents:</span>
+<span class="sd">        - &#39;shared_entities&#39;: Link docs that mention the same entity</span>
+<span class="sd">        - &#39;shared_tags&#39;: Link docs whose triples share tags (from triple_tags)</span>
+<span class="sd">        - &#39;shared_topics&#39;: Link docs with same explicit_topic or implicit_topic</span>
+<span class="sd">    min_shared : int</span>
+<span class="sd">        Minimum number of shared items required to create a link.</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Controls printing of progress messages.</span>
+<span class="sd">    tables : MutableMapping or None</span>
+<span class="sd">        (Added by @cached_graph_prep) Cache store for saving/loading results.</span>
+<span class="sd">        If provided and cache exists, returns cached data instead of recomputing.</span>
+<span class="sd">    force_recompute : bool</span>
+<span class="sd">        (Added by @cached_graph_prep) If True, recompute even if cache exists.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict with keys:</span>
+<span class="sd">        &#39;points&#39; : pd.DataFrame</span>
+<span class="sd">            Columns: doc_id, entity_count, triple_count, plus document metadata</span>
+<span class="sd">        &#39;links&#39; : pd.DataFrame</span>
+<span class="sd">            Columns: source, target, weight, shared_items</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+    <span class="n">clog</span> <span class="o">=</span> <span class="n">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="c1"># ---- Load tables --------------------------------------------------------</span>
+    <span class="k">if</span> <span class="n">source_tables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loaded</span> <span class="o">=</span> <span class="n">_load_tables</span><span class="p">(</span>
+            <span class="n">data_dir</span><span class="p">,</span>
+            <span class="p">[</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">,</span> <span class="s1">&#39;documents&#39;</span><span class="p">,</span> <span class="s1">&#39;entity_aliases&#39;</span><span class="p">],</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">loaded</span><span class="p">[</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">]</span>
+        <span class="n">documents</span> <span class="o">=</span> <span class="n">loaded</span><span class="p">[</span><span class="s1">&#39;documents&#39;</span><span class="p">]</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="n">loaded</span><span class="p">[</span><span class="s1">&#39;entity_aliases&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">,</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rdf_triples&#39;</span><span class="p">))</span>
+        <span class="n">documents</span> <span class="o">=</span> <span class="n">source_tables</span><span class="p">[</span><span class="s1">&#39;documents&#39;</span><span class="p">]</span>
+        <span class="n">aliases</span> <span class="o">=</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;entity_aliases&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Resolve aliases if available</span>
+    <span class="k">if</span> <span class="n">aliases</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Resolving entity aliases...&quot;</span><span class="p">)</span>
+        <span class="n">alias_map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;original_name&#39;</span><span class="p">],</span> <span class="n">aliases</span><span class="p">[</span><span class="s1">&#39;canonical_name&#39;</span><span class="p">]))</span>
+        <span class="n">src_col</span> <span class="o">=</span> <span class="s1">&#39;source&#39;</span> <span class="k">if</span> <span class="s1">&#39;source&#39;</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">columns</span> <span class="k">else</span> <span class="s1">&#39;actor&#39;</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">_resolve_aliases</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">alias_map</span><span class="p">,</span> <span class="n">src_col</span><span class="p">,</span> <span class="s1">&#39;target&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">src_col</span> <span class="o">=</span> <span class="s1">&#39;source&#39;</span> <span class="k">if</span> <span class="s1">&#39;source&#39;</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">columns</span> <span class="k">else</span> <span class="s1">&#39;actor&#39;</span>
+
+    <span class="c1"># ---- Build doc -&gt; items mapping based on strategy -----------------------</span>
+    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Building document links by &#39;</span><span class="si">{</span><span class="n">link_by</span><span class="si">}</span><span class="s2">&#39;...&quot;</span><span class="p">)</span>
+
+    <span class="n">doc_items</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># doc_id -&gt; set of items</span>
+
+    <span class="k">if</span> <span class="n">link_by</span> <span class="o">==</span> <span class="s1">&#39;shared_entities&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">doc_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">doc_items</span><span class="p">:</span>
+                <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">src_col</span><span class="p">])</span>
+            <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">])</span>
+
+    <span class="k">elif</span> <span class="n">link_by</span> <span class="o">==</span> <span class="s1">&#39;shared_tags&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">doc_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">doc_items</span><span class="p">:</span>
+                <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">tags_raw</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;triple_tags&#39;</span><span class="p">,</span> <span class="s1">&#39;[]&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tags_raw</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">tags</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tags_raw</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tags</span> <span class="o">=</span> <span class="n">tags_raw</span> <span class="k">if</span> <span class="n">tags_raw</span> <span class="k">else</span> <span class="p">[]</span>
+            <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">link_by</span> <span class="o">==</span> <span class="s1">&#39;shared_topics&#39;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">doc_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">doc_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">doc_items</span><span class="p">:</span>
+                <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">explicit</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;explicit_topic&#39;</span><span class="p">)</span>
+            <span class="n">implicit</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;implicit_topic&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">explicit</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">explicit</span><span class="p">):</span>
+                <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;explicit:</span><span class="si">{</span><span class="n">explicit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">implicit</span> <span class="ow">and</span> <span class="n">pd</span><span class="o">.</span><span class="n">notna</span><span class="p">(</span><span class="n">implicit</span><span class="p">):</span>
+                <span class="n">doc_items</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;implicit:</span><span class="si">{</span><span class="n">implicit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown link_by strategy: </span><span class="si">{</span><span class="n">link_by</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Build links between documents --------------------------------------</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Computing document pairs...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Invert: item -&gt; set of doc_ids</span>
+    <span class="n">item_docs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">items</span> <span class="ow">in</span> <span class="n">doc_items</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">item</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">item_docs</span><span class="p">:</span>
+                <span class="n">item_docs</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">item_docs</span><span class="p">[</span><span class="n">item</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">doc_id</span><span class="p">)</span>
+
+    <span class="c1"># Count shared items between doc pairs</span>
+    <span class="n">doc_pair_shared</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">docs</span> <span class="ow">in</span> <span class="n">item_docs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">docs</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="n">doc_pair_shared</span><span class="p">[(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="c1"># Filter by min_shared and build links DataFrame</span>
+    <span class="n">links_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">),</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">doc_pair_shared</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="n">min_shared</span><span class="p">:</span>
+            <span class="n">links_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">d1</span><span class="p">,</span>
+                <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="n">d2</span><span class="p">,</span>
+                <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+            <span class="p">})</span>
+
+    <span class="n">links</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">links_data</span><span class="p">)</span>
+    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">links</span><span class="p">)</span><span class="si">}</span><span class="s2"> document pairs with &gt;= </span><span class="si">{</span><span class="n">min_shared</span><span class="si">}</span><span class="s2"> shared </span><span class="si">{</span><span class="n">link_by</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Build points (documents) -------------------------------------------</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Building document points...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Compute per-doc stats</span>
+    <span class="n">doc_entity_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="n">doc_triple_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">doc_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+        <span class="n">doc_triple_count</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">doc_entity_count</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2</span>  <span class="c1"># source and target</span>
+
+    <span class="c1"># Merge with document metadata</span>
+    <span class="n">doc_ids_in_graph</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">doc_items</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">points_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">doc_info</span> <span class="o">=</span> <span class="n">documents</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;doc_id&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">doc_id</span> <span class="ow">in</span> <span class="n">doc_ids_in_graph</span><span class="p">:</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;doc_id&#39;</span><span class="p">:</span> <span class="n">doc_id</span><span class="p">}</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;entity_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">doc_items</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">doc_id</span><span class="p">,</span> <span class="nb">set</span><span class="p">()))</span>
+        <span class="n">row</span><span class="p">[</span><span class="s1">&#39;triple_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_triple_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">doc_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Add document metadata if available</span>
+        <span class="k">if</span> <span class="n">doc_id</span> <span class="ow">in</span> <span class="n">doc_info</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="n">doc_row</span> <span class="o">=</span> <span class="n">doc_info</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">doc_id</span><span class="p">]</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;one_sentence_summary&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;one_sentence_summary&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;date_range_earliest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;date_range_earliest&#39;</span><span class="p">)</span>
+            <span class="n">row</span><span class="p">[</span><span class="s1">&#39;date_range_latest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc_row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;date_range_latest&#39;</span><span class="p">)</span>
+
+        <span class="n">points_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+    <span class="n">points</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">points_data</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;triple_count&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2"> document nodes&quot;</span><span class="p">)</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="n">points</span><span class="p">,</span> <span class="s1">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span></div>
+
+
+
+<span class="c1"># ---------------------------------------------------------------------------</span>
+<span class="c1"># Tag-based graph functions</span>
+<span class="c1"># ---------------------------------------------------------------------------</span>
+
+<span class="n">TagLinkStrategy</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;co_occurrence&#39;</span><span class="p">,</span> <span class="s1">&#39;embedding_similarity&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="prepare_tag_graph_data">
+<a class="viewcode-back" href="../../module_docs/imbed_data_prep/epstein_files.html#imbed_data_prep.epstein_files.prepare_tag_graph_data">[docs]</a>
+<span class="nd">@cached_graph_prep</span><span class="p">(</span><span class="s1">&#39;tag_graph&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_tag_graph_data</span><span class="p">(</span>
+    <span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">source_tables</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">link_by</span><span class="p">:</span> <span class="n">TagLinkStrategy</span> <span class="o">=</span> <span class="s1">&#39;co_occurrence&#39;</span><span class="p">,</span>
+    <span class="n">min_co_occurrence</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">similarity_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Prepare tag-based graph data where nodes are unique tags and edges</span>
+<span class="sd">    connect tags that co-occur or are semantically similar.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_dir : str or Path or None</span>
+<span class="sd">        Directory containing the parquet files. If None, uses the default</span>
+<span class="sd">        imbed saves location. Ignored if ``source_tables`` is provided.</span>
+<span class="sd">    source_tables : dict[str, pd.DataFrame] or None</span>
+<span class="sd">        Pre-loaded DataFrames keyed by table name. If None, tables are read</span>
+<span class="sd">        from ``data_dir``.</span>
+<span class="sd">    link_by : {&#39;co_occurrence&#39;, &#39;embedding_similarity&#39;}</span>
+<span class="sd">        Strategy for creating links between tags:</span>
+<span class="sd">        - &#39;co_occurrence&#39;: Link tags that appear together in the same triple</span>
+<span class="sd">        - &#39;embedding_similarity&#39;: Link tags with similar embeddings</span>
+<span class="sd">    min_co_occurrence : int</span>
+<span class="sd">        For &#39;co_occurrence&#39;: minimum times tags must co-occur to create link.</span>
+<span class="sd">    similarity_threshold : float</span>
+<span class="sd">        For &#39;embedding_similarity&#39;: minimum cosine similarity to create link.</span>
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Controls printing of progress messages.</span>
+<span class="sd">    tables : MutableMapping or None</span>
+<span class="sd">        (Added by @cached_graph_prep) Cache store for saving/loading results.</span>
+<span class="sd">        If provided and cache exists, returns cached data instead of recomputing.</span>
+<span class="sd">    force_recompute : bool</span>
+<span class="sd">        (Added by @cached_graph_prep) If True, recompute even if cache exists.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict with keys:</span>
+<span class="sd">        &#39;points&#39; : pd.DataFrame</span>
+<span class="sd">            Columns: tag, occurrence_count, doc_count</span>
+<span class="sd">        &#39;links&#39; : pd.DataFrame</span>
+<span class="sd">            Columns: source, target, weight (co-occurrence count or similarity)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+    <span class="n">clog</span> <span class="o">=</span> <span class="n">_get_clog</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="c1"># ---- Load tables --------------------------------------------------------</span>
+    <span class="n">table_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">link_by</span> <span class="o">==</span> <span class="s1">&#39;embedding_similarity&#39;</span><span class="p">:</span>
+        <span class="n">table_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;tag_embeddings&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">source_tables</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">loaded</span> <span class="o">=</span> <span class="n">_load_tables</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span> <span class="n">table_names</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">loaded</span><span class="p">[</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">]</span>
+        <span class="n">tag_embeddings</span> <span class="o">=</span> <span class="n">loaded</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tag_embeddings&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">edges</span> <span class="o">=</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;relationships_edges&#39;</span><span class="p">,</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rdf_triples&#39;</span><span class="p">))</span>
+        <span class="n">tag_embeddings</span> <span class="o">=</span> <span class="n">source_tables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tag_embeddings&#39;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Parse tags from triples --------------------------------------------</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Parsing tags from triples...&quot;</span><span class="p">)</span>
+
+    <span class="n">tag_occurrences</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>  <span class="c1"># tag -&gt; total count</span>
+    <span class="n">tag_doc_count</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>  <span class="c1"># tag -&gt; unique doc count</span>
+    <span class="n">tag_docs</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># tag -&gt; set of doc_ids</span>
+    <span class="n">triple_tags_list</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># list of (doc_id, set of tags) for each triple</span>
+
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">edges</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="n">doc_id</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;doc_id&#39;</span><span class="p">]</span>
+        <span class="n">tags_raw</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;triple_tags&#39;</span><span class="p">,</span> <span class="s1">&#39;[]&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tags_raw</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">tags</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">tags_raw</span><span class="p">)</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">JSONDecodeError</span><span class="p">,</span> <span class="ne">TypeError</span><span class="p">):</span>
+                <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tags</span> <span class="o">=</span> <span class="n">tags_raw</span> <span class="k">if</span> <span class="n">tags_raw</span> <span class="k">else</span> <span class="p">[]</span>
+
+        <span class="n">tags_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">tags</span><span class="p">)</span>
+        <span class="n">triple_tags_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">doc_id</span><span class="p">,</span> <span class="n">tags_set</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_set</span><span class="p">:</span>
+            <span class="n">tag_occurrences</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tag_docs</span><span class="p">:</span>
+                <span class="n">tag_docs</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+            <span class="n">tag_docs</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">doc_id</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">docs</span> <span class="ow">in</span> <span class="n">tag_docs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">tag_doc_count</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
+
+    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tag_occurrences</span><span class="p">)</span><span class="si">}</span><span class="s2"> unique tags found&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Build links based on strategy --------------------------------------</span>
+    <span class="k">if</span> <span class="n">link_by</span> <span class="o">==</span> <span class="s1">&#39;co_occurrence&#39;</span><span class="p">:</span>
+        <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Computing tag co-occurrences...&quot;</span><span class="p">)</span>
+
+        <span class="n">co_occurrence</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">tags_set</span> <span class="ow">in</span> <span class="n">triple_tags_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tags_set</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">tags_set</span><span class="p">),</span> <span class="mi">2</span><span class="p">):</span>
+                    <span class="n">co_occurrence</span><span class="p">[(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="n">links_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">),</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">co_occurrence</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="n">min_co_occurrence</span><span class="p">:</span>
+                <span class="n">links_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span>
+                    <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="n">t2</span><span class="p">,</span>
+                    <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+                <span class="p">})</span>
+
+        <span class="n">links</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">links_data</span><span class="p">)</span>
+        <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">links</span><span class="p">)</span><span class="si">}</span><span class="s2"> tag pairs with &gt;= </span><span class="si">{</span><span class="n">min_co_occurrence</span><span class="si">}</span><span class="s2"> co-occurrences&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">link_by</span> <span class="o">==</span> <span class="s1">&#39;embedding_similarity&#39;</span><span class="p">:</span>
+        <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Computing tag embedding similarities...&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">tag_embeddings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;tag_embeddings table required for &#39;embedding_similarity&#39; strategy&quot;</span>
+            <span class="p">)</span>
+
+        <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+        <span class="c1"># Build tag -&gt; embedding mapping</span>
+        <span class="n">tag_to_emb</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">tag_embeddings</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;tag&#39;</span><span class="p">]</span>
+            <span class="n">emb_raw</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">emb_raw</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="n">emb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">emb_raw</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">emb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">emb_raw</span><span class="p">)</span>
+            <span class="n">tag_to_emb</span><span class="p">[</span><span class="n">tag</span><span class="p">]</span> <span class="o">=</span> <span class="n">emb</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>  <span class="c1"># normalize</span>
+
+        <span class="c1"># Only consider tags that appear in our data</span>
+        <span class="n">tags_with_emb</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tag_occurrences</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tag_to_emb</span><span class="p">]</span>
+        <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tags_with_emb</span><span class="p">)</span><span class="si">}</span><span class="s2"> tags have embeddings&quot;</span><span class="p">)</span>
+
+        <span class="n">links_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t1</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tags_with_emb</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">t2</span> <span class="ow">in</span> <span class="n">tags_with_emb</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:]:</span>
+                <span class="n">sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">tag_to_emb</span><span class="p">[</span><span class="n">t1</span><span class="p">],</span> <span class="n">tag_to_emb</span><span class="p">[</span><span class="n">t2</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">sim</span> <span class="o">&gt;=</span> <span class="n">similarity_threshold</span><span class="p">:</span>
+                    <span class="n">links_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s1">&#39;source&#39;</span><span class="p">:</span> <span class="n">t1</span><span class="p">,</span>
+                        <span class="s1">&#39;target&#39;</span><span class="p">:</span> <span class="n">t2</span><span class="p">,</span>
+                        <span class="s1">&#39;weight&#39;</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">sim</span><span class="p">),</span>
+                    <span class="p">})</span>
+
+        <span class="n">links</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">links_data</span><span class="p">)</span>
+        <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">links</span><span class="p">)</span><span class="si">}</span><span class="s2"> tag pairs with similarity &gt;= </span><span class="si">{</span><span class="n">similarity_threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown link_by strategy: </span><span class="si">{</span><span class="n">link_by</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># ---- Build points (tags) ------------------------------------------------</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Building tag points...&quot;</span><span class="p">)</span>
+
+    <span class="n">points_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">tag</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">tag_occurrences</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">points_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
+            <span class="s1">&#39;occurrence_count&#39;</span><span class="p">:</span> <span class="n">count</span><span class="p">,</span>
+            <span class="s1">&#39;doc_count&#39;</span><span class="p">:</span> <span class="n">tag_doc_count</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">})</span>
+
+    <span class="n">points</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">points_data</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">points</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;occurrence_count&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span>
+        <span class="n">drop</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+
+    <span class="n">clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="si">}</span><span class="s2"> tag nodes&quot;</span><span class="p">)</span>
+    <span class="n">clog</span><span class="p">(</span><span class="s2">&quot;Done.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="n">points</span><span class="p">,</span> <span class="s1">&#39;links&#39;</span><span class="p">:</span> <span class="n">links</span><span class="p">}</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

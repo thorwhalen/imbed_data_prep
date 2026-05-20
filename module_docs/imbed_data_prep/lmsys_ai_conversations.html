@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.lmsys_ai_conversations &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed_data_prep.mcdonalds_reviews" href="mcdonalds_reviews.html" />
+    <link rel="prev" title="imbed_data_prep.jersey_laws" href="jersey_laws.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embeddings_of_aggregations.html">imbed_data_prep.embeddings_of_aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="epstein_files.html">imbed_data_prep.epstein_files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_repos.html">imbed_data_prep.github_repos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed_data_prep.lmsys_ai_conversations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.lmsys_ai_conversations.Dacc"><code class="docutils literal notranslate"><span class="pre">Dacc</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.lmsys_ai_conversations.Dacc.dataset_dict_loader"><code class="docutils literal notranslate"><span class="pre">Dacc.dataset_dict_loader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.lmsys_ai_conversations.Dacc.flat_en_embeddings_iter"><code class="docutils literal notranslate"><span class="pre">Dacc.flat_en_embeddings_iter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.lmsys_ai_conversations.LmsysDacc"><code class="docutils literal notranslate"><span class="pre">LmsysDacc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.lmsys_ai_conversations.compute_and_save_kmeans"><code class="docutils literal notranslate"><span class="pre">compute_and_save_kmeans()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.lmsys_ai_conversations.concatenate_arrays"><code class="docutils literal notranslate"><span class="pre">concatenate_arrays()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mcdonalds_reviews.html">imbed_data_prep.mcdonalds_reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.lmsys_ai_conversations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed_data_prep/lmsys_ai_conversations.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed_data_prep.lmsys_ai_conversations">
+<span id="imbed-data-prep-lmsys-ai-conversations"></span><h1>imbed_data_prep.lmsys_ai_conversations<a class="headerlink" href="#module-imbed_data_prep.lmsys_ai_conversations" title="Link to this heading"></a></h1>
+<p>Lymsys AI Conversations</p>
+<p>See paper: <a class="reference external" href="https://arxiv.org/pdf/2309.11998.pdf">https://arxiv.org/pdf/2309.11998.pdf</a>
+Data here: <a class="reference external" href="https://huggingface.co/papers/2309.11998">https://huggingface.co/papers/2309.11998</a></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="imbed_data_prep.lmsys_ai_conversations.Dacc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">imbed_data_prep.lmsys_ai_conversations.</span></span><span class="sig-name descname"><span class="pre">Dacc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_dict_loader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">collections.abc.Callable</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">functools.partial(&lt;function</span> <span class="pre">load_dataset</span> <span class="pre">at</span> <span class="pre">0x7efb9b487380&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'lmsys/lmsys-chat-1m')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saves_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/home/runner/.config/imbed/saves/lmsys-chat-1m'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/lmsys_ai_conversations.html#Dacc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.lmsys_ai_conversations.Dacc" title="Link to this definition"></a></dt>
+<dd><dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.lmsys_ai_conversations.Dacc.dataset_dict_loader">
+<span class="sig-name descname"><span class="pre">dataset_dict_loader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_files</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Split</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Split</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Features</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DownloadConfig</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DownloadMode</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verification_mode</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VerificationMode</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_in_memory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">revision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Version</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">streaming</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_proc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">storage_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">config_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DatasetDict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Dataset</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IterableDatasetDict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">IterableDataset</span></span></span><a class="headerlink" href="#imbed_data_prep.lmsys_ai_conversations.Dacc.dataset_dict_loader" title="Link to this definition"></a></dt>
+<dd><p>Load a dataset from the Hugging Face Hub, or a local dataset.</p>
+<p>You can find the list of datasets on the [Hub](<a class="reference external" href="https://huggingface.co/datasets">https://huggingface.co/datasets</a>) or with [<cite>huggingface_hub.list_datasets</cite>].</p>
+<p>A dataset is a directory that contains some data files in generic formats (JSON, CSV, Parquet, etc.) and possibly
+in a generic structure (Webdataset, ImageFolder, AudioFolder, VideoFolder, etc.)</p>
+<p>This function does the following under the hood:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p>Load a dataset builder:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Find the most common data format in the dataset and pick its associated builder (JSON, CSV, Parquet, Webdataset, ImageFolder, AudioFolder, etc.)</p></li>
+<li><p>Find which file goes into which split (e.g. train/test) based on file and directory names or on the YAML configuration</p></li>
+<li><p>It is also possible to specify <cite>data_files</cite> manually, and which dataset builder to use (e.g. “parquet”).</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Run the dataset builder:</p>
+<blockquote>
+<div><p>In the general case:</p>
+<ul>
+<li><p>Download the data files from the dataset if they are not already available locally or cached.</p></li>
+<li><p>Process and cache the dataset in typed Arrow tables for caching.</p>
+<blockquote>
+<div><p>Arrow table are arbitrarily long, typed tables which can store nested objects and be mapped to numpy/pandas/python generic types.
+They can be directly accessed from disk, loaded in RAM or even streamed over the web.</p>
+</div></blockquote>
+</li>
+</ul>
+<p>In the streaming case:</p>
+<ul class="simple">
+<li><p>Don’t download or cache anything. Instead, the dataset is lazily loaded and will be streamed on-the-fly when iterating on it.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Return a dataset built from the requested splits in <cite>split</cite> (default: all).</p></li>
+</ol>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<cite>str</cite>) – <p>Path or name of the dataset.</p>
+<ul>
+<li><p>if <cite>path</cite> is a dataset repository on the HF hub (list all available datasets with [<cite>huggingface_hub.list_datasets</cite>])
+-&gt; load the dataset from supported files in the repository (csv, json, parquet, etc.)
+e.g. <cite>‘username/dataset_name’</cite>, a dataset repository on the HF hub containing the data files.</p></li>
+<li><p>if <cite>path</cite> is a directory within a Storage Bucket on the HF Hub (list your buckets with [<cite>huggingface_hub.list_buckets</cite>])
+-&gt; load the dataset from supported files in the directory (csv, json, parquet, etc.)
+e.g. <cite>‘buckets/username/bucket_name/my_dataset’</cite>.</p></li>
+<li><p>if <cite>path</cite> is a local directory
+-&gt; load the dataset from supported files in the directory (csv, json, parquet, etc.)
+e.g. <cite>‘./path/to/directory/with/my/csv/data’</cite>.</p></li>
+<li><p>if <cite>path</cite> is the name of a dataset builder and <cite>data_files</cite> or <cite>data_dir</cite> is specified
+(available builders are “json”, “csv”, “parquet”, “arrow”, “text”, “xml”, “webdataset”, “imagefolder”, “audiofolder”, “videofolder”)
+-&gt; load the dataset from the files in <cite>data_files</cite> or <cite>data_dir</cite>
+e.g. <cite>‘parquet’</cite>.</p></li>
+</ul>
+<p>Use a <cite>hf://</cite> path like <cite>‘hf://datasets/username/dataset_name’</cite> to allow remote only.
+Use an absolute path to allow local only.</p>
+</p></li>
+<li><p><strong>name</strong> (<cite>str</cite>, <em>optional</em>) – Defining the name of the dataset configuration.</p></li>
+<li><p><strong>data_dir</strong> (<cite>str</cite>, <em>optional</em>) – Defining the <cite>data_dir</cite> of the dataset configuration. If specified for the generic builders (csv, text etc.) or the Hub datasets and <cite>data_files</cite> is <cite>None</cite>,
+the behavior is equal to passing <cite>os.path.join(data_dir, **)</cite> as <cite>data_files</cite> to reference all the files in a directory.</p></li>
+<li><p><strong>data_files</strong> (<cite>str</cite> or <cite>Sequence</cite> or <cite>Mapping</cite>, <em>optional</em>) – Path(s) to source data file(s).</p></li>
+<li><p><strong>split</strong> (<cite>Split</cite> or <cite>str</cite>) – Which split of the data to load.
+If <cite>None</cite>, will return a <cite>dict</cite> with all splits (typically <cite>datasets.Split.TRAIN</cite> and <cite>datasets.Split.TEST</cite>).
+If given, will return a single Dataset.
+Splits can be combined and specified like in tensorflow-datasets.</p></li>
+<li><p><strong>cache_dir</strong> (<cite>str</cite>, <em>optional</em>) – Directory to read/write data. Defaults to <cite>“~/.cache/huggingface/datasets”</cite>.</p></li>
+<li><p><strong>features</strong> (<cite>Features</cite>, <em>optional</em>) – Set the features type to use for this dataset.</p></li>
+<li><p><strong>download_config</strong> ([<cite>DownloadConfig</cite>], <em>optional</em>) – Specific download configuration parameters.</p></li>
+<li><p><strong>download_mode</strong> ([<cite>DownloadMode</cite>] or <cite>str</cite>, defaults to <cite>REUSE_DATASET_IF_EXISTS</cite>) – Download/generate mode.</p></li>
+<li><p><strong>verification_mode</strong> ([<cite>VerificationMode</cite>] or <cite>str</cite>, defaults to <cite>BASIC_CHECKS</cite>) – <p>Verification mode determining the checks to run on the downloaded/processed dataset information (checksums/size/splits/…).</p>
+<p>&lt;Added version=”2.9.1”/&gt;</p>
+</p></li>
+<li><p><strong>keep_in_memory</strong> (<cite>bool</cite>, defaults to <cite>None</cite>) – Whether to copy the dataset in-memory. If <cite>None</cite>, the dataset
+will not be copied in-memory unless explicitly enabled by setting <cite>datasets.config.IN_MEMORY_MAX_SIZE</cite> to
+nonzero. See more details in the [improve performance](../cache#improve-performance) section.</p></li>
+<li><p><strong>revision</strong> ([<cite>Version</cite>] or <cite>str</cite>, <em>optional</em>) – Version of the dataset to load.
+As datasets have their own git repository on the Datasets Hub, the default version “main” corresponds to their “main” branch.
+You can specify a different version than the default “main” by using a commit SHA or a git tag of the dataset repository.</p></li>
+<li><p><strong>token</strong> (<cite>str</cite> or <cite>bool</cite>, <em>optional</em>) – Optional string or boolean to use as Bearer token for remote files on the Datasets Hub.
+If <cite>True</cite>, or not specified, will get token from <cite>“~/.huggingface”</cite>.</p></li>
+<li><p><strong>streaming</strong> (<cite>bool</cite>, defaults to <cite>False</cite>) – <p>If set to <cite>True</cite>, don’t download the data files. Instead, it streams the data progressively while
+iterating on the dataset. An [<cite>IterableDataset</cite>] or [<cite>IterableDatasetDict</cite>] is returned instead in this case.</p>
+<p>Note that streaming works for datasets that use data formats that support being iterated over like txt, csv, jsonl for example.
+Json files may be downloaded completely. Also streaming from remote zip or gzip files is supported but other compressed formats
+like rar and xz are not yet supported. The tgz format doesn’t allow streaming.</p>
+</p></li>
+<li><p><strong>num_proc</strong> (<cite>int</cite>, <em>optional</em>, defaults to <cite>None</cite>) – <p>Number of processes when downloading and generating the dataset locally.
+Multiprocessing is disabled by default.</p>
+<p>&lt;Added version=”2.7.0”/&gt;</p>
+</p></li>
+<li><p><strong>storage_options</strong> (<cite>dict</cite>, <em>optional</em>, defaults to <cite>None</cite>) – <p><strong>Experimental</strong>. Key/value pairs to be passed on to the dataset file-system backend, if any.</p>
+<p>&lt;Added version=”2.11.0”/&gt;</p>
+</p></li>
+<li><p><strong>**config_kwargs</strong> (<em>additional keyword arguments</em>) – Keyword arguments to be passed to the <cite>BuilderConfig</cite>
+and used in the [<cite>DatasetBuilder</cite>].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>if <cite>split</cite> is not <cite>None</cite>: the dataset requested,</p></li>
+<li><p>if <cite>split</cite> is <cite>None</cite>, a [<cite>~datasets.DatasetDict</cite>] with each split.</p></li>
+</ul>
+<p>or [<cite>IterableDataset</cite>] or [<cite>IterableDatasetDict</cite>]: if <cite>streaming=True</cite></p>
+<ul class="simple">
+<li><p>if <cite>split</cite> is not <cite>None</cite>, the dataset is requested</p></li>
+<li><p>if <cite>split</cite> is <cite>None</cite>, a [<cite>~datasets.streaming.IterableDatasetDict</cite>] with each split.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>[<cite>Dataset</cite>] or [<cite>DatasetDict</cite>]</p>
+</dd>
+</dl>
+<p>Example:</p>
+<p>Load a dataset from the Hugging Face Hub:</p>
+<p><a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>py
+&gt;&gt;&gt; from datasets import load_dataset
+&gt;&gt;&gt; ds = load_dataset(‘cornell-movie-review-data/rotten_tomatoes’, split=’train’)</p>
+<p># Load a subset or dataset configuration (here ‘sst2’)
+&gt;&gt;&gt; from datasets import load_dataset
+&gt;&gt;&gt; ds = load_dataset(‘nyu-mll/glue’, ‘sst2’, split=’train’)</p>
+<p># Manual mapping of data files to splits
+&gt;&gt;&gt; data_files = {‘train’: ‘train.csv’, ‘test’: ‘test.csv’}
+&gt;&gt;&gt; ds = load_dataset(‘namespace/your_dataset_name’, data_files=data_files)</p>
+<p># Manual selection of a directory to load
+&gt;&gt;&gt; ds = load_dataset(‘namespace/your_dataset_name’, data_dir=’folder_name’)
+<a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
+<p>Load a dataset from a Storage Bucket on the Hugging Face Hub:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`py</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">from</span> <span class="pre">datasets</span> <span class="pre">import</span> <span class="pre">load_dataset</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">ds</span> <span class="pre">=</span> <span class="pre">load_dataset('buckets/username/bucket_name/rotten_tomatoes',</span> <span class="pre">split='train')</span>
+<span class="pre">`</span></code></p>
+<p>Load a local dataset:</p>
+<p><a href="#id9"><span class="problematic" id="id10">``</span></a><a href="#id11"><span class="problematic" id="id12">`</span></a>py
+# Load a CSV file
+&gt;&gt;&gt; from datasets import load_dataset
+&gt;&gt;&gt; ds = load_dataset(‘csv’, data_files=’path/to/local/my_dataset.csv’)</p>
+<p># Load a JSON file
+&gt;&gt;&gt; from datasets import load_dataset
+&gt;&gt;&gt; ds = load_dataset(‘json’, data_files=’path/to/local/my_dataset.json’)
+<a href="#id13"><span class="problematic" id="id14">``</span></a><a href="#id15"><span class="problematic" id="id16">`</span></a></p>
+<p>Load an [<cite>~datasets.IterableDataset</cite>]:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`py</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">from</span> <span class="pre">datasets</span> <span class="pre">import</span> <span class="pre">load_dataset</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">ds</span> <span class="pre">=</span> <span class="pre">load_dataset('cornell-movie-review-data/rotten_tomatoes',</span> <span class="pre">split='train',</span> <span class="pre">streaming=True)</span>
+<span class="pre">`</span></code></p>
+<p>Load an image dataset with the <cite>ImageFolder</cite> dataset builder:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`py</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">from</span> <span class="pre">datasets</span> <span class="pre">import</span> <span class="pre">load_dataset</span>
+<span class="pre">&gt;&gt;&gt;</span> <span class="pre">ds</span> <span class="pre">=</span> <span class="pre">load_dataset('imagefolder',</span> <span class="pre">data_dir='/path/to/images',</span> <span class="pre">split='train')</span>
+<span class="pre">`</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.lmsys_ai_conversations.Dacc.flat_en_embeddings_iter">
+<span class="sig-name descname"><span class="pre">flat_en_embeddings_iter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/lmsys_ai_conversations.html#Dacc.flat_en_embeddings_iter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.lmsys_ai_conversations.Dacc.flat_en_embeddings_iter" title="Link to this definition"></a></dt>
+<dd><p>Yields embeddings matrices</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.lmsys_ai_conversations.LmsysDacc">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.lmsys_ai_conversations.</span></span><span class="sig-name descname"><span class="pre">LmsysDacc</span></span><a class="headerlink" href="#imbed_data_prep.lmsys_ai_conversations.LmsysDacc" title="Link to this definition"></a></dt>
+<dd><p>alias of <a class="reference internal" href="#imbed_data_prep.lmsys_ai_conversations.Dacc" title="imbed_data_prep.lmsys_ai_conversations.Dacc"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dacc</span></code></a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.lmsys_ai_conversations.compute_and_save_kmeans">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.lmsys_ai_conversations.</span></span><span class="sig-name descname"><span class="pre">compute_and_save_kmeans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dacc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">standardized_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_data_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'flat_en_embeddings_pca100.npy'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'kmeans_{n_clusters}_clusters_indices.pkl'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/lmsys_ai_conversations.html#compute_and_save_kmeans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.lmsys_ai_conversations.compute_and_save_kmeans" title="Link to this definition"></a></dt>
+<dd><p>Compute the kmeans clusting and save it to the data store.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.lmsys_ai_conversations.concatenate_arrays">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.lmsys_ai_conversations.</span></span><span class="sig-name descname"><span class="pre">concatenate_arrays</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arrays</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/lmsys_ai_conversations.html#concatenate_arrays"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.lmsys_ai_conversations.concatenate_arrays" title="Link to this definition"></a></dt>
+<dd><p>Essentially, np.vstack(arrays) but faster</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="jersey_laws.html" class="btn btn-neutral float-left" title="imbed_data_prep.jersey_laws" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mcdonalds_reviews.html" class="btn btn-neutral float-right" title="imbed_data_prep.mcdonalds_reviews" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

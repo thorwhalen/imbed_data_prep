@@ -1,0 +1,441 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.mcdonalds_reviews &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed_data_prep.prompt_injections" href="prompt_injections.html" />
+    <link rel="prev" title="imbed_data_prep.lmsys_ai_conversations" href="lmsys_ai_conversations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embeddings_of_aggregations.html">imbed_data_prep.embeddings_of_aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="epstein_files.html">imbed_data_prep.epstein_files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_repos.html">imbed_data_prep.github_repos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmsys_ai_conversations.html">imbed_data_prep.lmsys_ai_conversations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed_data_prep.mcdonalds_reviews</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.clusters_df"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc.clusters_df</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.embeddable"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc.embeddable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.embeddings_df"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc.embeddings_df</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.merged_artifacts"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc.merged_artifacts</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.planar_embeddings"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc.planar_embeddings</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.raw_data"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc.raw_data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.segments"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsDacc.segments</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.all_category_results"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.all_category_results()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_embeddings"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.category_embeddings</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_config"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.category_model_config()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_summary"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.category_model_summary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_results"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.category_results</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_segments"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.category_segments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_xy"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.category_xy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.clear_category_cache"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.clear_category_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.dataset_statistics"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.dataset_statistics()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.list_categories"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.list_categories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.semantic_attributes"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.semantic_attributes</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.train_model"><code class="docutils literal notranslate"><span class="pre">McdonaldsReviewsMoodModeling.train_model()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.mcdonalds_reviews</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed_data_prep/mcdonalds_reviews.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed_data_prep.mcdonalds_reviews">
+<span id="imbed-data-prep-mcdonalds-reviews"></span><h1>imbed_data_prep.mcdonalds_reviews<a class="headerlink" href="#module-imbed_data_prep.mcdonalds_reviews" title="Link to this heading"></a></h1>
+<p>McDonald’s reviews data accessor</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">imbed_data_prep.mcdonalds_reviews.</span></span><span class="sig-name descname"><span class="pre">McdonaldsReviewsDacc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mcdonalds_reviews'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">datadir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saves_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_data_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'McDonalds_Reviews_Cleaned.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'text-embedding-3-small'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsDacc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc" title="Link to this definition"></a></dt>
+<dd><p>Data accessor for McDonald’s reviews</p>
+<dl>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dacc</span> <span class="o">=</span> <span class="n">McdonaldsReviewsDacc</span><span class="p">(</span><span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">raw_data</span>  <span class="c1"># Loads CSV</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">embeddings_df</span>  <span class="c1"># Computes/loads embeddings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">planar</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">planar_embeddings</span>  <span class="c1"># 2D projections</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clusters</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">clusters_df</span>  <span class="c1"># Cluster assignments</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">merged</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">merged_artifacts</span>  <span class="c1"># Everything together</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.clusters_df">
+<span class="sig-name descname"><span class="pre">clusters_df</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.clusters_df" title="Link to this definition"></a></dt>
+<dd><p>Compute cluster assignments</p>
+<p>Uses the parent class method which applies clustering to embeddings</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.embeddable">
+<span class="sig-name descname"><span class="pre">embeddable</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.embeddable" title="Link to this definition"></a></dt>
+<dd><p>Prepare data for embedding</p>
+<p>Extracts review text and adds it as ‘segment’ column</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.embeddings_df">
+<span class="sig-name descname"><span class="pre">embeddings_df</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.embeddings_df" title="Link to this definition"></a></dt>
+<dd><p>Compute embeddings for reviews</p>
+<dl class="simple">
+<dt>Replaces the manual pattern:</dt><dd><dl class="simple">
+<dt>if save_key in store:</dt><dd><p>vectors = store[save_key]</p>
+</dd>
+<dt>else:</dt><dd><p>vectors = oa.embeddings(reviews)
+store[save_key] = vectors</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Now just call: dacc.embeddings_df</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.merged_artifacts">
+<span class="sig-name descname"><span class="pre">merged_artifacts</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.merged_artifacts" title="Link to this definition"></a></dt>
+<dd><p>Merge all computed artifacts into one dataframe</p>
+<p>Combines:
+- Original review data
+- Embeddings
+- Planar (2D) embeddings
+- Cluster assignments</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.planar_embeddings">
+<span class="sig-name descname"><span class="pre">planar_embeddings</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.planar_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Compute 2D planar embeddings for visualization</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.raw_data">
+<span class="sig-name descname"><span class="pre">raw_data</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.raw_data" title="Link to this definition"></a></dt>
+<dd><p>Load raw CSV data</p>
+<dl class="simple">
+<dt>Replaces:</dt><dd><p>f = djoin(‘McDonalds_Reviews_Cleaned.csv’)
+df = pd.read_csv(f)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.segments">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">segments</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc.segments" title="Link to this definition"></a></dt>
+<dd><p>Get segments as a dictionary (required by ImbedArtifactsMixin)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">imbed_data_prep.mcdonalds_reviews.</span></span><span class="sig-name descname"><span class="pre">McdonaldsReviewsMoodModeling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mcdonalds_reviews'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semantic_attributes_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'semantic_attributes.json'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semantic_attributes_dataset_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv_splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">datadir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saves_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_data_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'McDonalds_Reviews_Cleaned.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'text-embedding-3-small'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling" title="Link to this definition"></a></dt>
+<dd><p>Extended data accessor with mood modeling and analysis capabilities</p>
+<p>This class extends McdonaldsReviewsDacc to support:
+- Semantic attribute dataset management
+- Embeddings computation for training data
+- Model training and evaluation across categories
+- Results persistence and analysis</p>
+<dl>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dacc</span> <span class="o">=</span> <span class="n">McdonaldsReviewsMoodModeling</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">semantic_attributes_path</span><span class="o">=</span><span class="s1">&#39;semantic_attributes.json&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Access semantic attributes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">attrs</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">semantic_attributes</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get embeddings for a category</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">category_embeddings</span><span class="p">(</span><span class="s1">&#39;food_quality_presentation&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Train models for all categories</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">all_category_results</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get model summary for a specific category</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">summary</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">category_model_summary</span><span class="p">(</span><span class="s1">&#39;food_quality_presentation&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.all_category_results">
+<span class="sig-name descname"><span class="pre">all_category_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.all_category_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.all_category_results" title="Link to this definition"></a></dt>
+<dd><p>Train and evaluate models for all categories</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary mapping category names to their results</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_embeddings">
+<span class="sig-name descname"><span class="pre">category_embeddings</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Compute or load embeddings for a category’s segments</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>category</strong> – Name of the semantic attribute category</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with embeddings column</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_config">
+<span class="sig-name descname"><span class="pre">category_model_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'logistic_high_vs_low'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.category_model_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_config" title="Link to this definition"></a></dt>
+<dd><p>Get configuration for a specific model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>category</strong> – Name of the semantic attribute category</p></li>
+<li><p><strong>model_name</strong> – Name of the model to get config for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with model configuration including class and parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_summary">
+<span class="sig-name descname"><span class="pre">category_model_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.category_model_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_model_summary" title="Link to this definition"></a></dt>
+<dd><p>Get model performance summary for a category</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>category</strong> – Name of the semantic attribute category</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with model performance metrics</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_results">
+<span class="sig-name descname"><span class="pre">category_results</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_results" title="Link to this definition"></a></dt>
+<dd><p>Train and evaluate models for a category</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>category</strong> – Name of the semantic attribute category</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>results: Single train/test split results</p></li>
+<li><p>cv_results: Cross-validation results</p></li>
+<li><p>summary: Performance summary</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_segments">
+<span class="sig-name descname"><span class="pre">category_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Series</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Series</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.category_segments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_segments" title="Link to this definition"></a></dt>
+<dd><p>Get segments and scores for a category</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>category</strong> – Name of the semantic attribute category</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (segments, scores) as pandas Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_xy">
+<span class="sig-name descname"><span class="pre">category_xy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.category_xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.category_xy" title="Link to this definition"></a></dt>
+<dd><p>Get X, y arrays for model training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>category</strong> – Name of the semantic attribute category</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>X: (n_samples, embedding_dim) embedding vectors</p></li>
+<li><p>y: (n_samples,) score labels</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple of (X, y) as numpy arrays where</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.clear_category_cache">
+<span class="sig-name descname"><span class="pre">clear_category_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.clear_category_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.clear_category_cache" title="Link to this definition"></a></dt>
+<dd><p>Clear cached data for a category</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>category</strong> – Name of the semantic attribute category</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.dataset_statistics">
+<span class="sig-name descname"><span class="pre">dataset_statistics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.dataset_statistics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.dataset_statistics" title="Link to this definition"></a></dt>
+<dd><p>Get statistics about all semantic attribute datasets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame with category names and example counts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.list_categories">
+<span class="sig-name descname"><span class="pre">list_categories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.list_categories"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.list_categories" title="Link to this definition"></a></dt>
+<dd><p>List all available semantic attribute categories</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of category names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.semantic_attributes">
+<span class="sig-name descname"><span class="pre">semantic_attributes</span></span><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.semantic_attributes" title="Link to this definition"></a></dt>
+<dd><p>Load semantic attributes from JSON file</p>
+<p>Returns dictionary mapping attribute names to descriptions.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.train_model">
+<span class="sig-name descname"><span class="pre">train_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'logistic_high_vs_low'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsMoodModeling.train_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsMoodModeling.train_model" title="Link to this definition"></a></dt>
+<dd><p>Train and return a fitted model instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>category</strong> – Name of the semantic attribute category</p></li>
+<li><p><strong>model_name</strong> – Name of the model to train</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Fitted model instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="lmsys_ai_conversations.html" class="btn btn-neutral float-left" title="imbed_data_prep.lmsys_ai_conversations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="prompt_injections.html" class="btn btn-neutral float-right" title="imbed_data_prep.prompt_injections" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

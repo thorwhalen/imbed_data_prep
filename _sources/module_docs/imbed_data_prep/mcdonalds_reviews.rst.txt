@@ -1,0 +1,4 @@
+imbed_data_prep.mcdonalds_reviews
+=================================
+.. automodule:: imbed_data_prep.mcdonalds_reviews
+   :members:

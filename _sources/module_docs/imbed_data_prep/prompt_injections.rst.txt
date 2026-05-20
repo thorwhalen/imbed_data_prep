@@ -1,0 +1,4 @@
+imbed_data_prep.prompt_injections
+=================================
+.. automodule:: imbed_data_prep.prompt_injections
+   :members:

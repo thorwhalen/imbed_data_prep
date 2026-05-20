@@ -1,0 +1,4 @@
+imbed_data_prep.github_repos
+============================
+.. automodule:: imbed_data_prep.github_repos
+   :members:

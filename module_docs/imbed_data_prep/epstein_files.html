@@ -1,0 +1,449 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed_data_prep.epstein_files &mdash; imbed_data_prep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed_data_prep.eurovis" href="eurovis.html" />
+    <link rel="prev" title="imbed_data_prep.embeddings_of_aggregations" href="embeddings_of_aggregations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed_data_prep
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed_data_prep.html">imbed_data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="arxiv.html">imbed_data_prep.arxiv</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embeddings_of_aggregations.html">imbed_data_prep.embeddings_of_aggregations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed_data_prep.epstein_files</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-source">Data Source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#database-structure">Database Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#key-functions">Key Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.epstein_files.acquire_epstein_data"><code class="docutils literal notranslate"><span class="pre">acquire_epstein_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.epstein_files.cached_graph_prep"><code class="docutils literal notranslate"><span class="pre">cached_graph_prep()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.epstein_files.normalize_epstein_tables"><code class="docutils literal notranslate"><span class="pre">normalize_epstein_tables()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.epstein_files.prepare_cosmograph_data"><code class="docutils literal notranslate"><span class="pre">prepare_cosmograph_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.epstein_files.prepare_document_graph_data"><code class="docutils literal notranslate"><span class="pre">prepare_document_graph_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.epstein_files.prepare_entity_graph_data"><code class="docutils literal notranslate"><span class="pre">prepare_entity_graph_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed_data_prep.epstein_files.prepare_tag_graph_data"><code class="docutils literal notranslate"><span class="pre">prepare_tag_graph_data()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="eurovis.html">imbed_data_prep.eurovis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github_repos.html">imbed_data_prep.github_repos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hcp.html">imbed_data_prep.hcp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jersey_laws.html">imbed_data_prep.jersey_laws</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lmsys_ai_conversations.html">imbed_data_prep.lmsys_ai_conversations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcdonalds_reviews.html">imbed_data_prep.mcdonalds_reviews</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prompt_injections.html">imbed_data_prep.prompt_injections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="trump_vs_zelenskyy.html">imbed_data_prep.trump_vs_zelenskyy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="twitter_sentiment.html">imbed_data_prep.twitter_sentiment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ultra_chat.html">imbed_data_prep.ultra_chat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wildchat.html">imbed_data_prep.wildchat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="wordnet_words.html">imbed_data_prep.wordnet_words</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed_data_prep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed_data_prep.epstein_files</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed_data_prep/epstein_files.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed_data_prep.epstein_files">
+<span id="imbed-data-prep-epstein-files"></span><h1>imbed_data_prep.epstein_files<a class="headerlink" href="#module-imbed_data_prep.epstein_files" title="Link to this heading"></a></h1>
+<p>Epstein Files Data Preparation Module.</p>
+<p>This module provides tools for acquiring, normalizing, and preparing graph data
+from the Epstein document corpus for visualization and analysis.</p>
+<section id="data-source">
+<h2>Data Source<a class="headerlink" href="#data-source" title="Link to this heading"></a></h2>
+<p>The data originates from the Jeffrey Epstein case legal documents released by
+the House Oversight Committee. This module sources data from a SQLite database
+in the GitHub project:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/maxandrews/Epstein-doc-explorer">https://github.com/maxandrews/Epstein-doc-explorer</a></p>
+</div></blockquote>
+<p>The project’s document_analysis.db contains AI-extracted entities, relationships,
+and semantic tags from ~25,000 legal documents. The original document corpus was
+sourced from:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://huggingface.co/datasets/tensonaut/EPSTEIN_FILES_20K/tree/main">https://huggingface.co/datasets/tensonaut/EPSTEIN_FILES_20K/tree/main</a></p>
+</div></blockquote>
+<p>At the time of writing, processed documents are also available at:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://drive.google.com/drive/folders/1ldncvdqIf6miiskDp_EDuGSDAaI_fJx8">https://drive.google.com/drive/folders/1ldncvdqIf6miiskDp_EDuGSDAaI_fJx8</a></p>
+</div></blockquote>
+</section>
+<section id="database-structure">
+<h2>Database Structure<a class="headerlink" href="#database-structure" title="Link to this heading"></a></h2>
+<p>The source SQLite database contains these main tables:</p>
+<ul class="simple">
+<li><p><strong>documents</strong>: Document metadata, AI-generated summaries, categories, content
+tags, date ranges, and full text (~25K documents)</p></li>
+<li><p><strong>rdf_triples</strong>: Extracted relationships as subject-action-object triples with
+context (location, timestamp), classifications (actor type, tags, topics),
+and cluster assignments (~107K triples)</p></li>
+<li><p><strong>entity_aliases</strong>: Deduplication mappings from variant names to canonical
+forms (e.g., “Jeff Epstein” → “Jeffrey Epstein”) with LLM-generated reasoning</p></li>
+<li><p><strong>canonical_entities</strong>: Unique entity names with hop distance from Jeffrey
+Epstein (the “principal” entity)</p></li>
+<li><p><strong>tag_embeddings</strong>: Vector embeddings for ~30K unique tags extracted from
+triples, using a 32-dimensional model</p></li>
+</ul>
+</section>
+<section id="key-functions">
+<h2>Key Functions<a class="headerlink" href="#key-functions" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>acquire_epstein_data: Download and export SQLite data to parquet files</p></li>
+<li><p>prepare_entity_graph_data: Entity network (people/orgs as nodes)</p></li>
+<li><p>prepare_document_graph_data: Document network (docs as nodes)</p></li>
+<li><p>prepare_tag_graph_data: Tag/topic network (tags as nodes)</p></li>
+</ul>
+<p>All prep functions support caching via the &#64;cached_graph_prep decorator.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">imbed_data_prep.epstein_files</span><span class="w"> </span><span class="kn">import</span> <span class="n">acquire_epstein_data</span><span class="p">,</span> <span class="n">prepare_entity_graph_data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_dir</span> <span class="o">=</span> <span class="n">acquire_epstein_data</span><span class="p">()</span>  <span class="c1"># downloads and exports to parquet</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="n">prepare_entity_graph_data</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="p">[</span><span class="s1">&#39;points&#39;</span><span class="p">]</span>  <span class="c1"># entity nodes with degree and hop distance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span><span class="p">[</span><span class="s1">&#39;links&#39;</span><span class="p">]</span>   <span class="c1"># relationship edges between entities</span>
+</pre></div>
+</div>
+</section>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.epstein_files.acquire_epstein_data">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.epstein_files.</span></span><span class="sig-name descname"><span class="pre">acquire_epstein_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">sqlite_db_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_relationships</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dataframes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">pd.DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/epstein_files.html#acquire_epstein_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.epstein_files.acquire_epstein_data" title="Link to this definition"></a></dt>
+<dd><p>Download (if needed) the Epstein document SQLite DB, read it with DuckDB,
+and export all tables to Parquet files and/or return as DataFrames.</p>
+<p>This function handles the full data acquisition pipeline: downloading the
+SQLite database from GitHub (if not provided), exporting all tables to
+parquet format, optionally normalizing JSON string columns, and creating
+a convenient relationships_edges view.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>out_dir</strong> (<em>str</em><em> or </em><em>Path</em><em> or </em><em>None</em>) – Output directory for parquet files. Defaults to:
+~/Downloads/epstein_doc_explorer_parquet
+If None and return_dataframes=True, no files are saved.</p></li>
+<li><p><strong>sqlite_db_file</strong> (<em>str</em><em> or </em><em>Path</em><em> or </em><em>None</em>) – Path to the SQLite database file. If None, the DB is downloaded
+to a temporary file from the official GitHub source.</p></li>
+<li><p><strong>export_relationships</strong> (<em>bool</em>) – Whether to create the extra relationships_edges.parquet file.
+This is a convenient view of rdf_triples with renamed columns
+(actor→source) for graph processing.</p></li>
+<li><p><strong>normalize</strong> (<em>bool</em>) – If True, coerce known JSON string columns (like content_tags,
+triple_tags, embedding) to actual Python lists before saving.
+This makes the parquet files ready to use without post-processing.</p></li>
+<li><p><strong>return_dataframes</strong> (<em>bool</em>) – If True, return (dataframes_dict, out_dir_path).
+If False, return just out_dir_path (original behavior).</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Controls printing of progress messages.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If return_dataframes=False: Path to output directory
+If return_dataframes=True: (dataframes_dict, output_directory_or_none)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Union[Path, tuple[Dict[str, pd.DataFrame], Optional[Path]]]</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The source SQLite database is cached locally using the graze library,
+so subsequent calls won’t re-download unless the cache is cleared.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.epstein_files.cached_graph_prep">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.epstein_files.</span></span><span class="sig-name descname"><span class="pre">cached_graph_prep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cache_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/epstein_files.html#cached_graph_prep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.epstein_files.cached_graph_prep" title="Link to this definition"></a></dt>
+<dd><p>Decorator to cache graph prep functions to a tables store.</p>
+<p>The decorated function gains <cite>tables</cite> and <cite>force_recompute</cite> parameters.
+If <cite>tables</cite> is provided and cache exists, returns cached data.
+Otherwise computes, caches (if tables provided), and returns.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cache_name</strong> (<em>str</em>) – Base name for cache files (e.g., ‘entity_graph’ creates
+‘prepped/{cache_name}_points’ and ‘prepped/{cache_name}_links’)</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@cached_graph_prep</span><span class="p">(</span><span class="s1">&#39;entity_graph&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="k">def</span><span class="w"> </span><span class="nf">prepare_entity_graph_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">...</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="o">...</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;points&#39;</span><span class="p">:</span> <span class="n">points_df</span><span class="p">,</span> <span class="s1">&#39;links&#39;</span><span class="p">:</span> <span class="n">links_df</span><span class="p">}</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># First call computes and caches:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">prepare_entity_graph_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">tables</span><span class="o">=</span><span class="n">tables</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Second call loads from cache:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">prepare_entity_graph_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">tables</span><span class="o">=</span><span class="n">tables</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Force recompute:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">prepare_entity_graph_data</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">tables</span><span class="o">=</span><span class="n">tables</span><span class="p">,</span> <span class="n">force_recompute</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.epstein_files.normalize_epstein_tables">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.epstein_files.</span></span><span class="sig-name descname"><span class="pre">normalize_epstein_tables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_to_store</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../../_modules/imbed_data_prep/epstein_files.html#normalize_epstein_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.epstein_files.normalize_epstein_tables" title="Link to this definition"></a></dt>
+<dd><p>Normalize Epstein data tables by coercing JSON string columns to lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tables</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>pd.DataFrame</em><em>]</em>) – Dictionary of table name -&gt; DataFrame.</p></li>
+<li><p><strong>save_to_store</strong> (<em>MutableMapping</em><em> or </em><em>None</em>) – If provided, save the normalized tables back to this store.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – If True, print which columns were transformed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Normalized tables.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, pd.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.epstein_files.prepare_cosmograph_data">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.epstein_files.</span></span><span class="sig-name descname"><span class="pre">prepare_cosmograph_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_tables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deduplicate_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_extended_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imbed_data_prep.epstein_files.prepare_cosmograph_data" title="Link to this definition"></a></dt>
+<dd><p>Prepare entity-based graph data where nodes are people/entities and edges
+are relationships between them.</p>
+<p>This resolves entity aliases (so “Jeff Epstein” -&gt; “Jeffrey Epstein”),
+builds a nodes DataFrame with degree counts and hop distance from
+Jeffrey Epstein, and returns cleaned edges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_dir</strong> (<em>str</em><em> or </em><em>Path</em><em> or </em><em>None</em>) – Directory containing the parquet files. If None, uses the default
+imbed saves location. Ignored if <code class="docutils literal notranslate"><span class="pre">source_tables</span></code> is provided.</p></li>
+<li><p><strong>source_tables</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>pd.DataFrame</em><em>] or </em><em>None</em>) – Pre-loaded DataFrames keyed by table name. Expected keys:
+‘relationships_edges’ (or ‘rdf_triples’), ‘entity_aliases’,
+‘canonical_entities’. If None, tables are read from <code class="docutils literal notranslate"><span class="pre">data_dir</span></code>.</p></li>
+<li><p><strong>deduplicate_edges</strong> (<em>bool</em>) – If True, collapse multiple edges between the same (source, target)
+pair into one row and add a <code class="docutils literal notranslate"><span class="pre">weight</span></code> column with the count.</p></li>
+<li><p><strong>include_extended_info</strong> (<em>bool</em>) – If True, include additional columns in points: in_degree, out_degree,
+doc_count (number of unique documents mentioning entity).</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Controls printing of progress messages.</p></li>
+<li><p><strong>tables</strong> (<em>MutableMapping</em><em> or </em><em>None</em>) – (Added by &#64;cached_graph_prep) Cache store for saving/loading results.
+If provided and cache exists, returns cached data instead of recomputing.</p></li>
+<li><p><strong>force_recompute</strong> (<em>bool</em>) – (Added by &#64;cached_graph_prep) If True, recompute even if cache exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>‘points’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: canonical_name, degree, hop_distance
+(plus in_degree, out_degree, doc_count if include_extended_info)</p>
+</dd>
+<dt>’links’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: source, target, action, [weight], plus original metadata</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict with keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.epstein_files.prepare_document_graph_data">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.epstein_files.</span></span><span class="sig-name descname"><span class="pre">prepare_document_graph_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_tables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'shared_entities'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'shared_tags'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'shared_topics'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'shared_entities'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_shared</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/epstein_files.html#prepare_document_graph_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.epstein_files.prepare_document_graph_data" title="Link to this definition"></a></dt>
+<dd><p>Prepare document-based graph data where nodes are documents and edges
+connect documents that share entities, tags, or topics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_dir</strong> (<em>str</em><em> or </em><em>Path</em><em> or </em><em>None</em>) – Directory containing the parquet files. If None, uses the default
+imbed saves location. Ignored if <code class="docutils literal notranslate"><span class="pre">source_tables</span></code> is provided.</p></li>
+<li><p><strong>source_tables</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>pd.DataFrame</em><em>] or </em><em>None</em>) – Pre-loaded DataFrames keyed by table name. If None, tables are read
+from <code class="docutils literal notranslate"><span class="pre">data_dir</span></code>.</p></li>
+<li><p><strong>link_by</strong> (<em>{'shared_entities'</em><em>, </em><em>'shared_tags'</em><em>, </em><em>'shared_topics'}</em>) – Strategy for creating links between documents:
+- ‘shared_entities’: Link docs that mention the same entity
+- ‘shared_tags’: Link docs whose triples share tags (from triple_tags)
+- ‘shared_topics’: Link docs with same explicit_topic or implicit_topic</p></li>
+<li><p><strong>min_shared</strong> (<em>int</em>) – Minimum number of shared items required to create a link.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Controls printing of progress messages.</p></li>
+<li><p><strong>tables</strong> (<em>MutableMapping</em><em> or </em><em>None</em>) – (Added by &#64;cached_graph_prep) Cache store for saving/loading results.
+If provided and cache exists, returns cached data instead of recomputing.</p></li>
+<li><p><strong>force_recompute</strong> (<em>bool</em>) – (Added by &#64;cached_graph_prep) If True, recompute even if cache exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>‘points’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: doc_id, entity_count, triple_count, plus document metadata</p>
+</dd>
+<dt>’links’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: source, target, weight, shared_items</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict with keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.epstein_files.prepare_entity_graph_data">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.epstein_files.</span></span><span class="sig-name descname"><span class="pre">prepare_entity_graph_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_tables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deduplicate_edges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_extended_info</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/epstein_files.html#prepare_entity_graph_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.epstein_files.prepare_entity_graph_data" title="Link to this definition"></a></dt>
+<dd><p>Prepare entity-based graph data where nodes are people/entities and edges
+are relationships between them.</p>
+<p>This resolves entity aliases (so “Jeff Epstein” -&gt; “Jeffrey Epstein”),
+builds a nodes DataFrame with degree counts and hop distance from
+Jeffrey Epstein, and returns cleaned edges.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_dir</strong> (<em>str</em><em> or </em><em>Path</em><em> or </em><em>None</em>) – Directory containing the parquet files. If None, uses the default
+imbed saves location. Ignored if <code class="docutils literal notranslate"><span class="pre">source_tables</span></code> is provided.</p></li>
+<li><p><strong>source_tables</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>pd.DataFrame</em><em>] or </em><em>None</em>) – Pre-loaded DataFrames keyed by table name. Expected keys:
+‘relationships_edges’ (or ‘rdf_triples’), ‘entity_aliases’,
+‘canonical_entities’. If None, tables are read from <code class="docutils literal notranslate"><span class="pre">data_dir</span></code>.</p></li>
+<li><p><strong>deduplicate_edges</strong> (<em>bool</em>) – If True, collapse multiple edges between the same (source, target)
+pair into one row and add a <code class="docutils literal notranslate"><span class="pre">weight</span></code> column with the count.</p></li>
+<li><p><strong>include_extended_info</strong> (<em>bool</em>) – If True, include additional columns in points: in_degree, out_degree,
+doc_count (number of unique documents mentioning entity).</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Controls printing of progress messages.</p></li>
+<li><p><strong>tables</strong> (<em>MutableMapping</em><em> or </em><em>None</em>) – (Added by &#64;cached_graph_prep) Cache store for saving/loading results.
+If provided and cache exists, returns cached data instead of recomputing.</p></li>
+<li><p><strong>force_recompute</strong> (<em>bool</em>) – (Added by &#64;cached_graph_prep) If True, recompute even if cache exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>‘points’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: canonical_name, degree, hop_distance
+(plus in_degree, out_degree, doc_count if include_extended_info)</p>
+</dd>
+<dt>’links’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: source, target, action, [weight], plus original metadata</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict with keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed_data_prep.epstein_files.prepare_tag_graph_data">
+<span class="sig-prename descclassname"><span class="pre">imbed_data_prep.epstein_files.</span></span><span class="sig-name descname"><span class="pre">prepare_tag_graph_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_tables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">link_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'co_occurrence'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'embedding_similarity'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'co_occurrence'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_co_occurrence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">similarity_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/epstein_files.html#prepare_tag_graph_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.epstein_files.prepare_tag_graph_data" title="Link to this definition"></a></dt>
+<dd><p>Prepare tag-based graph data where nodes are unique tags and edges
+connect tags that co-occur or are semantically similar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_dir</strong> (<em>str</em><em> or </em><em>Path</em><em> or </em><em>None</em>) – Directory containing the parquet files. If None, uses the default
+imbed saves location. Ignored if <code class="docutils literal notranslate"><span class="pre">source_tables</span></code> is provided.</p></li>
+<li><p><strong>source_tables</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>pd.DataFrame</em><em>] or </em><em>None</em>) – Pre-loaded DataFrames keyed by table name. If None, tables are read
+from <code class="docutils literal notranslate"><span class="pre">data_dir</span></code>.</p></li>
+<li><p><strong>link_by</strong> (<em>{'co_occurrence'</em><em>, </em><em>'embedding_similarity'}</em>) – Strategy for creating links between tags:
+- ‘co_occurrence’: Link tags that appear together in the same triple
+- ‘embedding_similarity’: Link tags with similar embeddings</p></li>
+<li><p><strong>min_co_occurrence</strong> (<em>int</em>) – For ‘co_occurrence’: minimum times tags must co-occur to create link.</p></li>
+<li><p><strong>similarity_threshold</strong> (<em>float</em>) – For ‘embedding_similarity’: minimum cosine similarity to create link.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Controls printing of progress messages.</p></li>
+<li><p><strong>tables</strong> (<em>MutableMapping</em><em> or </em><em>None</em>) – (Added by &#64;cached_graph_prep) Cache store for saving/loading results.
+If provided and cache exists, returns cached data instead of recomputing.</p></li>
+<li><p><strong>force_recompute</strong> (<em>bool</em>) – (Added by &#64;cached_graph_prep) If True, recompute even if cache exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>‘points’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: tag, occurrence_count, doc_count</p>
+</dd>
+<dt>’links’<span class="classifier">pd.DataFrame</span></dt><dd><p>Columns: source, target, weight (co-occurrence count or similarity)</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict with keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="embeddings_of_aggregations.html" class="btn btn-neutral float-left" title="imbed_data_prep.embeddings_of_aggregations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="eurovis.html" class="btn btn-neutral float-right" title="imbed_data_prep.eurovis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
