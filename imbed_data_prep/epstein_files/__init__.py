@@ -102,16 +102,16 @@ def cached_graph_prep(cache_name: str):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, tables=None, force_recompute=False, **kwargs):
-            points_key = f'prepped/{cache_name}_points'
-            links_key = f'prepped/{cache_name}_links'
+            points_key = f"prepped/{cache_name}_points"
+            links_key = f"prepped/{cache_name}_links"
 
             # Check cache (if tables provided and not forcing recompute)
             if tables is not None and not force_recompute:
                 try:
                     if points_key in tables and links_key in tables:
                         return {
-                            'points': tables[points_key],
-                            'links': tables[links_key],
+                            "points": tables[points_key],
+                            "links": tables[links_key],
                         }
                 except Exception:
                     pass  # Cache miss or error, proceed to compute
@@ -121,8 +121,8 @@ def cached_graph_prep(cache_name: str):
 
             # Save to cache if tables provided
             if tables is not None:
-                tables[points_key] = result['points']
-                tables[links_key] = result['links']
+                tables[points_key] = result["points"]
+                tables[links_key] = result["links"]
 
             return result
 
@@ -131,6 +131,7 @@ def cached_graph_prep(cache_name: str):
         return wrapper
 
     return decorator
+
 
 def _get_clog(verbose):
     """Return a logging function based on verbosity setting."""
@@ -143,10 +144,10 @@ def _get_clog(verbose):
 
 # Known columns that contain JSON list strings in the Epstein data
 EPSTEIN_JSON_LIST_COLUMNS = {
-    'documents': ['content_tags'],
-    'rdf_triples': ['triple_tags', 'top_cluster_ids'],
-    'relationships_edges': ['triple_tags', 'top_cluster_ids'],
-    'tag_embeddings': ['embedding'],
+    "documents": ["content_tags"],
+    "rdf_triples": ["triple_tags", "top_cluster_ids"],
+    "relationships_edges": ["triple_tags", "top_cluster_ids"],
+    "tag_embeddings": ["embedding"],
 }
 
 
@@ -222,14 +223,15 @@ def _load_tables(data_dir, table_names, verbose=True, *, normalize=True):
 
     if data_dir is None:
         from imbed.util import DFLT_SAVES_DIR, process_path
-        data_dir = process_path(DFLT_SAVES_DIR, 'epstein_files')
+
+        data_dir = process_path(DFLT_SAVES_DIR, "epstein_files")
     data_dir = Path(data_dir)
 
     clog(f"Reading parquet files from {data_dir}")
 
     tables = {}
     for name in table_names:
-        df = pd.read_parquet(data_dir / f'{name}.parquet')
+        df = pd.read_parquet(data_dir / f"{name}.parquet")
 
         # Normalize JSON string columns if requested
         if normalize:
@@ -242,7 +244,7 @@ def _load_tables(data_dir, table_names, verbose=True, *, normalize=True):
     return tables
 
 
-def _resolve_aliases(edges, alias_map, src_col='source', tgt_col='target'):
+def _resolve_aliases(edges, alias_map, src_col="source", tgt_col="target"):
     """
     Apply alias resolution to source and target columns of an edges DataFrame.
 
@@ -254,7 +256,7 @@ def _resolve_aliases(edges, alias_map, src_col='source', tgt_col='target'):
     return edges
 
 
-def _compute_degree_counts(edges, src_col='source', tgt_col='target'):
+def _compute_degree_counts(edges, src_col="source", tgt_col="target"):
     """Compute degree counts for nodes from an edges DataFrame."""
     degree = Counter()
     for src, tgt in zip(edges[src_col], edges[tgt_col]):
@@ -274,8 +276,8 @@ def _deduplicate_edges(edges, src_col, tgt_col, verbose=True):
     deduped = (
         edges.groupby([src_col, tgt_col], sort=False)
         .agg(
-            weight=(src_col, 'size'),
-            **{col: (col, 'first') for col in metadata_cols},
+            weight=(src_col, "size"),
+            **{col: (col, "first") for col in metadata_cols},
         )
         .reset_index()
     )
@@ -425,7 +427,7 @@ def acquire_epstein_data(
 
                 # Normalize relationships_edges if requested
                 if normalize:
-                    rel_cols = EPSTEIN_JSON_LIST_COLUMNS.get('relationships_edges')
+                    rel_cols = EPSTEIN_JSON_LIST_COLUMNS.get("relationships_edges")
                     if rel_cols:
                         relationships_df = coerce_json_columns(
                             relationships_df, columns=rel_cols, verbose=verbose
@@ -497,18 +499,20 @@ def acquire_epstein_data(
             if normalize:
                 import pandas as pd
 
-                rel_cols = EPSTEIN_JSON_LIST_COLUMNS.get('relationships_edges')
+                rel_cols = EPSTEIN_JSON_LIST_COLUMNS.get("relationships_edges")
                 if rel_cols:
                     df = pd.read_parquet(relationships_path)
                     df = coerce_json_columns(df, columns=rel_cols, verbose=verbose)
-                    clog(f"Re-saving normalized relationships_edges -> {relationships_path}")
+                    clog(
+                        f"Re-saving normalized relationships_edges -> {relationships_path}"
+                    )
                     df.to_parquet(relationships_path, compression="zstd")
 
         clog(f"Done. Output folder: {final_out_dir}")
         return final_out_dir
 
 
-@cached_graph_prep('entity_graph')
+@cached_graph_prep("entity_graph")
 def prepare_entity_graph_data(
     data_dir=None,
     *,
@@ -565,23 +569,25 @@ def prepare_entity_graph_data(
     if source_tables is None:
         loaded = _load_tables(
             data_dir,
-            ['relationships_edges', 'entity_aliases', 'canonical_entities'],
+            ["relationships_edges", "entity_aliases", "canonical_entities"],
             verbose=verbose,
         )
-        edges = loaded['relationships_edges']
-        aliases = loaded['entity_aliases']
-        entities = loaded['canonical_entities']
+        edges = loaded["relationships_edges"]
+        aliases = loaded["entity_aliases"]
+        entities = loaded["canonical_entities"]
     else:
-        edges = source_tables.get('relationships_edges', source_tables.get('rdf_triples'))
-        aliases = source_tables['entity_aliases']
-        entities = source_tables['canonical_entities']
+        edges = source_tables.get(
+            "relationships_edges", source_tables.get("rdf_triples")
+        )
+        aliases = source_tables["entity_aliases"]
+        entities = source_tables["canonical_entities"]
 
     # ---- Resolve aliases ----------------------------------------------------
     clog("Resolving entity aliases...")
-    alias_map = dict(zip(aliases['original_name'], aliases['canonical_name']))
+    alias_map = dict(zip(aliases["original_name"], aliases["canonical_name"]))
 
-    src_col = 'source' if 'source' in edges.columns else 'actor'
-    tgt_col = 'target'
+    src_col = "source" if "source" in edges.columns else "actor"
+    tgt_col = "target"
 
     edges = _resolve_aliases(edges, alias_map, src_col, tgt_col)
 
@@ -593,7 +599,7 @@ def prepare_entity_graph_data(
     clog("Building nodes...")
 
     hop_map = dict(
-        zip(entities['canonical_name'], entities['hop_distance_from_principal'])
+        zip(entities["canonical_name"], entities["hop_distance_from_principal"])
     )
 
     if include_extended_info:
@@ -605,7 +611,7 @@ def prepare_entity_graph_data(
         # Count unique documents per entity
         doc_counts = Counter()
         for _, row in edges.iterrows():
-            doc_id = row.get('doc_id')
+            doc_id = row.get("doc_id")
             if doc_id:
                 doc_counts[(row[src_col], doc_id)] = 1
                 doc_counts[(row[tgt_col], doc_id)] = 1
@@ -613,31 +619,35 @@ def prepare_entity_graph_data(
         for (entity, _), _ in doc_counts.items():
             entity_doc_count[entity] += 1
 
-        points = pd.DataFrame([
-            {
-                'canonical_name': name,
-                'degree': in_degree.get(name, 0) + out_degree.get(name, 0),
-                'in_degree': in_degree.get(name, 0),
-                'out_degree': out_degree.get(name, 0),
-                'hop_distance': hop_map.get(name),
-                'doc_count': entity_doc_count.get(name, 0),
-            }
-            for name in all_names
-        ])
+        points = pd.DataFrame(
+            [
+                {
+                    "canonical_name": name,
+                    "degree": in_degree.get(name, 0) + out_degree.get(name, 0),
+                    "in_degree": in_degree.get(name, 0),
+                    "out_degree": out_degree.get(name, 0),
+                    "hop_distance": hop_map.get(name),
+                    "doc_count": entity_doc_count.get(name, 0),
+                }
+                for name in all_names
+            ]
+        )
     else:
         degree = _compute_degree_counts(edges, src_col, tgt_col)
-        points = pd.DataFrame([
-            {
-                'canonical_name': name,
-                'degree': deg,
-                'hop_distance': hop_map.get(name),
-            }
-            for name, deg in degree.items()
-        ])
+        points = pd.DataFrame(
+            [
+                {
+                    "canonical_name": name,
+                    "degree": deg,
+                    "hop_distance": hop_map.get(name),
+                }
+                for name, deg in degree.items()
+            ]
+        )
 
-    points = points.sort_values('degree', ascending=False).reset_index(drop=True)
+    points = points.sort_values("degree", ascending=False).reset_index(drop=True)
 
-    n_with_hop = points['hop_distance'].notna().sum()
+    n_with_hop = points["hop_distance"].notna().sum()
     clog(
         f"  {len(points)} nodes "
         f"({n_with_hop} with hop distance, "
@@ -645,11 +655,11 @@ def prepare_entity_graph_data(
     )
 
     # ---- Rename edge columns for consistency --------------------------------
-    if src_col == 'actor':
-        edges = edges.rename(columns={'actor': 'source'})
+    if src_col == "actor":
+        edges = edges.rename(columns={"actor": "source"})
 
     clog("Done.")
-    return {'points': points, 'links': edges}
+    return {"points": points, "links": edges}
 
 
 # Backward compatibility alias
@@ -660,15 +670,15 @@ prepare_cosmograph_data = prepare_entity_graph_data
 # Document-based graph functions
 # ---------------------------------------------------------------------------
 
-DocumentLinkStrategy = Literal['shared_entities', 'shared_tags', 'shared_topics']
+DocumentLinkStrategy = Literal["shared_entities", "shared_tags", "shared_topics"]
 
 
-@cached_graph_prep('document_graph')
+@cached_graph_prep("document_graph")
 def prepare_document_graph_data(
     data_dir=None,
     *,
     source_tables=None,
-    link_by: DocumentLinkStrategy = 'shared_entities',
+    link_by: DocumentLinkStrategy = "shared_entities",
     min_shared: int = 1,
     verbose=True,
 ):
@@ -716,45 +726,47 @@ def prepare_document_graph_data(
     if source_tables is None:
         loaded = _load_tables(
             data_dir,
-            ['relationships_edges', 'documents', 'entity_aliases'],
+            ["relationships_edges", "documents", "entity_aliases"],
             verbose=verbose,
         )
-        edges = loaded['relationships_edges']
-        documents = loaded['documents']
-        aliases = loaded['entity_aliases']
+        edges = loaded["relationships_edges"]
+        documents = loaded["documents"]
+        aliases = loaded["entity_aliases"]
     else:
-        edges = source_tables.get('relationships_edges', source_tables.get('rdf_triples'))
-        documents = source_tables['documents']
-        aliases = source_tables.get('entity_aliases')
+        edges = source_tables.get(
+            "relationships_edges", source_tables.get("rdf_triples")
+        )
+        documents = source_tables["documents"]
+        aliases = source_tables.get("entity_aliases")
 
     # Resolve aliases if available
     if aliases is not None:
         clog("Resolving entity aliases...")
-        alias_map = dict(zip(aliases['original_name'], aliases['canonical_name']))
-        src_col = 'source' if 'source' in edges.columns else 'actor'
-        edges = _resolve_aliases(edges, alias_map, src_col, 'target')
+        alias_map = dict(zip(aliases["original_name"], aliases["canonical_name"]))
+        src_col = "source" if "source" in edges.columns else "actor"
+        edges = _resolve_aliases(edges, alias_map, src_col, "target")
     else:
-        src_col = 'source' if 'source' in edges.columns else 'actor'
+        src_col = "source" if "source" in edges.columns else "actor"
 
     # ---- Build doc -> items mapping based on strategy -----------------------
     clog(f"Building document links by '{link_by}'...")
 
     doc_items = {}  # doc_id -> set of items
 
-    if link_by == 'shared_entities':
+    if link_by == "shared_entities":
         for _, row in edges.iterrows():
-            doc_id = row['doc_id']
+            doc_id = row["doc_id"]
             if doc_id not in doc_items:
                 doc_items[doc_id] = set()
             doc_items[doc_id].add(row[src_col])
-            doc_items[doc_id].add(row['target'])
+            doc_items[doc_id].add(row["target"])
 
-    elif link_by == 'shared_tags':
+    elif link_by == "shared_tags":
         for _, row in edges.iterrows():
-            doc_id = row['doc_id']
+            doc_id = row["doc_id"]
             if doc_id not in doc_items:
                 doc_items[doc_id] = set()
-            tags_raw = row.get('triple_tags', '[]')
+            tags_raw = row.get("triple_tags", "[]")
             if isinstance(tags_raw, str):
                 try:
                     tags = json.loads(tags_raw)
@@ -764,13 +776,13 @@ def prepare_document_graph_data(
                 tags = tags_raw if tags_raw else []
             doc_items[doc_id].update(tags)
 
-    elif link_by == 'shared_topics':
+    elif link_by == "shared_topics":
         for _, row in edges.iterrows():
-            doc_id = row['doc_id']
+            doc_id = row["doc_id"]
             if doc_id not in doc_items:
                 doc_items[doc_id] = set()
-            explicit = row.get('explicit_topic')
-            implicit = row.get('implicit_topic')
+            explicit = row.get("explicit_topic")
+            implicit = row.get("implicit_topic")
             if explicit and pd.notna(explicit):
                 doc_items[doc_id].add(f"explicit:{explicit}")
             if implicit and pd.notna(implicit):
@@ -800,11 +812,13 @@ def prepare_document_graph_data(
     links_data = []
     for (d1, d2), count in doc_pair_shared.items():
         if count >= min_shared:
-            links_data.append({
-                'source': d1,
-                'target': d2,
-                'weight': count,
-            })
+            links_data.append(
+                {
+                    "source": d1,
+                    "target": d2,
+                    "weight": count,
+                }
+            )
 
     links = pd.DataFrame(links_data)
     clog(f"  {len(links)} document pairs with >= {min_shared} shared {link_by}")
@@ -816,52 +830,52 @@ def prepare_document_graph_data(
     doc_entity_count = Counter()
     doc_triple_count = Counter()
     for _, row in edges.iterrows():
-        doc_id = row['doc_id']
+        doc_id = row["doc_id"]
         doc_triple_count[doc_id] += 1
         doc_entity_count[doc_id] += 2  # source and target
 
     # Merge with document metadata
     doc_ids_in_graph = set(doc_items.keys())
     points_data = []
-    doc_info = documents.set_index('doc_id')
+    doc_info = documents.set_index("doc_id")
 
     for doc_id in doc_ids_in_graph:
-        row = {'doc_id': doc_id}
-        row['entity_count'] = len(doc_items.get(doc_id, set()))
-        row['triple_count'] = doc_triple_count.get(doc_id, 0)
+        row = {"doc_id": doc_id}
+        row["entity_count"] = len(doc_items.get(doc_id, set()))
+        row["triple_count"] = doc_triple_count.get(doc_id, 0)
 
         # Add document metadata if available
         if doc_id in doc_info.index:
             doc_row = doc_info.loc[doc_id]
-            row['one_sentence_summary'] = doc_row.get('one_sentence_summary', '')
-            row['category'] = doc_row.get('category', '')
-            row['date_range_earliest'] = doc_row.get('date_range_earliest')
-            row['date_range_latest'] = doc_row.get('date_range_latest')
+            row["one_sentence_summary"] = doc_row.get("one_sentence_summary", "")
+            row["category"] = doc_row.get("category", "")
+            row["date_range_earliest"] = doc_row.get("date_range_earliest")
+            row["date_range_latest"] = doc_row.get("date_range_latest")
 
         points_data.append(row)
 
     points = pd.DataFrame(points_data)
-    points = points.sort_values('triple_count', ascending=False).reset_index(drop=True)
+    points = points.sort_values("triple_count", ascending=False).reset_index(drop=True)
 
     clog(f"  {len(points)} document nodes")
     clog("Done.")
 
-    return {'points': points, 'links': links}
+    return {"points": points, "links": links}
 
 
 # ---------------------------------------------------------------------------
 # Tag-based graph functions
 # ---------------------------------------------------------------------------
 
-TagLinkStrategy = Literal['co_occurrence', 'embedding_similarity']
+TagLinkStrategy = Literal["co_occurrence", "embedding_similarity"]
 
 
-@cached_graph_prep('tag_graph')
+@cached_graph_prep("tag_graph")
 def prepare_tag_graph_data(
     data_dir=None,
     *,
     source_tables=None,
-    link_by: TagLinkStrategy = 'co_occurrence',
+    link_by: TagLinkStrategy = "co_occurrence",
     min_co_occurrence: int = 2,
     similarity_threshold: float = 0.7,
     verbose=True,
@@ -908,17 +922,19 @@ def prepare_tag_graph_data(
     clog = _get_clog(verbose)
 
     # ---- Load tables --------------------------------------------------------
-    table_names = ['relationships_edges']
-    if link_by == 'embedding_similarity':
-        table_names.append('tag_embeddings')
+    table_names = ["relationships_edges"]
+    if link_by == "embedding_similarity":
+        table_names.append("tag_embeddings")
 
     if source_tables is None:
         loaded = _load_tables(data_dir, table_names, verbose=verbose)
-        edges = loaded['relationships_edges']
-        tag_embeddings = loaded.get('tag_embeddings')
+        edges = loaded["relationships_edges"]
+        tag_embeddings = loaded.get("tag_embeddings")
     else:
-        edges = source_tables.get('relationships_edges', source_tables.get('rdf_triples'))
-        tag_embeddings = source_tables.get('tag_embeddings')
+        edges = source_tables.get(
+            "relationships_edges", source_tables.get("rdf_triples")
+        )
+        tag_embeddings = source_tables.get("tag_embeddings")
 
     # ---- Parse tags from triples --------------------------------------------
     clog("Parsing tags from triples...")
@@ -929,8 +945,8 @@ def prepare_tag_graph_data(
     triple_tags_list = []  # list of (doc_id, set of tags) for each triple
 
     for _, row in edges.iterrows():
-        doc_id = row['doc_id']
-        tags_raw = row.get('triple_tags', '[]')
+        doc_id = row["doc_id"]
+        tags_raw = row.get("triple_tags", "[]")
         if isinstance(tags_raw, str):
             try:
                 tags = json.loads(tags_raw)
@@ -954,7 +970,7 @@ def prepare_tag_graph_data(
     clog(f"  {len(tag_occurrences)} unique tags found")
 
     # ---- Build links based on strategy --------------------------------------
-    if link_by == 'co_occurrence':
+    if link_by == "co_occurrence":
         clog("Computing tag co-occurrences...")
 
         co_occurrence = Counter()
@@ -966,16 +982,18 @@ def prepare_tag_graph_data(
         links_data = []
         for (t1, t2), count in co_occurrence.items():
             if count >= min_co_occurrence:
-                links_data.append({
-                    'source': t1,
-                    'target': t2,
-                    'weight': count,
-                })
+                links_data.append(
+                    {
+                        "source": t1,
+                        "target": t2,
+                        "weight": count,
+                    }
+                )
 
         links = pd.DataFrame(links_data)
         clog(f"  {len(links)} tag pairs with >= {min_co_occurrence} co-occurrences")
 
-    elif link_by == 'embedding_similarity':
+    elif link_by == "embedding_similarity":
         clog("Computing tag embedding similarities...")
 
         if tag_embeddings is None:
@@ -988,8 +1006,8 @@ def prepare_tag_graph_data(
         # Build tag -> embedding mapping
         tag_to_emb = {}
         for _, row in tag_embeddings.iterrows():
-            tag = row['tag']
-            emb_raw = row['embedding']
+            tag = row["tag"]
+            emb_raw = row["embedding"]
             if isinstance(emb_raw, str):
                 emb = np.array(json.loads(emb_raw))
             else:
@@ -1002,14 +1020,16 @@ def prepare_tag_graph_data(
 
         links_data = []
         for i, t1 in enumerate(tags_with_emb):
-            for t2 in tags_with_emb[i + 1:]:
+            for t2 in tags_with_emb[i + 1 :]:
                 sim = np.dot(tag_to_emb[t1], tag_to_emb[t2])
                 if sim >= similarity_threshold:
-                    links_data.append({
-                        'source': t1,
-                        'target': t2,
-                        'weight': float(sim),
-                    })
+                    links_data.append(
+                        {
+                            "source": t1,
+                            "target": t2,
+                            "weight": float(sim),
+                        }
+                    )
 
         links = pd.DataFrame(links_data)
         clog(f"  {len(links)} tag pairs with similarity >= {similarity_threshold}")
@@ -1022,18 +1042,20 @@ def prepare_tag_graph_data(
 
     points_data = []
     for tag, count in tag_occurrences.items():
-        points_data.append({
-            'tag': tag,
-            'occurrence_count': count,
-            'doc_count': tag_doc_count.get(tag, 0),
-        })
+        points_data.append(
+            {
+                "tag": tag,
+                "occurrence_count": count,
+                "doc_count": tag_doc_count.get(tag, 0),
+            }
+        )
 
     points = pd.DataFrame(points_data)
-    points = points.sort_values('occurrence_count', ascending=False).reset_index(
+    points = points.sort_values("occurrence_count", ascending=False).reset_index(
         drop=True
     )
 
     clog(f"  {len(points)} tag nodes")
     clog("Done.")
 
-    return {'points': points, 'links': links}
+    return {"points": points, "links": links}

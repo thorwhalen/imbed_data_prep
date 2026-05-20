@@ -15,32 +15,32 @@ MANUAL WORK NEEDED:
 import os
 
 
-laws_list_url = 'https://www.jerseylaw.je/laws/current/Pages/search.aspx?size=n_500_n'
+laws_list_url = "https://www.jerseylaw.je/laws/current/Pages/search.aspx?size=n_500_n"
 
 
 def extract_ref(url):
     import re
 
-    return re.search(r'([\d\.]+)\.aspx', url).group(1)
+    return re.search(r"([\d\.]+)\.aspx", url).group(1)
 
 
 def extract_info(html):
     from bs4 import BeautifulSoup
 
-    soup = BeautifulSoup(html, 'html.parser')
+    soup = BeautifulSoup(html, "html.parser")
     table = soup.find("tbody", {"class": "MuiTableBody-root"})
     rows = table.find_all("a", {"class": "MuiTableRow-root resultRow"})
 
     def gen():
         for row in rows:
-            d = {'name': row.text, 'url': row.get('href')}
-            ref = extract_ref(d['url'])
-            d['ref'] = ref
-            if d['name'] == 'Communications (Jersey) Order 2020':
+            d = {"name": row.text, "url": row.get("href")}
+            ref = extract_ref(d["url"])
+            d["ref"] = ref
+            if d["name"] == "Communications (Jersey) Order 2020":
                 # Special case: this law has a space in the pdf filename (error in the website)
-                d['pdf'] = f"https://www.jerseylaw.je/laws/current/PDFs/{ref} .pdf"
+                d["pdf"] = f"https://www.jerseylaw.je/laws/current/PDFs/{ref} .pdf"
             else:  # Normal case
-                d['pdf'] = f"https://www.jerseylaw.je/laws/current/PDFs/{ref}.pdf"
+                d["pdf"] = f"https://www.jerseylaw.je/laws/current/PDFs/{ref}.pdf"
             yield d
 
     return list(gen())
@@ -49,7 +49,7 @@ def extract_info(html):
 from dol import TextFiles, filt_iter
 
 
-@filt_iter(filt=lambda x: x.endswith('html') and x.startswith('jersey_laws_'))
+@filt_iter(filt=lambda x: x.endswith("html") and x.startswith("jersey_laws_"))
 class Htmls(TextFiles):
     """jersey law htmls"""
 
@@ -74,12 +74,12 @@ def htmls_store(htmls: Folderpath | Mapping[str, str]) -> Htmls:
 def gather_info(htmls: Folderpath | Mapping[str, str]):
     htmls = htmls_store(htmls)
     for d in chain.from_iterable(map(extract_info, htmls.values())):
-        d['pdf_url'] = d['url'].replace('Pages/Default.aspx', 'Documents')
+        d["pdf_url"] = d["url"].replace("Pages/Default.aspx", "Documents")
 
 
 def get_laws_info(htmls: Folderpath | Mapping[str, str]):
     htmls = htmls_store(htmls)
     laws_info = list(chain.from_iterable(map(extract_info, htmls.values())))
-    assert all(x['pdf'] for x in laws_info)
-    assert len({x['name'] for x in laws_info}) == len(laws_info)
+    assert all(x["pdf"] for x in laws_info)
+    assert len({x["name"] for x in laws_info}) == len(laws_info)
     return laws_info

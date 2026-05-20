@@ -19,7 +19,7 @@ from imbed.util import (
     planar_embeddings_dict_to_df,
 )
 
-data_name = 'mcdonalds_reviews'
+data_name = "mcdonalds_reviews"
 
 
 @dataclass
@@ -37,9 +37,9 @@ class McdonaldsReviewsDacc(LocalSavesMixin, ImbedArtifactsMixin):
 
     name: str | None = data_name
     _: KW_ONLY
-    datadir: str = '.'
+    datadir: str = "."
     saves_dir: str | None = None
-    raw_data_filename: str = 'McDonalds_Reviews_Cleaned.csv'
+    raw_data_filename: str = "McDonalds_Reviews_Cleaned.csv"
     verbose: int = 1
     model: str = DFLT_EMBEDDING_MODEL
 
@@ -65,20 +65,20 @@ class McdonaldsReviewsDacc(LocalSavesMixin, ImbedArtifactsMixin):
         df.columns = [col.strip() for col in df.columns]
         return df
 
-    @cache_this(cache='saves', key=add_extension('.parquet'))
+    @cache_this(cache="saves", key=add_extension(".parquet"))
     def embeddable(self):
         """Prepare data for embedding
 
         Extracts review text and adds it as 'segment' column
         """
         df = self.raw_data.copy()
-        df['segment'] = df['review']
-        df.index.name = 'id_'
+        df["segment"] = df["review"]
+        df.index.name = "id_"
         if self.verbose:
             print(f"Prepared {len(df)} reviews for embedding")
         return df
 
-    @cache_this(cache='saves', key=add_extension('.parquet'))
+    @cache_this(cache="saves", key=add_extension(".parquet"))
     def embeddings_df(self):
         """Compute embeddings for reviews
 
@@ -94,23 +94,23 @@ class McdonaldsReviewsDacc(LocalSavesMixin, ImbedArtifactsMixin):
         if self.verbose:
             print("Computing embeddings...")
 
-        reviews = self.embeddable['review'].tolist()
+        reviews = self.embeddable["review"].tolist()
         vectors = oa.embeddings(reviews, model=self.model)
 
-        df = pd.DataFrame({'embedding': list(vectors)}, index=self.embeddable.index)
+        df = pd.DataFrame({"embedding": list(vectors)}, index=self.embeddable.index)
 
         if self.verbose:
             print(f"Computed {len(vectors)} embeddings")
 
         return df
 
-    @cache_this(cache='saves', key=add_extension('.parquet'))
+    @cache_this(cache="saves", key=add_extension(".parquet"))
     def planar_embeddings(self):
         """Compute 2D planar embeddings for visualization"""
         if self.verbose:
             print("Computing planar embeddings...")
 
-        embeddings_dict = self.embeddings_df['embedding'].to_dict()
+        embeddings_dict = self.embeddings_df["embedding"].to_dict()
         planar_dict = planar_embeddings(embeddings_dict)
         return planar_embeddings_dict_to_df(planar_dict)
 
@@ -120,7 +120,7 @@ class McdonaldsReviewsDacc(LocalSavesMixin, ImbedArtifactsMixin):
         df = self.embeddable
         return dict(zip(df.index.values, df.segment))
 
-    @cache_this(cache='saves', key=add_extension('.parquet'))
+    @cache_this(cache="saves", key=add_extension(".parquet"))
     def clusters_df(self):
         """Compute cluster assignments
 
@@ -130,7 +130,7 @@ class McdonaldsReviewsDacc(LocalSavesMixin, ImbedArtifactsMixin):
             print("Computing clusters...")
         return super().clusters_df()
 
-    @cache_this(cache='saves', key=add_extension('.parquet'))
+    @cache_this(cache="saves", key=add_extension(".parquet"))
     def merged_artifacts(self):
         """Merge all computed artifacts into one dataframe
 
@@ -167,13 +167,13 @@ from dol import cache_this, add_extension
 @dataclass
 class McdonaldsReviewsMoodModeling(McdonaldsReviewsDacc):
     """Extended data accessor with mood modeling and analysis capabilities
-    
+
     This class extends McdonaldsReviewsDacc to support:
     - Semantic attribute dataset management
     - Embeddings computation for training data
     - Model training and evaluation across categories
     - Results persistence and analysis
-    
+
     Usage:
         >>> dacc = McdonaldsReviewsMoodModeling(  # doctest: +SKIP
         ...     datadir='.',
@@ -192,137 +192,132 @@ class McdonaldsReviewsMoodModeling(McdonaldsReviewsDacc):
         >>> # Get model summary for a specific category
         >>> summary = dacc.category_model_summary('food_quality_presentation')  # doctest: +SKIP
     """
-    
+
     # Paths for semantic attributes and modeling
-    semantic_attributes_path: str | None = 'semantic_attributes.json'
+    semantic_attributes_path: str | None = "semantic_attributes.json"
     semantic_attributes_dataset_dir: str | None = None
     embeddings_folder: str | None = None
     results_folder: str | None = None
-    
+
     # Modeling parameters
     cv_splits: int = 30
-    
+
     def __post_init__(self):
         super().__post_init__()
-        
+
         # Set default paths relative to saves_dir
         if self.semantic_attributes_dataset_dir is None:
             self.semantic_attributes_dataset_dir = os.path.join(
-                self.saves_dir, 'semantic_attributes'
+                self.saves_dir, "semantic_attributes"
             )
-        
+
         if self.embeddings_folder is None:
-            self.embeddings_folder = os.path.join(
-                self.saves_dir, 'embeddings'
-            )
-            
+            self.embeddings_folder = os.path.join(self.saves_dir, "embeddings")
+
         if self.results_folder is None:
-            self.results_folder = os.path.join(
-                self.saves_dir, 'mood_modeling_results'
-            )
-        
+            self.results_folder = os.path.join(self.saves_dir, "mood_modeling_results")
+
         # Ensure directories exist
         for dirpath in [
             self.semantic_attributes_dataset_dir,
             self.embeddings_folder,
-            self.results_folder
+            self.results_folder,
         ]:
             os.makedirs(dirpath, exist_ok=True)
-    
+
     @cache_this
     def semantic_attributes(self) -> dict[str, str]:
         """Load semantic attributes from JSON file
-        
+
         Returns dictionary mapping attribute names to descriptions.
         """
         filepath = os.path.join(self.datadir, self.semantic_attributes_path)
-        
+
         if not os.path.exists(filepath):
             if self.verbose:
                 print(f"Warning: {filepath} not found, returning empty dict")
             return {}
-        
+
         json_store = dol.JsonFiles(os.path.dirname(filepath))
         key = os.path.basename(filepath)
-        
+
         if self.verbose:
             print(f"Loading semantic attributes from {filepath}")
-        
+
         return json_store[key]
-    
+
     @property
     def _segments_store(self):
         """Internal: Create store for accessing category segments"""
         import dol
         from mood.dataset_makers import parsed_lines
-        
+
         mk_segments_store = dol.Pipe(
             dol.TextFiles,
-            dol.filt_iter(filt=lambda x: x.endswith('.txt')),
-            dol.KeyCodecs.suffixed('.txt'),
+            dol.filt_iter(filt=lambda x: x.endswith(".txt")),
+            dol.KeyCodecs.suffixed(".txt"),
             dol.wrap_kvs(value_decoder=dol.Pipe(parsed_lines, pd.DataFrame)),
         )
-        
+
         return mk_segments_store(self.semantic_attributes_dataset_dir)
-    
+
     @property
     def _embeddings_store(self):
         """Internal: Create store for accessing category embeddings"""
         import tabled
+
         return tabled.DfFiles(self.embeddings_folder)
-    
+
     @property
     def _results_store(self):
         """Internal: Create store for accessing modeling results"""
         import dill
-        
+
         DillFiles = dol.wrap_kvs(
-            dol.Files,
-            value_decoder=dill.loads,
-            value_encoder=dill.dumps
+            dol.Files, value_decoder=dill.loads, value_encoder=dill.dumps
         )
-        
+
         return DillFiles(self.results_folder)
-    
+
     def category_segments(self, category: str) -> tuple[pd.Series, pd.Series]:
         """Get segments and scores for a category
-        
+
         Args:
             category: Name of the semantic attribute category
-            
+
         Returns:
             Tuple of (segments, scores) as pandas Series
         """
         data_table = self._segments_store[category]
-        return data_table['segment'], data_table['score']
-    
-    @cache_this(cache='_embeddings_store', key=lambda cat: f'{cat}.parquet')
+        return data_table["segment"], data_table["score"]
+
+    @cache_this(cache="_embeddings_store", key=lambda cat: f"{cat}.parquet")
     def category_embeddings(self, category: str) -> pd.DataFrame:
         """Compute or load embeddings for a category's segments
-        
+
         Args:
             category: Name of the semantic attribute category
-            
+
         Returns:
             DataFrame with embeddings column
         """
         import oa
-        
+
         segments, _ = self.category_segments(category)
-        
+
         if self.verbose:
             print(f"Computing embeddings for {category} ({len(segments)} segments)")
-        
+
         embeddings = oa.embeddings(segments.to_list(), model=self.model)
-        
-        return pd.DataFrame({'embedding': list(embeddings)})
-    
+
+        return pd.DataFrame({"embedding": list(embeddings)})
+
     def category_xy(self, category: str) -> tuple[np.ndarray, np.ndarray]:
         """Get X, y arrays for model training
-        
+
         Args:
             category: Name of the semantic attribute category
-            
+
         Returns:
             Tuple of (X, y) as numpy arrays where:
             - X: (n_samples, embedding_dim) embedding vectors
@@ -330,19 +325,19 @@ class McdonaldsReviewsMoodModeling(McdonaldsReviewsDacc):
         """
         _, scores = self.category_segments(category)
         embeddings_df = self.category_embeddings(category)
-        
-        X = np.stack(embeddings_df['embedding'].values)
+
+        X = np.stack(embeddings_df["embedding"].values)
         y = np.array(scores)
-        
+
         return X, y
-    
-    @cache_this(cache='_results_store', key=lambda cat: f'{cat}.p')
+
+    @cache_this(cache="_results_store", key=lambda cat: f"{cat}.p")
     def category_results(self, category: str) -> dict:
         """Train and evaluate models for a category
-        
+
         Args:
             category: Name of the semantic attribute category
-            
+
         Returns:
             Dictionary containing:
             - results: Single train/test split results
@@ -350,126 +345,119 @@ class McdonaldsReviewsMoodModeling(McdonaldsReviewsDacc):
             - summary: Performance summary
         """
         from mood.mood_modeling import MoodModelingManager
-        
+
         if self.verbose:
             print(f"Training models for {category}")
-        
+
         X, y = self.category_xy(category)
         manager = MoodModelingManager.from_arrays(X, y)
-        
+
         return {
-            'results': manager.train_and_evaluate(),
-            'cv_results': manager.cross_validate_models(n_splits=self.cv_splits),
-            'summary': manager.get_model_summary(use_cv=True),
+            "results": manager.train_and_evaluate(),
+            "cv_results": manager.cross_validate_models(n_splits=self.cv_splits),
+            "summary": manager.get_model_summary(use_cv=True),
         }
-    
+
     def all_category_results(self) -> dict[str, dict]:
         """Train and evaluate models for all categories
-        
+
         Returns:
             Dictionary mapping category names to their results
         """
         results = {}
-        
+
         for category in self._segments_store:
             if self.verbose:
                 print(f"\nProcessing category: {category}")
-            
+
             results[category] = self.category_results(category)
-        
+
         return results
-    
+
     def category_model_summary(self, category: str) -> pd.DataFrame:
         """Get model performance summary for a category
-        
+
         Args:
             category: Name of the semantic attribute category
-            
+
         Returns:
             DataFrame with model performance metrics
         """
         results = self.category_results(category)
-        return results['summary']
-    
+        return results["summary"]
+
     def category_model_config(
-        self, 
-        category: str, 
-        model_name: str = 'logistic_high_vs_low'
+        self, category: str, model_name: str = "logistic_high_vs_low"
     ) -> dict:
         """Get configuration for a specific model
-        
+
         Args:
             category: Name of the semantic attribute category
             model_name: Name of the model to get config for
-            
+
         Returns:
             Dictionary with model configuration including class and parameters
         """
         results = self.category_results(category)
-        return results['results'][model_name]['config']
-    
-    def train_model(
-        self,
-        category: str,
-        model_name: str = 'logistic_high_vs_low'
-    ):
+        return results["results"][model_name]["config"]
+
+    def train_model(self, category: str, model_name: str = "logistic_high_vs_low"):
         """Train and return a fitted model instance
-        
+
         Args:
             category: Name of the semantic attribute category
             model_name: Name of the model to train
-            
+
         Returns:
             Fitted model instance
         """
         config = self.category_model_config(category, model_name)
         X, y = self.category_xy(category)
-        
-        learner = config['model_class'](**config['model_params'])
+
+        learner = config["model_class"](**config["model_params"])
         learner.fit(X, y)
-        
+
         return learner
-    
+
     def dataset_statistics(self) -> pd.DataFrame:
         """Get statistics about all semantic attribute datasets
-        
+
         Returns:
             DataFrame with category names and example counts
         """
         stats = []
-        
+
         for category in self._segments_store:
             segments, _ = self.category_segments(category)
-            stats.append({
-                'semantic_attribute': category,
-                'number_of_examples': len(segments)
-            })
-        
+            stats.append(
+                {"semantic_attribute": category, "number_of_examples": len(segments)}
+            )
+
         return pd.DataFrame(stats)
-    
+
     def list_categories(self) -> list[str]:
         """List all available semantic attribute categories
-        
+
         Returns:
             List of category names
         """
         return list(self._segments_store)
-    
+
     def clear_category_cache(self, category: str):
         """Clear cached data for a category
-        
+
         Args:
             category: Name of the semantic attribute category
         """
         # Clear embeddings
-        embeddings_key = f'{category}.parquet'
+        embeddings_key = f"{category}.parquet"
         if embeddings_key in self._embeddings_store:
             del self._embeddings_store[embeddings_key]
-        
+
         # Clear results
-        results_key = f'{category}.p'
+        results_key = f"{category}.p"
         if results_key in self._results_store:
             del self._results_store[results_key]
-        
+
         if self.verbose:
             print(f"Cleared cache for {category}")

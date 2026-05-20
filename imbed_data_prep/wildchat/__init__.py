@@ -1,6 +1,4 @@
-"""Data prep for Github Repositories data.
-
-"""
+"""Data prep for Github Repositories data."""
 
 from functools import partial
 from io import BytesIO
@@ -39,7 +37,7 @@ import pandas as pd
 import numpy as np
 
 
-data_name = 'wildchat'
+data_name = "wildchat"
 huggingface_data_stub = "allenai/WildChat-1M"
 # raw_data_name = 'github_repos.parquet'
 
@@ -47,7 +45,7 @@ huggingface_data_stub = "allenai/WildChat-1M"
 # TODO: Use config2py tools to include a message containing the default values
 _DFLT_CACHE_DIR = saves_join(data_name)
 
-DFLT_CACHE_DIR = os.environ.get('WILDCHAT_CACHE_DIR', default=_DFLT_CACHE_DIR)
+DFLT_CACHE_DIR = os.environ.get("WILDCHAT_CACHE_DIR", default=_DFLT_CACHE_DIR)
 # # For a more flexible configs getter (that will ask user for missing keys):
 # DFLT_CACHE_DIR = get_config('WILDCHAT_CACHE_DIR', default=_DFLT_CACHE_DIR)
 
@@ -83,14 +81,14 @@ class WildchatDacc(HugfaceDaccBase):
     verbose: int = 1
     model: str = DFLT_EMBEDDING_MODEL
 
-    @cache_this(cache='saves', key=add_extension('parquet'))
+    @cache_this(cache="saves", key=add_extension("parquet"))
     @log_method_calls
     def expanded_train(self):
         return expand_wildchat_data(self.train_data)
 
     @property
     def expanded_en(self):
-        return self.expanded_train[self.expanded_train.language == 'English']
+        return self.expanded_train[self.expanded_train.language == "English"]
 
     @property
     def language_conversation_counts(self):
@@ -102,20 +100,20 @@ class WildchatDacc(HugfaceDaccBase):
 
     # @cache_this(cache='saves', key=add_extension('.parquet'))
     # @log_method_calls
-    @cache_this(cache='saves', key=add_extension('.parquet'))
+    @cache_this(cache="saves", key=add_extension(".parquet"))
     @log_method_calls
     def embeddable_df(self):
         df = self.expanded_train
-        df['id_'] = df.index.values
-        df['segment_length'] = df['conversation.content'].apply(len)
+        df["id_"] = df.index.values
+        df["segment_length"] = df["conversation.content"].apply(len)
         df = add_token_info_to_df(
             df,
-            segments_col='conversation.content',
+            segments_col="conversation.content",
             model=self.model,
         )  # takes 10mn
         # then keep only those conversations (grouped by hash) that have all valid segments
-        return df.groupby('conversation_hash').filter(
-            lambda x: x['segment_is_valid'].all()
+        return df.groupby("conversation_hash").filter(
+            lambda x: x["segment_is_valid"].all()
         )
 
 
@@ -141,21 +139,21 @@ def expand_wildchat_data(df):
 
     """
     # for each (aligned) item of conversation and moderation, make a new row
-    df = expand_rows(df, ['conversation', 'openai_moderation', 'detoxify_moderation'])
+    df = expand_rows(df, ["conversation", "openai_moderation", "detoxify_moderation"])
     # These items are dicts, so expand their fields into columns
     df = expand_columns(
-        df, ['conversation', 'openai_moderation', 'detoxify_moderation']
+        df, ["conversation", "openai_moderation", "detoxify_moderation"]
     )
     # openai_moderation has yet one more level of nesting so flatten that too
     openai_moderation_cols = [
-        'openai_moderation.categories',
-        'openai_moderation.category_scores',
+        "openai_moderation.categories",
+        "openai_moderation.category_scores",
     ]
     #   some 16996 rows have null openai_moderation values: drop them before expanding
     df.dropna(subset=openai_moderation_cols, inplace=True)
     df = expand_columns(df, openai_moderation_cols)
     # remove all columns that have a / in them (because they have duplicates)
-    df = df[[c for c in df.columns if '/' not in c]]
+    df = df[[c for c in df.columns if "/" not in c]]
     return df
 
 

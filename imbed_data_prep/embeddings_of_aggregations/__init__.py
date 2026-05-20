@@ -6,6 +6,7 @@ import pandas as pd
 from typing import List, TypeVar, Tuple
 from collections.abc import Mapping, Callable, Iterable
 import oa
+
 # `simple_semantic_features` was moved/renamed in `imbed`; the current equivalent
 # is `three_text_features` in `imbed.components.vectorization`.
 from imbed.components.vectorization import (
@@ -164,13 +165,13 @@ def aggregated_embeddings_for_sample(
             )
 
             d = {
-                'citing_id': citing_id,
-                'n_cited': len(neighbor_nodes),
-                'permutation_index': idx,
-                'aggregated_title': aggregated_title,
+                "citing_id": citing_id,
+                "n_cited": len(neighbor_nodes),
+                "permutation_index": idx,
+                "aggregated_title": aggregated_title,
             }
             if text_to_embedding:
-                d['embedding'] = text_to_embedding(aggregated_title)
+                d["embedding"] = text_to_embedding(aggregated_title)
             yield d
 
 
@@ -195,9 +196,9 @@ def test_get_n_unique_permutations():
     # Contract-based checks (RNG selection is not stable across versions):
     assert len(perms) == n, "Wrong number of permutations returned"
     assert len(set(perms)) == n, "Permutations are not unique"
-    assert all(
-        sorted(p) == sorted(arr) for p in perms
-    ), "Each result must be a permutation of the input array"
+    assert all(sorted(p) == sorted(arr) for p in perms), (
+        "Each result must be a permutation of the input array"
+    )
 
 
 def test_get_n_unique_permutations_error():
@@ -224,17 +225,17 @@ def _is_vector(v):
 
 def test_get_aggregated_embeddings_for_sample():
     citation_graph = {
-        'paper1': ['paper2', 'paper3'],
-        'paper2': ['paper3'],
-        'paper3': ['paper1'],
-        'paper4': [],
+        "paper1": ["paper2", "paper3"],
+        "paper2": ["paper3"],
+        "paper3": ["paper1"],
+        "paper4": [],
     }
 
     node_titles = {
-        'paper1': 'Title of Paper 1',
-        'paper2': 'Title of Paper 2',
-        'paper3': 'Title of Paper 3',
-        'paper4': 'Title of Paper 4',
+        "paper1": "Title of Paper 1",
+        "paper2": "Title of Paper 2",
+        "paper3": "Title of Paper 3",
+        "paper4": "Title of Paper 4",
     }
 
     n_nodes = 2
@@ -254,22 +255,22 @@ def test_get_aggregated_embeddings_for_sample():
     # Check that embeddings are numpy arrays
     import numpy as np
 
-    assert all(map(_is_vector, df['embedding'])), "Embeddings are not vectors"
+    assert all(map(_is_vector, df["embedding"])), "Embeddings are not vectors"
 
 
 def test_node_with_no_citations():
     citation_graph = {
-        'paper1': ['paper2', 'paper3'],
-        'paper2': ['paper3'],
-        'paper3': ['paper1'],
-        'paper4': [],
+        "paper1": ["paper2", "paper3"],
+        "paper2": ["paper3"],
+        "paper3": ["paper1"],
+        "paper4": [],
     }
 
     node_titles = {
-        'paper1': 'Title of Paper 1',
-        'paper2': 'Title of Paper 2',
-        'paper3': 'Title of Paper 3',
-        'paper4': 'Title of Paper 4',
+        "paper1": "Title of Paper 1",
+        "paper2": "Title of Paper 2",
+        "paper3": "Title of Paper 3",
+        "paper4": "Title of Paper 4",
     }
 
     n_nodes = 4  # All nodes
@@ -284,24 +285,24 @@ def test_node_with_no_citations():
     )
 
     # Check that 'paper4' (node with no citations) is not in df['citing_id']
-    assert (
-        'paper4' not in df['citing_id'].values
-    ), "Node with no citations should be skipped"
+    assert "paper4" not in df["citing_id"].values, (
+        "Node with no citations should be skipped"
+    )
 
 
 def test_n_nodes_too_large():
     citation_graph = {
-        'paper1': ['paper2', 'paper3'],
-        'paper2': ['paper3'],
-        'paper3': ['paper1'],
-        'paper4': [],
+        "paper1": ["paper2", "paper3"],
+        "paper2": ["paper3"],
+        "paper3": ["paper1"],
+        "paper4": [],
     }
 
     node_titles = {
-        'paper1': 'Title of Paper 1',
-        'paper2': 'Title of Paper 2',
-        'paper3': 'Title of Paper 3',
-        'paper4': 'Title of Paper 4',
+        "paper1": "Title of Paper 1",
+        "paper2": "Title of Paper 2",
+        "paper3": "Title of Paper 3",
+        "paper4": "Title of Paper 4",
     }
 
     n_nodes = 5  # There are only 4 nodes in citation_graph

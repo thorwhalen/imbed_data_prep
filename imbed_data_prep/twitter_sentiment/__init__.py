@@ -16,7 +16,7 @@ from imbed.util import (
 import pandas as pd
 
 
-data_name = 'twitter_sentiment'
+data_name = "twitter_sentiment"
 
 # raw_data_name = 'github_repos.parquet'
 
@@ -24,14 +24,14 @@ data_name = 'twitter_sentiment'
 # TODO: Use config2py tools to include a message containing the default values
 _DFLT_CACHE_DIR = saves_join(data_name)
 
-DFLT_CACHE_DIR = os.environ.get('TWITTER_SENTIMENT_DATA_DIR', default=_DFLT_CACHE_DIR)
+DFLT_CACHE_DIR = os.environ.get("TWITTER_SENTIMENT_DATA_DIR", default=_DFLT_CACHE_DIR)
 
 DFLT_N_CLUSTERS = (5, 8, 13, 21, 34)
 
 
 # TODO: _cache_this doesn't work well with partial
 # cache_this = partial(_cache_this, cache='cache')
-cache_this = partial(_cache_this, cache='saves', key=add_extension('parquet'))
+cache_this = partial(_cache_this, cache="saves", key=add_extension("parquet"))
 
 import oa
 from dataclasses import dataclass, KW_ONLY
@@ -95,9 +95,9 @@ class Dacc(LocalSavesMixin, ImbedArtifactsMixin):
 
         kaggle = KaggleDatasets()
 
-        raw_data_store = extension_based_wrap(kaggle['kazanova/sentiment140'])
+        raw_data_store = extension_based_wrap(kaggle["kazanova/sentiment140"])
         list(raw_data_store)
-        df = raw_data_store['training.1600000.processed.noemoticon.csv']
+        df = raw_data_store["training.1600000.processed.noemoticon.csv"]
 
         # there was no header in the csv file, so we need to specify the column names
         columns = list(

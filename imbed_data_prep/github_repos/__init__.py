@@ -1,7 +1,7 @@
 """Data prep for Github Repositories data.
 
 Data source:
-- [GitHub Public Repository Metadata](https://www.kaggle.com/datasets/pelmers/github-repository-metadata-with-5-stars?resource=download) 
+- [GitHub Public Repository Metadata](https://www.kaggle.com/datasets/pelmers/github-repository-metadata-with-5-stars?resource=download)
 - ([Dropbox link to parquet file](https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=0))
 
 """
@@ -40,18 +40,18 @@ import pandas as pd
 import numpy as np
 
 
-raw_data_url = 'https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1'
+raw_data_url = "https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1"
 
-data_name = 'github_repos'
-raw_data_name = 'github_repos.parquet'
+data_name = "github_repos"
+raw_data_name = "github_repos.parquet"
 
 # TODO: Use config2py tools to use and save default values
 # TODO: Use config2py tools to include a message containing the default values
 _DFLT_CACHE_DIR = saves_join(data_name)
-DFLT_CACHE_DIR = get_config('GITHUB_REPOS_CACHE_DIR', default=_DFLT_CACHE_DIR)
+DFLT_CACHE_DIR = get_config("GITHUB_REPOS_CACHE_DIR", default=_DFLT_CACHE_DIR)
 _DFLT_RAW_DATA_FILEPATH = os.path.join(DFLT_CACHE_DIR, raw_data_name)
 DFLT_RAW_DATA_FILEPATH = get_config(
-    'GITHUB_REPOS_RAW_DATA_FILEPATH', default=_DFLT_RAW_DATA_FILEPATH
+    "GITHUB_REPOS_RAW_DATA_FILEPATH", default=_DFLT_RAW_DATA_FILEPATH
 )
 DFLT_N_CLUSTERS = (5, 8, 13, 21, 34)
 
@@ -78,7 +78,7 @@ cache_this = _cache_this
 
 log_calls = _log_calls(
     logger=print_with_timestamp,
-    log_condition=partial(_log_calls.instance_flag_is_set, flag_attr='verbose'),
+    log_condition=partial(_log_calls.instance_flag_is_set, flag_attr="verbose"),
 )
 
 
@@ -86,14 +86,14 @@ log_calls = _log_calls(
 class GithubReposData:
     _: KW_ONLY
     raw_data_src: str = (
-        'https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1'
+        "https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1"
     )
     cache: CacheSpec = DFLT_CACHE_DIR
     raw_data_local_path: str = DFLT_RAW_DATA_FILEPATH
     planar_compute_chk_size: int = 1000
-    embeddings_column: str = 'embedding'
-    text_segments_column: str = 'text'
-    planar_embeddings_func: PlanarEmbeddingSpec = 'ncvis'
+    embeddings_column: str = "embedding"
+    text_segments_column: str = "text"
+    planar_embeddings_func: PlanarEmbeddingSpec = "ncvis"
     drop_duplicates: bool = True
     n_clusters: Sequence[int] = DFLT_N_CLUSTERS
     mk_cluster_learner: Callable = kmeans_cluster_indices
@@ -128,7 +128,7 @@ class GithubReposData:
         if self.drop_duplicates:
             n_rows_before = len(df)
             self.log(f"Dropping duplicate nameWithOwner (github stub)...")
-            df = df.drop_duplicates(subset=['nameWithOwner'])
+            df = df.drop_duplicates(subset=["nameWithOwner"])
             n_rows_after = len(df)
             self.log(f"... Dropped {n_rows_before - n_rows_after} duplicates")
         assert df.nameWithOwner.is_unique, f"Duplicate nameWithOwner in df"
@@ -150,7 +150,7 @@ class GithubReposData:
 
     segment_vectors = embeddings  # alias
 
-    @cache_this(cache='cache', key=add_extension('.parquet'))
+    @cache_this(cache="cache", key=add_extension(".parquet"))
     @log_calls
     def planar_embeddings(self):
         self.log(
@@ -165,7 +165,7 @@ class GithubReposData:
             self.raw_data, self.planar_embeddings, left_index=True, right_index=True
         )
 
-    @cache_this(cache='cache', key=add_extension('.parquet'))
+    @cache_this(cache="cache", key=add_extension(".parquet"))
     @log_calls
     def cluster_indices(self):
         """

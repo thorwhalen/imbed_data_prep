@@ -30,8 +30,8 @@ def concatenate_arrays(arrays):
     return np.concatenate(arrays).reshape(n_arrays, array_size)
 
 
-data_name = 'lmsys-chat-1m'
-huggingface_data_stub = 'lmsys/lmsys-chat-1m'
+data_name = "lmsys-chat-1m"
+huggingface_data_stub = "lmsys/lmsys-chat-1m"
 data_saves_join = partial(saves_join, data_name)
 
 
@@ -63,9 +63,9 @@ class Dacc:
             elif data_spec in self.saves:
                 return self.saves[data_spec]
         if assert_type:
-            assert isinstance(
-                data_spec, assert_type
-            ), f"{data_spec=} is not {assert_type}"
+            assert isinstance(data_spec, assert_type), (
+                f"{data_spec=} is not {assert_type}"
+            )
         # just return the data_spec itself as the data
         return data_spec
 
@@ -75,7 +75,7 @@ class Dacc:
 
     @property
     def _train_data(self):
-        return self.dataset_dict['train']
+        return self.dataset_dict["train"]
 
     @cached_property
     def train_data(self):
@@ -84,41 +84,41 @@ class Dacc:
     @cached_property
     def conversation_sizes(self):
         _conversation_sizes = self.train_data.conversation.apply(len)
-        assert all(
-            _conversation_sizes == self.train_data.turn * 2
-        ), "Some turns were not twice the conversation size"
+        assert all(_conversation_sizes == self.train_data.turn * 2), (
+            "Some turns were not twice the conversation size"
+        )
         return _conversation_sizes
 
     @cached_property
     def language_count(self):
-        return counts(self.train_data['language'])
+        return counts(self.train_data["language"])
 
     @cached_property
     def model_count(self):
-        return counts(self.train_data['model'])
+        return counts(self.train_data["model"])
 
     @cached_property
     def redacted_count(self):
-        return counts(self.train_data['redacted'])
+        return counts(self.train_data["redacted"])
 
     @cached_property
     def role_count(self):
         c = Counter(
-            x['role'] for x in chain.from_iterable(self.train_data.conversation)
+            x["role"] for x in chain.from_iterable(self.train_data.conversation)
         )
         return pd.Series(dict(c.most_common()))
 
     @cached_property
     def en_df(self):
-        return self.train_data[self.train_data['language'] == 'English']
+        return self.train_data[self.train_data["language"] == "English"]
 
     @cached_property
     def flat_en(self):
         t = self.en_df
-        t = expand_rows(t, ['conversation', 'openai_moderation'])
-        t = expand_columns(t, ['conversation', 'openai_moderation'], key_mapper=None)
-        t = expand_columns(t, ['categories'], key_mapper=None)
-        t = expand_columns(t, ['category_scores'])
+        t = expand_rows(t, ["conversation", "openai_moderation"])
+        t = expand_columns(t, ["conversation", "openai_moderation"], key_mapper=None)
+        t = expand_columns(t, ["categories"], key_mapper=None)
+        t = expand_columns(t, ["category_scores"])
         return t
 
     @cached_property
@@ -127,12 +127,12 @@ class Dacc:
         from oa import text_is_valid
         import numpy as np
 
-        model = 'text-embedding-3-small'
-        max_tokens = embeddings_models[model]['max_input']
+        model = "text-embedding-3-small"
+        max_tokens = embeddings_models[model]["max_input"]
 
         # TODO: Make it source from self.flat_en directly (once persistent caching is working)
         # TODO: Also make it check if dacc.flat_en is loaded or not before, and if not, unload it after using.
-        flat_en = self.saves['flat_en.parquet']
+        flat_en = self.saves["flat_en.parquet"]
 
         lidx = ~np.array(
             list(
@@ -144,7 +144,7 @@ class Dacc:
                 )
             )
         )
-        invalid_conversations = set(flat_en[lidx]['conversation_id'])
+        invalid_conversations = set(flat_en[lidx]["conversation_id"])
 
         print(f"{len(invalid_conversations)=}")
 
@@ -156,12 +156,12 @@ class Dacc:
         from dol import KeyTemplate, cache_iter
 
         key_template = KeyTemplate(
-            'flat_en_embeddings/{index}.parquet',
-            from_str_funcs={'index': int},
-            to_str_funcs={'index': "{:04d}".format},
+            "flat_en_embeddings/{index}.parquet",
+            from_str_funcs={"index": int},
+            to_str_funcs={"index": "{:04d}".format},
         )
         s = key_template.filt_iter(self.saves)
-        s = key_template.key_codec(decoded='single')(s)
+        s = key_template.key_codec(decoded="single")(s)
         s = cache_iter(s, keys_cache=sorted)
         return s
 
@@ -172,7 +172,7 @@ class Dacc:
     def flat_en_embeddings_iter(self):
         """Yields embeddings matrices"""
         return map(
-            lambda x: concatenate_arrays(x['embeddings'].values),
+            lambda x: concatenate_arrays(x["embeddings"].values),
             self.flat_en_embeddings_store.values(),
         )
 
@@ -184,21 +184,21 @@ class Dacc:
     @cached_property
     def flat_en_conversation_grouped_embeddings(self):
         # TODO: This is the kind of thing that the save decorator should take care of
-        if 'flat_en_conversation_grouped_embeddings.parquet' in self.saves:
-            return self.saves['flat_en_conversation_grouped_embeddings.parquet']
+        if "flat_en_conversation_grouped_embeddings.parquet" in self.saves:
+            return self.saves["flat_en_conversation_grouped_embeddings.parquet"]
         else:
             g = self.flat_en_embeddings
-            g = g.drop(columns=['content'])
+            g = g.drop(columns=["content"])
             # groupby conversation_id, doing the following with, for each group:
-            g = g.groupby('conversation_id')
-            g = g.agg({'num_of_tokens': 'sum', 'embeddings': 'mean'})
-            self.saves['flat_en_conversation_grouped_embeddings.parquet'] = g
+            g = g.groupby("conversation_id")
+            g = g.agg({"num_of_tokens": "sum", "embeddings": "mean"})
+            self.saves["flat_en_conversation_grouped_embeddings.parquet"] = g
             return g
 
     def planar_embeddings_with_metadata(
         self,
         planar_embeddings: DataSpec,
-        metadata: DataSpec = 'flat_en_embeddable',
+        metadata: DataSpec = "flat_en_embeddable",
         *,
         merge_on=None,
     ):
@@ -206,48 +206,48 @@ class Dacc:
         metadata = self.get_data(metadata)
 
         return merge_data(
-            metadata, planar_embeddings, merge_on=merge_on, data_2_cols=['x', 'y']
+            metadata, planar_embeddings, merge_on=merge_on, data_2_cols=["x", "y"]
         )
 
     @property
     def planar_embeddings_of_grouped_conversations(self):
-        t = self.saves['planar_embeddings_grouped.pkl']
+        t = self.saves["planar_embeddings_grouped.pkl"]
         t = pd.Series(t)
         t = pd.DataFrame(t).reset_index()
-        t = t.rename(columns={'index': 'conversation_id'})
-        t['x'] = t[0].apply(lambda x: x[0])
-        t['y'] = t[0].apply(lambda x: x[1])
+        t = t.rename(columns={"index": "conversation_id"})
+        t["x"] = t[0].apply(lambda x: x[0])
+        t["y"] = t[0].apply(lambda x: x[1])
         t = t.drop(0, axis=1)
-        t.index.name = 'id'
+        t.index.name = "id"
         # self.saves['planar_embeddings_grouped.tsv'] = t
         return t
 
     @property
     def meta_for_grouped_conversations(self):
-        meta = self.saves['flat_en.parquet']
-        nested_columns = list(filter(lambda x: '.' in x, meta.columns))
+        meta = self.saves["flat_en.parquet"]
+        nested_columns = list(filter(lambda x: "." in x, meta.columns))
         meta = meta.drop(
-            ['language', 'redacted', 'content', 'role'] + nested_columns, axis=1
+            ["language", "redacted", "content", "role"] + nested_columns, axis=1
         )
         aggregate_specs_1 = {
-            'model': lambda x: x[0],
-            'turn': lambda x: x[0],
-            'flagged': 'mean',
-            'num_of_tokens': 'sum',
+            "model": lambda x: x[0],
+            "turn": lambda x: x[0],
+            "flagged": "mean",
+            "num_of_tokens": "sum",
         }
         remaining_columns = (
-            set(meta.columns) - set(aggregate_specs_1.keys()) - {'conversation_id'}
+            set(meta.columns) - set(aggregate_specs_1.keys()) - {"conversation_id"}
         )
         aggregate_specs = {
-            'model': 'first',
-            'turn': 'first',
-            'flagged': 'mean',
-            'num_of_tokens': 'sum',
-            **{col: 'mean' for col in remaining_columns},
+            "model": "first",
+            "turn": "first",
+            "flagged": "mean",
+            "num_of_tokens": "sum",
+            **{col: "mean" for col in remaining_columns},
         }
 
         # group by conversaion_id and apply aggaggregate_specs to each group
-        meta = meta.groupby('conversation_id').agg(aggregate_specs)
+        meta = meta.groupby("conversation_id").agg(aggregate_specs)
         meta = meta.reset_index(drop=False)
         return meta
 
@@ -255,8 +255,8 @@ class Dacc:
     def planar_embeddings_of_grouped_conversations_with_metadata(self):
         e = self.planar_embeddings_of_grouped_conversations
         meta = self.meta_for_grouped_conversations
-        df = merge_data(e, meta, merge_on='conversation_id')
-        df['id'] = df.conversation_id  # just because cosmograph needs it!
+        df = merge_data(e, meta, merge_on="conversation_id")
+        df["id"] = df.conversation_id  # just because cosmograph needs it!
         return df
         # dacc.saves['planar_embeddings_of_grouped_conversations_with_metadata.tsv'] = df
 
@@ -307,7 +307,7 @@ def compute_and_save_embeddings(
     chk_size=DFLT_CHK_SIZE,  # needs to be under max batch size of 2048
     validate=False,
     overwrite_chunks=False,
-    model='text-embedding-3-small',
+    model="text-embedding-3-small",
     verbose=1,
     exclude_chk_ids=(),
     include_chk_ids=(),
@@ -316,7 +316,7 @@ def compute_and_save_embeddings(
     __clog = partial(clog, verbose >= 2)
 
     dacc = dacc or mk_dacc()
-    df = dacc.flat_en_embeddable[['conversation_id', 'content', 'num_of_tokens']]
+    df = dacc.flat_en_embeddable[["conversation_id", "content", "num_of_tokens"]]
 
     from oa import embeddings as embeddings_
     import pandas as pd
@@ -351,7 +351,7 @@ def compute_and_save_embeddings(
                 [x[1] for x in index_and_row], index=[x[0] for x in index_and_row]
             )
             vectors = embeddings(chunk.content.tolist())
-            chunk['embeddings'] = vectors
+            chunk["embeddings"] = vectors
             store_chunk(i, chunk)
         except Exception as e:
             _clog(f"--> ERROR: {i=}, {e=}")
@@ -379,10 +379,10 @@ def compute_and_save_planar_embeddings(dacc=None, verbose=1):
     planar_embeddings = umap_2d_embeddings(embdeddings_store)
 
     _clog("Reformatting the embeddings into a DataFrame")
-    planar_embeddings = pd.DataFrame(planar_embeddings, index=['x', 'y']).T
+    planar_embeddings = pd.DataFrame(planar_embeddings, index=["x", "y"]).T
 
     _clog("Saving the planar embeddings to planar_embeddings.parquet'")
-    dacc.saves['planar_embeddings.parquet'] = planar_embeddings
+    dacc.saves["planar_embeddings.parquet"] = planar_embeddings
 
 
 def compute_and_save_incremental_pca(
@@ -390,7 +390,7 @@ def compute_and_save_incremental_pca(
     verbose=2,
     *,
     n_pca_components=500,
-    save_name='pca{pca_components}.pkl',
+    save_name="pca{pca_components}.pkl",
 ):
 
     dacc = dacc or mk_dacc()
@@ -414,7 +414,7 @@ def compute_and_save_incremental_pca(
             pca.partial_fit(embeddings_chunk)
         except Exception as e:
             # TODO: Save intermediate results?
-            if 'must be less or equal to the batch number of samples' in e.args[0]:
+            if "must be less or equal to the batch number of samples" in e.args[0]:
                 break  # it's the last chunk
 
     # def compute_pca_projections():
@@ -434,8 +434,8 @@ def compute_and_save_pca_of_embeddings(
     dacc=None,
     verbose=1,
     *,
-    pca_model='pca500.pkl',
-    pca_embeddings_name='pca500_embeddings.npy',
+    pca_model="pca500.pkl",
+    pca_embeddings_name="pca500_embeddings.npy",
 ):
     dacc = dacc or mk_dacc()
     _clog = partial(clog, int(verbose))
@@ -456,8 +456,8 @@ def compute_and_save_ncvis_planar_embeddings(
     dacc=None,
     verbose=1,
     *,
-    embeddings_save_name='pca500_embeddings.npy',
-    ncvis_planar_embeddings_name='ncvis_planar_pca500_embeddings.npy',
+    embeddings_save_name="pca500_embeddings.npy",
+    ncvis_planar_embeddings_name="ncvis_planar_pca500_embeddings.npy",
 ):
     import ncvis
 
@@ -468,7 +468,7 @@ def compute_and_save_ncvis_planar_embeddings(
     X = dacc.saves[embeddings_save_name]
 
     _clog("Computing the NCVis planar embeddings")
-    vis = ncvis.NCVis(d=2, distance='cosine')
+    vis = ncvis.NCVis(d=2, distance="cosine")
     ncvis_planar_embeddings = vis.fit_transform(X)
 
     _clog(f"Saving the NCVis planar embeddings to {ncvis_planar_embeddings_name=}")
@@ -482,8 +482,8 @@ def compute_and_save_planar_embeddings_with_incremental_pca(
     verbose=1,
     *,
     n_pca_components=500,
-    save_name='planar_embeddings_pca{pca_components}_{planar_projector}.npy',
-    planar_projector: Literal['umap', 'ncvis'] = 'ncvis',
+    save_name="planar_embeddings_pca{pca_components}_{planar_projector}.npy",
+    planar_projector: Literal["umap", "ncvis"] = "ncvis",
 ):
 
     assert __import__(planar_projector), f"No {planar_projector=} installed"
@@ -516,17 +516,17 @@ def compute_and_save_planar_embeddings_with_incremental_pca(
 
     _clog("And now, {planar_projector}... Crossing fingers")
 
-    if planar_projector == 'umap':
+    if planar_projector == "umap":
         import umap
 
         planar_embeddings = umap.UMAP(
-            n_components=2, output_metric='cosine'
+            n_components=2, output_metric="cosine"
         ).fit_transform(X)
 
-    elif planar_projector == 'ncvis':
+    elif planar_projector == "ncvis":
         import ncvis
 
-        planar_embeddings = ncvis.NCVis(d=2, distance='cosine').fit_transform(X)
+        planar_embeddings = ncvis.NCVis(d=2, distance="cosine").fit_transform(X)
 
     _clog("deleting X")
     del X
@@ -549,8 +549,8 @@ def compute_and_save_planar_embeddings_light(
     verbose=1,
     *,
     n_pca_components=500,
-    save_name='planar_embeddings_pca{pca_components}_{planar_projector}.npy',
-    planar_projector: Literal['umap', 'ncvis'] = 'ncvis',
+    save_name="planar_embeddings_pca{pca_components}_{planar_projector}.npy",
+    planar_projector: Literal["umap", "ncvis"] = "ncvis",
     incremental_pca_chunk_size: int = None,
 ):
 
@@ -597,17 +597,17 @@ def compute_and_save_planar_embeddings_light(
 
     _clog("And now, {planar_projector}... Crossing fingers")
 
-    if planar_projector == 'umap':
+    if planar_projector == "umap":
         import umap
 
         planar_embeddings = umap.UMAP(
-            n_components=2, output_metric='cosine'
+            n_components=2, output_metric="cosine"
         ).fit_transform(X)
 
-    elif planar_projector == 'ncvis':
+    elif planar_projector == "ncvis":
         import ncvis
 
-        planar_embeddings = ncvis.NCVis(d=2, distance='cosine').fit_transform(X)
+        planar_embeddings = ncvis.NCVis(d=2, distance="cosine").fit_transform(X)
 
     _clog("deleting X")
     del X
@@ -638,7 +638,7 @@ def compute_and_save_grouped_embeddings(dacc=None, verbose=1):
     d = dacc.flat_en_conversation_grouped_embeddings
 
     _clog("Making key-value store from them")
-    d = {k: v['embeddings'] for k, v in d.iterrows()}
+    d = {k: v["embeddings"] for k, v in d.iterrows()}
     _clog("Deleting dacc to free up memory")
     del dacc
 
@@ -646,7 +646,7 @@ def compute_and_save_grouped_embeddings(dacc=None, verbose=1):
     planar_embeddings = umap_2d_embeddings(d)
 
     _clog("Saving the planar embeddings to planar_embeddings_grouped.pkl'")
-    saves['planar_embeddings_grouped.pkl'] = planar_embeddings
+    saves["planar_embeddings_grouped.pkl"] = planar_embeddings
 
 
 def compute_and_save_embeddings_pca(
@@ -655,7 +655,7 @@ def compute_and_save_embeddings_pca(
     *,
     pca_components: int = 100,
     chk_size: int = 50_000,
-    data_name: str = 'pca_model.pkl',
+    data_name: str = "pca_model.pkl",
 ):
     import numpy as np
 
@@ -699,8 +699,8 @@ def compute_and_save_dbscan(
     *,
     eps=0.7,
     min_samples=1000,
-    source_data_name='flat_en_embeddings_pca100.npy',
-    data_name='dbscan_0.7_1000_pca100.pkl',
+    source_data_name="flat_en_embeddings_pca100.npy",
+    data_name="dbscan_0.7_1000_pca100.pkl",
 ):
     from sklearn.cluster import DBSCAN
     from sklearn.preprocessing import StandardScaler
@@ -718,7 +718,7 @@ def compute_and_save_dbscan(
     _clog(f"Computing DBSCAN(eps={eps}, min_samples={min_samples})...")
     dbscan = DBSCAN(eps=eps, min_samples=min_samples).fit(X)
 
-    rootdir = getattr(dacc.saves, 'rootdir', '')
+    rootdir = getattr(dacc.saves, "rootdir", "")
     _clog(f"Saving the DBSCAN to {os.path.join(rootdir, data_name)}")
     dacc.saves[data_name] = dbscan
 
@@ -732,8 +732,8 @@ def compute_and_save_kmeans(
     X=None,
     standardized_X=None,
     n_clusters=7,
-    source_data_name='flat_en_embeddings_pca100.npy',
-    data_name='kmeans_{n_clusters}_clusters_indices.pkl',
+    source_data_name="flat_en_embeddings_pca100.npy",
+    data_name="kmeans_{n_clusters}_clusters_indices.pkl",
 ):
     """Compute the kmeans clusting and save it to the data store."""
     from sklearn.cluster import KMeans
@@ -756,18 +756,18 @@ def compute_and_save_kmeans(
     kmeans_clusters = KMeans(n_clusters=n_clusters).fit_predict(standardized_X)
 
     if data_name is not None:
-        rootdir = getattr(dacc.saves, 'rootdir', '')
+        rootdir = getattr(dacc.saves, "rootdir", "")
         _clog(
             f"Saving the kmeans cluster indices to {os.path.join(rootdir, data_name)}"
         )
-        if '{n_clusters}' in data_name:
+        if "{n_clusters}" in data_name:
             data_name = data_name.format(n_clusters=n_clusters)
         dacc.saves[data_name] = kmeans_clusters
 
     return kmeans_clusters
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from argh import dispatch_commands
 
     dispatch_commands(

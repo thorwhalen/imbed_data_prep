@@ -17,7 +17,7 @@ from imbed.util import (
 import pandas as pd
 
 
-data_name = 'eurovis'
+data_name = "eurovis"
 
 # raw_data_name = 'github_repos.parquet'
 
@@ -25,7 +25,7 @@ data_name = 'eurovis'
 # TODO: Use config2py tools to include a message containing the default values
 _DFLT_CACHE_DIR = saves_join(data_name)
 
-DFLT_CACHE_DIR = os.environ.get('EUROVIS_CACHE_DIR', default=_DFLT_CACHE_DIR)
+DFLT_CACHE_DIR = os.environ.get("EUROVIS_CACHE_DIR", default=_DFLT_CACHE_DIR)
 
 DFLT_N_CLUSTERS = (5, 8, 13, 21, 34)
 
@@ -60,7 +60,7 @@ def embed_segments_one_by_one(segments: Mapping[str, str]) -> KeyVectorPairs:
 
 # TODO: _cache_this doesn't work well with partial
 # cache_this = partial(_cache_this, cache='cache')
-cache_this = partial(_cache_this, cache='saves', key=add_extension('parquet'))
+cache_this = partial(_cache_this, cache="saves", key=add_extension("parquet"))
 
 
 @dataclass
@@ -71,7 +71,7 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
     verbose: int = 1
     model: str = DFLT_EMBEDDING_MODEL
 
-    @cache_this(key=add_extension('csv'))
+    @cache_this(key=add_extension("csv"))
     def raw_data(self):
         """The purpose of this function is to return the data that the user would
         have manually place in the saved_dir, so the method should never actually
@@ -84,22 +84,22 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
     @cache_this(pre_cache=True)
     def embeddable(self):
         # remove rows with missing title or abstract
-        df = self.raw_data.dropna(subset=['title', 'abstract'])
+        df = self.raw_data.dropna(subset=["title", "abstract"])
         ## Add some util columns
         # contatenate title and abstract to make segment
-        df['segment'] = '##' + df['title'] + '\n\n' + df.get('abstract')
+        df["segment"] = "##" + df["title"] + "\n\n" + df.get("abstract")
 
         assert not any(df.segment.isna()), "some segments are NaN"
 
         # apply oa.num_tokens to segment to get n_tokens
-        df['n_tokens'] = df['segment'].apply(oa.num_tokens)
+        df["n_tokens"] = df["segment"].apply(oa.num_tokens)
         max_tokens = oa.util.embeddings_models[oa.base.DFLT_EMBEDDINGS_MODEL][
-            'max_input'
+            "max_input"
         ]
-        assert df['n_tokens'].max() <= max_tokens, "some segments exceed max tokens"
+        assert df["n_tokens"].max() <= max_tokens, "some segments exceed max tokens"
 
-        df.set_index('doi', drop=False, inplace=True)
-        df.index.name = 'id_'
+        df.set_index("doi", drop=False, inplace=True)
+        df.index.name = "id_"
         return df
 
     # Replace by more scalable default
@@ -109,7 +109,7 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
         segments = self.segments()  # TODO: Should detect if property or method!
         vectors = dict(embed_segments_one_by_one(segments))
         df = pd.DataFrame(vectors).T
-        df.index.name = 'id_'
+        df.index.name = "id_"
         return df
 
     @cache_this
@@ -124,9 +124,9 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
         df = self.embeddable
         segments = dict(zip(df.index.values, df.segment))
         assert len(segments) == len(df), "oops, duplicate DOIs"
-        assert all(
-            map(oa.text_is_valid, df.segment.values)
-        ), "some segments are invalid"
+        assert all(map(oa.text_is_valid, df.segment.values)), (
+            "some segments are invalid"
+        )
 
         return segments
 
@@ -134,7 +134,7 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
     def clusters_df(self):
         return super().clusters_df()
 
-    @cache_this(cache='saves', key=add_extension('parquet'))
+    @cache_this(cache="saves", key=add_extension("parquet"))
     def merged_artifacts(self):
         t = self.embeddable
         t = t.merge(self.planar_embeddings, left_index=True, right_index=True)
@@ -143,4 +143,4 @@ class EurovisDacc(LocalSavesMixin, ImbedArtifactsMixin):
 
     @cache_this
     def testing123(self):
-        return pd.DataFrame({'a': [1, 2, 3], 'b': [4, 5, 6]})
+        return pd.DataFrame({"a": [1, 2, 3], "b": [4, 5, 6]})

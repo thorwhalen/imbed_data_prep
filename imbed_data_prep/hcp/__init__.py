@@ -21,7 +21,7 @@ from imbed.util import (
 
 
 def get_src_key_from_local_configs():
-    config_val = os.environ.get('HCP_PUBS_SRC_KEY', None)
+    config_val = os.environ.get("HCP_PUBS_SRC_KEY", None)
     if config_val:
         return config_val
     else:
@@ -62,11 +62,11 @@ class Hcp3Dacc:
     mean_aggregator: Callable[[np.ndarray], np.ndarray] = cosine_mean_aggregator
     src_store_factory: Callable = Files
 
-    titles_aggr_src_key = 'publications-hcp3-with_titles_aggregates.parquet'
-    embeddings_src_key = 'publications-hcp2-embeddings.parquet'
-    citations_src_key = 'citation-links-hcp3.tsv.zip'
-    info_src_key = 'publications-hcp2.tsv.zip'
-    aggregate_titles_embeddings_key = 'aggregate_titles_embeddings.parquet'
+    titles_aggr_src_key = "publications-hcp3-with_titles_aggregates.parquet"
+    embeddings_src_key = "publications-hcp2-embeddings.parquet"
+    citations_src_key = "citation-links-hcp3.tsv.zip"
+    info_src_key = "publications-hcp2.tsv.zip"
+    aggregate_titles_embeddings_key = "aggregate_titles_embeddings.parquet"
 
     @cached_property
     def pjoin(self):
@@ -95,17 +95,17 @@ class Hcp3Dacc:
     @cached_property
     def embeddings_hcp2(self):
         embeddings_hcp2 = pd.read_parquet(self.embeddings_filepath)
-        embeddings_hcp2 = embeddings_hcp2.set_index('id')['embedding']
+        embeddings_hcp2 = embeddings_hcp2.set_index("id")["embedding"]
         return embeddings_hcp2
 
     @cached_property
     def _citations_hcp3(self):
-        return pd.read_csv(self.citations_hcp3_src, sep='\t')
+        return pd.read_csv(self.citations_hcp3_src, sep="\t")
 
     @property
     def _citations_ids(self):
-        return set(self._citations_hcp3['citing_pub_id']) | set(
-            self._citations_hcp3['cited_pub_id']
+        return set(self._citations_hcp3["citing_pub_id"]) | set(
+            self._citations_hcp3["cited_pub_id"]
         )
 
     def citation_graph(
@@ -122,7 +122,7 @@ class Hcp3Dacc:
 
         """
         if ids_with_embeddings is None:
-            ids_with_embeddings = set(self.aggregate_titles_embeddings['id'])
+            ids_with_embeddings = set(self.aggregate_titles_embeddings["id"])
         citations = {
             k: v for k, v in self.citations_of.items() if len(v) >= min_citations
         }
@@ -144,20 +144,20 @@ class Hcp3Dacc:
 
     @cached_property
     def missing_cited_ids(dacc):
-        cited_ids = set(dacc.citations_hcp3['cited_pub_id'])
-        return set(dacc.info_hcp2['id']) - cited_ids
+        cited_ids = set(dacc.citations_hcp3["cited_pub_id"])
+        return set(dacc.info_hcp2["id"]) - cited_ids
 
     @cached_property
     def citations_hcp3(self):
         return self._citations_hcp3[
-            ~self._citations_hcp3['citing_pub_id'].isin(self.missing_embedding_ids)
-            & ~self._citations_hcp3['cited_pub_id'].isin(self.missing_embedding_ids)
+            ~self._citations_hcp3["citing_pub_id"].isin(self.missing_embedding_ids)
+            & ~self._citations_hcp3["cited_pub_id"].isin(self.missing_embedding_ids)
         ]
 
     @cached_property
     def cited_by(self):
         return (
-            self.citations_hcp3.groupby('cited_pub_id')['citing_pub_id']
+            self.citations_hcp3.groupby("cited_pub_id")["citing_pub_id"]
             .apply(set)
             .apply(list)
             .to_dict()
@@ -166,7 +166,7 @@ class Hcp3Dacc:
     @cached_property
     def citations_of(self):
         return (
-            self.citations_hcp3.groupby('citing_pub_id')['cited_pub_id']
+            self.citations_hcp3.groupby("citing_pub_id")["cited_pub_id"]
             .apply(set)
             .apply(list)
             .to_dict()
@@ -183,15 +183,15 @@ class Hcp3Dacc:
 
     @cached_property
     def planar_mean_embeddings(self):
-        return umap_2d_embeddings_df(self.mean_aggregates, key_col='id')
+        return umap_2d_embeddings_df(self.mean_aggregates, key_col="id")
 
     @cached_property
     def info_hcp2(self):
-        return pd.read_csv(self.info_filepath, sep='\t', encoding='latin-1')
+        return pd.read_csv(self.info_filepath, sep="\t", encoding="latin-1")
 
     @cached_property
     def planar_mean_embeddings_with_ids(self):
-        return pd.merge(self.planar_mean_embeddings, self.info_hcp2, on='id')
+        return pd.merge(self.planar_mean_embeddings, self.info_hcp2, on="id")
 
     @cached_property
     def titles_aggr_df(self):
@@ -206,7 +206,7 @@ class Hcp3Dacc:
         """Generator of (id, citing_title, cited_titles) triples.
         Helper for dacc.titles_aggregate method.
         """
-        titles = dacc.info_hcp2.set_index('id')['title']
+        titles = dacc.info_hcp2.set_index("id")["title"]
         for id_, cited_ids in dacc.citations_of.items():
             cited_ids = sorted(set(cited_ids) - dacc.missing_cited_ids)
             cited_titles = titles.loc[cited_ids].dropna()
@@ -215,7 +215,7 @@ class Hcp3Dacc:
                 yield id_, citing_title, cited_titles
 
     def titles_aggregate(
-        dacc, *, titles_sep='\n\n###\n\n', main_title_sep='\n\n\n######\n\n\n'
+        dacc, *, titles_sep="\n\n###\n\n", main_title_sep="\n\n\n######\n\n\n"
     ):
         """For each article, aggregate its title with the titles of the papers it cites.
 
@@ -233,8 +233,8 @@ class Hcp3Dacc:
     def titles_aggregate_sr(
         dacc,
         *,
-        titles_sep='\n\n###\n\n',
-        main_title_sep='\n\n\n######\n\n\n',
+        titles_sep="\n\n###\n\n",
+        main_title_sep="\n\n\n######\n\n\n",
         print_progress_every=50_000,
     ):
         """For each article, aggregate its title with the titles of the papers it cites.
@@ -250,4 +250,4 @@ class Hcp3Dacc:
             if i % print_progress_every == 0:
                 print(f"Proccessed {i} elements")
             titles_aggregate_sr[citing_id] = titles_aggregate
-        return pd.Series(titles_aggregate_sr, name='titles_aggregate')
+        return pd.Series(titles_aggregate_sr, name="titles_aggregate")

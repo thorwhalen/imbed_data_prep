@@ -7,4 +7,4 @@ def get_raw_data():
     """Get the Ultra Chat data."""
     from datasets import load_dataset
 
-    return load_dataset('stingning/ultrachat')
+    return load_dataset("stingning/ultrachat")
