@@ -19,9 +19,20 @@ dependencies = [
     "dol",
     "i2",
     "lkj",
-    "tabled",
+    "tabled>=0.1.28",
     "pandas",
+    "numpy",
     "oa",
+    "datasets",
+    "vaderSentiment",
+    "nltk",
+    "graze",
+    "haggle",
+    "scikit-learn",
+    "requests",
+    "beautifulsoup4",
+    "duckdb",
+    "dill",
 ]
 
 [project.license]
@@ -103,7 +114,10 @@ format = []
 
 [tool.wads.ci.env]
 required_envvars = []
-test_envvars = []
+# OPENAI_API_KEY: several submodules read it at import time (via `oa`).
+# Wired as a workflow env var so collection doesn't crash; API-calling
+# doctests are still marked `# doctest: +SKIP` so CI makes no real calls.
+test_envvars = ["OPENAI_API_KEY"]
 extra_envvars = []
 
 [tool.wads.ci.env.defaults]

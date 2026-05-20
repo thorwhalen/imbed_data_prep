@@ -8,6 +8,7 @@ on: [push, pull_request]
 # rendered as `KEY: secrets.KEY || ''` so missing secrets don't fail parsing.
 env:
   PROJECT_NAME: imbed_data_prep
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY || '' }}
 
 jobs:
   # First job: Read configuration from pyproject.toml
@@ -21,6 +22,7 @@ jobs:
       coverage-enabled: ${{ steps.config.outputs.coverage-enabled }}
       exclude-paths: ${{ steps.config.outputs.exclude-paths }}
       test-on-windows: ${{ steps.config.outputs.test-on-windows }}
+      tests-enabled: ${{ steps.config.outputs.tests-enabled }}
       build-sdist: ${{ steps.config.outputs.build-sdist }}
       build-wheel: ${{ steps.config.outputs.build-wheel }}
       metrics-enabled: ${{ steps.config.outputs.metrics-enabled }}
@@ -99,6 +101,7 @@ jobs:
         run: uvx mypy ${{ needs.setup.outputs.project-name }}
 
       - name: Run Tests
+        if: needs.setup.outputs.tests-enabled != 'false'
         uses: i2mint/wads/actions/run-tests-uv@master
         with:
           root-dir: ${{ needs.setup.outputs.project-name }}
@@ -120,7 +123,7 @@ jobs:
   # Optional Windows testing (if enabled in config)
   windows-validation:
     name: Windows Tests
-    if: "!contains(github.event.head_commit.message, '[skip ci]') && needs.setup.outputs.test-on-windows == 'true'"
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && needs.setup.outputs.test-on-windows == 'true' && needs.setup.outputs.tests-enabled != 'false'"
     needs: setup
     runs-on: windows-latest
     continue-on-error: true

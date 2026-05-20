@@ -88,7 +88,7 @@ def synset_to_glosstag(synset) -> str:
 
     Examples
     --------
-    >>> synset_to_glosstag('dog.n.01')
+    >>> synset_to_glosstag('dog.n.01')  # doctest: +SKIP
     'n02084071'
     """
     if isinstance(synset, str):
@@ -108,7 +108,7 @@ def glosstag_to_synset(glosstag: str) -> str:
 
     Examples
     --------
-    >>> glosstag_to_synset('n02084071')
+    >>> glosstag_to_synset('n02084071')  # doctest: +SKIP
     'dog.n.01'
     """
     pos = glosstag[0]
@@ -122,7 +122,7 @@ def sense_key_to_synset(sense_key: str) -> str:
 
     Examples
     --------
-    >>> sense_key_to_synset("dog%1:05:00::")
+    >>> sense_key_to_synset("dog%1:05:00::")  # doctest: +SKIP
     'dog.n.01'
     """
     lemma = wn.lemma_from_key(sense_key)

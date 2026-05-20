@@ -27,12 +27,12 @@ class McdonaldsReviewsDacc(LocalSavesMixin, ImbedArtifactsMixin):
     """Data accessor for McDonald's reviews
 
     Usage:
-        >>> dacc = McdonaldsReviewsDacc(datadir='.')
-        >>> df = dacc.raw_data  # Loads CSV
-        >>> embeddings = dacc.embeddings_df  # Computes/loads embeddings
-        >>> planar = dacc.planar_embeddings  # 2D projections
-        >>> clusters = dacc.clusters_df  # Cluster assignments
-        >>> merged = dacc.merged_artifacts  # Everything together
+        >>> dacc = McdonaldsReviewsDacc(datadir='.')  # doctest: +SKIP
+        >>> df = dacc.raw_data  # Loads CSV  # doctest: +SKIP
+        >>> embeddings = dacc.embeddings_df  # Computes/loads embeddings  # doctest: +SKIP
+        >>> planar = dacc.planar_embeddings  # 2D projections  # doctest: +SKIP
+        >>> clusters = dacc.clusters_df  # Cluster assignments  # doctest: +SKIP
+        >>> merged = dacc.merged_artifacts  # Everything together  # doctest: +SKIP
     """
 
     name: str | None = data_name
@@ -175,22 +175,22 @@ class McdonaldsReviewsMoodModeling(McdonaldsReviewsDacc):
     - Results persistence and analysis
     
     Usage:
-        >>> dacc = McdonaldsReviewsMoodModeling(
+        >>> dacc = McdonaldsReviewsMoodModeling(  # doctest: +SKIP
         ...     datadir='.',
         ...     semantic_attributes_path='semantic_attributes.json'
         ... )
-        >>> 
+        >>>
         >>> # Access semantic attributes
-        >>> attrs = dacc.semantic_attributes
-        >>> 
+        >>> attrs = dacc.semantic_attributes  # doctest: +SKIP
+        >>>
         >>> # Get embeddings for a category
-        >>> embeddings = dacc.category_embeddings('food_quality_presentation')
-        >>> 
+        >>> embeddings = dacc.category_embeddings('food_quality_presentation')  # doctest: +SKIP
+        >>>
         >>> # Train models for all categories
-        >>> results = dacc.all_category_results()
-        >>> 
+        >>> results = dacc.all_category_results()  # doctest: +SKIP
+        >>>
         >>> # Get model summary for a specific category
-        >>> summary = dacc.category_model_summary('food_quality_presentation')
+        >>> summary = dacc.category_model_summary('food_quality_presentation')  # doctest: +SKIP
     """
     
     # Paths for semantic attributes and modeling

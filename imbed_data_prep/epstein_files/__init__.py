@@ -1,10 +1,68 @@
-"""Preparing Epstein Files Data"""
+"""
+Epstein Files Data Preparation Module.
+
+This module provides tools for acquiring, normalizing, and preparing graph data
+from the Epstein document corpus for visualization and analysis.
+
+Data Source
+-----------
+The data originates from the Jeffrey Epstein case legal documents released by
+the House Oversight Committee. This module sources data from a SQLite database
+in the GitHub project:
+
+    https://github.com/maxandrews/Epstein-doc-explorer
+
+The project's document_analysis.db contains AI-extracted entities, relationships,
+and semantic tags from ~25,000 legal documents. The original document corpus was
+sourced from:
+
+    https://huggingface.co/datasets/tensonaut/EPSTEIN_FILES_20K/tree/main
+
+At the time of writing, processed documents are also available at:
+
+    https://drive.google.com/drive/folders/1ldncvdqIf6miiskDp_EDuGSDAaI_fJx8
+
+Database Structure
+------------------
+The source SQLite database contains these main tables:
+
+- **documents**: Document metadata, AI-generated summaries, categories, content
+  tags, date ranges, and full text (~25K documents)
+- **rdf_triples**: Extracted relationships as subject-action-object triples with
+  context (location, timestamp), classifications (actor type, tags, topics),
+  and cluster assignments (~107K triples)
+- **entity_aliases**: Deduplication mappings from variant names to canonical
+  forms (e.g., "Jeff Epstein" → "Jeffrey Epstein") with LLM-generated reasoning
+- **canonical_entities**: Unique entity names with hop distance from Jeffrey
+  Epstein (the "principal" entity)
+- **tag_embeddings**: Vector embeddings for ~30K unique tags extracted from
+  triples, using a 32-dimensional model
+
+Key Functions
+-------------
+- acquire_epstein_data: Download and export SQLite data to parquet files
+- prepare_entity_graph_data: Entity network (people/orgs as nodes)
+- prepare_document_graph_data: Document network (docs as nodes)
+- prepare_tag_graph_data: Tag/topic network (tags as nodes)
+
+All prep functions support caching via the @cached_graph_prep decorator.
+
+Example
+-------
+>>> from imbed_data_prep.epstein_files import acquire_epstein_data, prepare_entity_graph_data  # doctest: +SKIP
+>>> data_dir = acquire_epstein_data()  # downloads and exports to parquet  # doctest: +SKIP
+>>> graph = prepare_entity_graph_data(data_dir)  # doctest: +SKIP
+>>> graph['points']  # entity nodes with degree and hop distance  # doctest: +SKIP
+>>> graph['links']   # relationship edges between entities  # doctest: +SKIP
+"""
 
 from typing import Dict, Optional, Union, Literal
 from pathlib import Path
 from collections import Counter
 from itertools import combinations
 import functools
+
+from tabled.coerce import coerce_json_columns
 
 
 # ---------------------------------------------------------------------------
@@ -28,17 +86,17 @@ def cached_graph_prep(cache_name: str):
 
     Example
     -------
-    >>> @cached_graph_prep('entity_graph')
+    >>> @cached_graph_prep('entity_graph')  # doctest: +SKIP
     ... def prepare_entity_graph_data(data_dir=None, ...):
     ...     ...
     ...     return {'points': points_df, 'links': links_df}
     ...
     >>> # First call computes and caches:
-    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables)
+    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables)  # doctest: +SKIP
     >>> # Second call loads from cache:
-    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables)
+    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables)  # doctest: +SKIP
     >>> # Force recompute:
-    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables, force_recompute=True)
+    >>> data = prepare_entity_graph_data(data_dir=path, tables=tables, force_recompute=True)  # doctest: +SKIP
     """
 
     def decorator(func):
@@ -80,162 +138,8 @@ def _get_clog(verbose):
 
 
 # ---------------------------------------------------------------------------
-# Column type coercion utilities
+# Data normalization configuration
 # ---------------------------------------------------------------------------
-
-
-def coerce_series_conditionally(
-    series: "pd.Series",
-    condition: callable,
-    transform: callable,
-    *,
-    sample_size: int = 100,
-    threshold: float = 0.8,
-):
-    """
-    Conditionally transform a pandas Series based on sampled values.
-
-    This function samples non-null values to check if the condition holds,
-    and if so, applies the transform to all non-null values.
-
-    Parameters
-    ----------
-    series : pd.Series
-        The series to potentially transform.
-    condition : callable
-        A function (value -> bool) that tests whether a value should be
-        transformed. Applied to a sample to determine if transformation
-        should occur for the whole series.
-    transform : callable
-        A function (value -> new_value) to apply to each non-null value
-        if the condition threshold is met.
-    sample_size : int
-        Maximum number of non-null values to sample for condition testing.
-    threshold : float
-        Fraction of sampled values that must satisfy condition (0.0 to 1.0)
-        for the transform to be applied to the series.
-
-    Returns
-    -------
-    pd.Series
-        The original series if condition not met, otherwise transformed series.
-
-    Example
-    -------
-    >>> import pandas as pd
-    >>> import ast
-    >>> s = pd.Series(['[1, 2]', '[3, 4]', None, '[5]'])
-    >>> is_json_list = lambda x: isinstance(x, str) and x.startswith('[')
-    >>> coerce_series_conditionally(s, is_json_list, ast.literal_eval)
-    0    [1, 2]
-    1    [3, 4]
-    2      None
-    3       [5]
-    dtype: object
-    """
-    import pandas as pd
-
-    # Get non-null values
-    non_null_mask = series.notna()
-    non_null = series[non_null_mask]
-
-    if len(non_null) == 0:
-        return series
-
-    # Sample for condition testing
-    actual_sample_size = min(sample_size, len(non_null))
-    sample = non_null.sample(n=actual_sample_size, random_state=42)
-
-    # Check if condition holds for enough sampled values
-    condition_met = sample.apply(condition).sum() / len(sample) >= threshold
-
-    if not condition_met:
-        return series
-
-    # Apply transform to non-null values only
-    result = series.copy()
-    result.loc[non_null_mask] = non_null.apply(transform)
-    return result
-
-
-def is_json_list_string(value) -> bool:
-    """Check if a value looks like a JSON list encoded as a string."""
-    if not isinstance(value, str):
-        return False
-    stripped = value.strip()
-    return stripped.startswith('[') and stripped.endswith(']')
-
-
-def parse_json_safe(value):
-    """Parse a JSON string, returning original value if parsing fails."""
-    import json
-
-    try:
-        return json.loads(value)
-    except (json.JSONDecodeError, TypeError):
-        return value
-
-
-# Pre-configured coercer for JSON list columns
-def coerce_json_list_column(series: "pd.Series", **kwargs) -> "pd.Series":
-    """
-    Coerce a column of JSON list strings to actual Python lists.
-
-    This is a convenience wrapper around coerce_series_conditionally
-    configured for the common case of JSON list string columns.
-    """
-    return coerce_series_conditionally(
-        series,
-        condition=is_json_list_string,
-        transform=parse_json_safe,
-        **kwargs,
-    )
-
-
-def coerce_dataframe_json_columns(
-    df: "pd.DataFrame",
-    columns: list = None,
-    *,
-    verbose: bool = False,
-) -> "pd.DataFrame":
-    """
-    Coerce JSON list string columns in a DataFrame to actual lists.
-
-    Parameters
-    ----------
-    df : pd.DataFrame
-        The DataFrame to process.
-    columns : list or None
-        Specific columns to check. If None, checks all object-dtype columns.
-    verbose : bool
-        If True, print which columns were transformed.
-
-    Returns
-    -------
-    pd.DataFrame
-        DataFrame with JSON list columns coerced to actual lists.
-    """
-    clog = _get_clog(verbose)
-    df = df.copy()
-
-    if columns is None:
-        # Only check object columns (strings)
-        columns = df.select_dtypes(include=['object']).columns.tolist()
-
-    for col in columns:
-        if col not in df.columns:
-            continue
-
-        original = df[col]
-        coerced = coerce_json_list_column(original)
-
-        # Check if any transformation occurred
-        if not original.equals(coerced):
-            df[col] = coerced
-            clog(f"  Coerced column '{col}' from JSON strings to lists")
-
-    return df
-
 
 # Known columns that contain JSON list strings in the Epstein data
 EPSTEIN_JSON_LIST_COLUMNS = {
@@ -278,7 +182,7 @@ def normalize_epstein_tables(
         columns = EPSTEIN_JSON_LIST_COLUMNS.get(name)
 
         if columns:
-            df = coerce_dataframe_json_columns(df, columns=columns, verbose=verbose)
+            df = coerce_json_columns(df, columns=columns, verbose=verbose)
 
         result[name] = df
 
@@ -303,6 +207,9 @@ def _load_tables(data_dir, table_names, verbose=True, *, normalize=True):
         Whether to print progress messages.
     normalize : bool
         If True, coerce known JSON string columns to actual lists.
+        This is mainly for backward compatibility with older parquet files
+        that weren't normalized during acquisition. Files created by
+        acquire_epstein_data(normalize=True) are already normalized.
 
     Returns
     -------
@@ -328,7 +235,7 @@ def _load_tables(data_dir, table_names, verbose=True, *, normalize=True):
         if normalize:
             columns = EPSTEIN_JSON_LIST_COLUMNS.get(name)
             if columns:
-                df = coerce_dataframe_json_columns(df, columns=columns, verbose=False)
+                df = coerce_json_columns(df, columns=columns, verbose=False)
 
         tables[name] = df
 
@@ -381,12 +288,18 @@ def acquire_epstein_data(
     *,
     sqlite_db_file=None,
     export_relationships=True,
+    normalize=True,
     return_dataframes=False,
     verbose=True,
 ) -> Union[Path, tuple[Dict[str, "pd.DataFrame"], Optional[Path]]]:
     """
     Download (if needed) the Epstein document SQLite DB, read it with DuckDB,
     and export all tables to Parquet files and/or return as DataFrames.
+
+    This function handles the full data acquisition pipeline: downloading the
+    SQLite database from GitHub (if not provided), exporting all tables to
+    parquet format, optionally normalizing JSON string columns, and creating
+    a convenient relationships_edges view.
 
     Parameters
     ----------
@@ -399,6 +312,12 @@ def acquire_epstein_data(
         to a temporary file from the official GitHub source.
     export_relationships : bool
         Whether to create the extra relationships_edges.parquet file.
+        This is a convenient view of rdf_triples with renamed columns
+        (actor→source) for graph processing.
+    normalize : bool
+        If True, coerce known JSON string columns (like content_tags,
+        triple_tags, embedding) to actual Python lists before saving.
+        This makes the parquet files ready to use without post-processing.
     return_dataframes : bool
         If True, return (dataframes_dict, out_dir_path).
         If False, return just out_dir_path (original behavior).
@@ -410,16 +329,17 @@ def acquire_epstein_data(
     Union[Path, tuple[Dict[str, pd.DataFrame], Optional[Path]]]
         If return_dataframes=False: Path to output directory
         If return_dataframes=True: (dataframes_dict, output_directory_or_none)
+
+    Notes
+    -----
+    The source SQLite database is cached locally using the graze library,
+    so subsequent calls won't re-download unless the cache is cleared.
     """
     from tabled.sqlite_tools import (
         export_sqlite_to_parquet,
-        export_sqlite_to_dataframes,
         export_sqlite_to_dataframes_and_parquet,
         export_sqlite_query_to_parquet,
     )
-    import tempfile
-    import urllib.request
-    import shutil
 
     clog = _get_clog(verbose)
 
@@ -458,6 +378,19 @@ def acquire_epstein_data(
             sqlite_db_file, out_dir, verbose=verbose
         )
 
+        # Normalize JSON string columns if requested
+        if normalize:
+            dataframes = normalize_epstein_tables(
+                dataframes, save_to_store=None, verbose=verbose
+            )
+            # Re-save normalized tables to parquet if we have an output directory
+            if final_out_dir is not None:
+                for name, df in dataframes.items():
+                    if name in EPSTEIN_JSON_LIST_COLUMNS:
+                        parquet_path = final_out_dir / f"{name}.parquet"
+                        clog(f"Re-saving normalized {name} -> {parquet_path}")
+                        df.to_parquet(parquet_path, compression="zstd")
+
         # Add custom relationships edge list if requested
         if export_relationships:
             relationships_query = """
@@ -489,6 +422,15 @@ def acquire_epstein_data(
                 relationships_df = con.execute(
                     relationships_query.format(schema="src")
                 ).df()
+
+                # Normalize relationships_edges if requested
+                if normalize:
+                    rel_cols = EPSTEIN_JSON_LIST_COLUMNS.get('relationships_edges')
+                    if rel_cols:
+                        relationships_df = coerce_json_columns(
+                            relationships_df, columns=rel_cols, verbose=verbose
+                        )
+
                 dataframes["relationships_edges"] = relationships_df
 
                 # Also save to parquet if we have an output directory
@@ -508,6 +450,19 @@ def acquire_epstein_data(
         final_out_dir = export_sqlite_to_parquet(
             sqlite_db_file, out_dir, verbose=verbose
         )
+
+        # Normalize JSON string columns if requested
+        if normalize:
+            import pandas as pd
+
+            clog("Normalizing JSON string columns...")
+            for table_name, columns in EPSTEIN_JSON_LIST_COLUMNS.items():
+                parquet_path = final_out_dir / f"{table_name}.parquet"
+                if parquet_path.exists():
+                    df = pd.read_parquet(parquet_path)
+                    df = coerce_json_columns(df, columns=columns, verbose=verbose)
+                    clog(f"Re-saving normalized {table_name} -> {parquet_path}")
+                    df.to_parquet(parquet_path, compression="zstd")
 
         # Add custom relationships edge list if requested
         if export_relationships:
@@ -537,6 +492,17 @@ def acquire_epstein_data(
                 query=relationships_query,
                 verbose=verbose,
             )
+
+            # Normalize relationships_edges if requested
+            if normalize:
+                import pandas as pd
+
+                rel_cols = EPSTEIN_JSON_LIST_COLUMNS.get('relationships_edges')
+                if rel_cols:
+                    df = pd.read_parquet(relationships_path)
+                    df = coerce_json_columns(df, columns=rel_cols, verbose=verbose)
+                    clog(f"Re-saving normalized relationships_edges -> {relationships_path}")
+                    df.to_parquet(relationships_path, compression="zstd")
 
         clog(f"Done. Output folder: {final_out_dir}")
         return final_out_dir

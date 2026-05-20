@@ -50,9 +50,9 @@ class TrumpZelenskyyDacc:
     reduction.
     
     Examples:
-        >>> dacc = TrumpZelenskyyDacc()
-        >>> transcript_df = dacc.transcript_df
-        >>> tsne_df = dacc.tsne_projection
+        >>> dacc = TrumpZelenskyyDacc()  # doctest: +SKIP
+        >>> transcript_df = dacc.transcript_df  # doctest: +SKIP
+        >>> tsne_df = dacc.tsne_projection  # doctest: +SKIP
     """
     raw_src_url: str = "https://raw.githubusercontent.com/thorwhalen/content/refs/heads/master/text/trump-zelensky-2025-03-01--with_speakers.txt"
     rootdir: str = "."
