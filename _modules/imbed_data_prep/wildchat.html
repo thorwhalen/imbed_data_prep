@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.wildchat &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.wildchat &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -89,9 +89,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imbed_data_prep.wildchat</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Data prep for Github Repositories data.</span>
-
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Data prep for Github Repositories data."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
@@ -130,27 +128,27 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 
-<span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;wildchat&#39;</span>
-<span class="n">huggingface_data_stub</span> <span class="o">=</span> <span class="s2">&quot;allenai/WildChat-1M&quot;</span>
-<span class="c1"># raw_data_name = &#39;github_repos.parquet&#39;</span>
+<span class="n">data_name</span> <span class="o">=</span> <span class="s2">"wildchat"</span>
+<span class="n">huggingface_data_stub</span> <span class="o">=</span> <span class="s2">"allenai/WildChat-1M"</span>
+<span class="c1"># raw_data_name = 'github_repos.parquet'</span>
 
 <span class="c1"># TODO: Use config2py tools to use and save default values</span>
 <span class="c1"># TODO: Use config2py tools to include a message containing the default values</span>
 <span class="n">_DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">saves_join</span><span class="p">(</span><span class="n">data_name</span><span class="p">)</span>
 
-<span class="n">DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;WILDCHAT_CACHE_DIR&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_CACHE_DIR</span><span class="p">)</span>
+<span class="n">DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"WILDCHAT_CACHE_DIR"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_CACHE_DIR</span><span class="p">)</span>
 <span class="c1"># # For a more flexible configs getter (that will ask user for missing keys):</span>
-<span class="c1"># DFLT_CACHE_DIR = get_config(&#39;WILDCHAT_CACHE_DIR&#39;, default=_DFLT_CACHE_DIR)</span>
+<span class="c1"># DFLT_CACHE_DIR = get_config('WILDCHAT_CACHE_DIR', default=_DFLT_CACHE_DIR)</span>
 
 <span class="c1"># _DFLT_RAW_DATA_FILEPATH = os.path.join(DFLT_CACHE_DIR, raw_data_name)</span>
 <span class="c1"># DFLT_RAW_DATA_FILEPATH = get_config(</span>
-<span class="c1">#     &#39;GITHUB_REPOS_RAW_DATA_FILEPATH&#39;, default=_DFLT_RAW_DATA_FILEPATH</span>
+<span class="c1">#     'GITHUB_REPOS_RAW_DATA_FILEPATH', default=_DFLT_RAW_DATA_FILEPATH</span>
 <span class="c1"># )</span>
 <span class="n">DFLT_N_CLUSTERS</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
 
 
-<span class="c1"># TODO: _cache_this doesn&#39;t work well with partial</span>
-<span class="c1"># cache_this = partial(_cache_this, cache=&#39;cache&#39;)</span>
+<span class="c1"># TODO: _cache_this doesn't work well with partial</span>
+<span class="c1"># cache_this = partial(_cache_this, cache='cache')</span>
 <span class="n">cache_this</span> <span class="o">=</span> <span class="n">_cache_this</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">oa</span>
@@ -176,14 +174,14 @@
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_EMBEDDING_MODEL</span>
 
-    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;parquet&#39;</span><span class="p">))</span>
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s2">"saves"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s2">"parquet"</span><span class="p">))</span>
     <span class="nd">@log_method_calls</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">expanded_train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">expand_wildchat_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">expanded_en</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="o">.</span><span class="n">language</span> <span class="o">==</span> <span class="s1">&#39;English&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="o">.</span><span class="n">language</span> <span class="o">==</span> <span class="s2">"English"</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">language_conversation_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -193,22 +191,22 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">language_turn_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span><span class="o">.</span><span class="n">language</span><span class="p">)</span>
 
-    <span class="c1"># @cache_this(cache=&#39;saves&#39;, key=add_extension(&#39;.parquet&#39;))</span>
+    <span class="c1"># @cache_this(cache='saves', key=add_extension('.parquet'))</span>
     <span class="c1"># @log_method_calls</span>
-    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s2">"saves"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s2">".parquet"</span><span class="p">))</span>
     <span class="nd">@log_method_calls</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">embeddable_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expanded_train</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;id_&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;segment_length&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;conversation.content&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">"id_"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">"segment_length"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"conversation.content"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">add_token_info_to_df</span><span class="p">(</span>
             <span class="n">df</span><span class="p">,</span>
-            <span class="n">segments_col</span><span class="o">=</span><span class="s1">&#39;conversation.content&#39;</span><span class="p">,</span>
+            <span class="n">segments_col</span><span class="o">=</span><span class="s2">"conversation.content"</span><span class="p">,</span>
             <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
         <span class="p">)</span>  <span class="c1"># takes 10mn</span>
         <span class="c1"># then keep only those conversations (grouped by hash) that have all valid segments</span>
-        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;conversation_hash&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;segment_is_valid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"conversation_hash"</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">"segment_is_valid"</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
         <span class="p">)</span></div>
 
 
@@ -216,42 +214,42 @@
 <div class="viewcode-block" id="expand_wildchat_data">
 <a class="viewcode-back" href="../../module_docs/imbed_data_prep/wildchat.html#imbed_data_prep.wildchat.expand_wildchat_data">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">expand_wildchat_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Expand columns and rows of raw wildchat data, to get a more flattened dataframe.</span>
 
 <span class="sd">    The raw data contains several columns that have nested data. More specifically,</span>
-<span class="sd">    the columns -- &#39;conversation&#39;, &#39;openai_moderation&#39;, and &#39;detoxify_moderation&#39; --</span>
+<span class="sd">    the columns -- 'conversation', 'openai_moderation', and 'detoxify_moderation' --</span>
 <span class="sd">    which contain (aligned) lists of dicts, where each dict of a list corresponds to</span>
-<span class="sd">    a &quot;part&quot; of the conversation conversation: Either the &quot;user&quot;, or the &quot;assistant&quot;</span>
-<span class="sd">    role -- the size of this list should be the number of &quot;turns&quot; times two (user part,</span>
+<span class="sd">    a "part" of the conversation conversation: Either the "user", or the "assistant"</span>
+<span class="sd">    role -- the size of this list should be the number of "turns" times two (user part,</span>
 <span class="sd">    followed with assistant response).</span>
 
 <span class="sd">    So we expand the lists, thus expanding the rows to contain exactly a part each.</span>
 <span class="sd">    Then we expand the dicts, thus expanding the colums, to contain a field of the dict</span>
 <span class="sd">    each.</span>
-<span class="sd">    Finally, there&#39;s one more level of nested dicts in the</span>
-<span class="sd">    &#39;openai_moderation.categories&#39; and &#39;openai_moderation.category_scores&#39; columns,</span>
+<span class="sd">    Finally, there's one more level of nested dicts in the</span>
+<span class="sd">    'openai_moderation.categories' and 'openai_moderation.category_scores' columns,</span>
 <span class="sd">    which we also flatten by expanding columns.</span>
 <span class="sd">    Note that before we do this, we drop rows that have null openai_moderation values.</span>
 <span class="sd">    There were 16996 such rows in the (row-expanded) raw data.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="c1"># for each (aligned) item of conversation and moderation, make a new row</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">expand_rows</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;conversation&#39;</span><span class="p">,</span> <span class="s1">&#39;openai_moderation&#39;</span><span class="p">,</span> <span class="s1">&#39;detoxify_moderation&#39;</span><span class="p">])</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">expand_rows</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s2">"conversation"</span><span class="p">,</span> <span class="s2">"openai_moderation"</span><span class="p">,</span> <span class="s2">"detoxify_moderation"</span><span class="p">])</span>
     <span class="c1"># These items are dicts, so expand their fields into columns</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span>
-        <span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;conversation&#39;</span><span class="p">,</span> <span class="s1">&#39;openai_moderation&#39;</span><span class="p">,</span> <span class="s1">&#39;detoxify_moderation&#39;</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s2">"conversation"</span><span class="p">,</span> <span class="s2">"openai_moderation"</span><span class="p">,</span> <span class="s2">"detoxify_moderation"</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="c1"># openai_moderation has yet one more level of nesting so flatten that too</span>
     <span class="n">openai_moderation_cols</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;openai_moderation.categories&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;openai_moderation.category_scores&#39;</span><span class="p">,</span>
+        <span class="s2">"openai_moderation.categories"</span><span class="p">,</span>
+        <span class="s2">"openai_moderation.category_scores"</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="c1">#   some 16996 rows have null openai_moderation values: drop them before expanding</span>
     <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="n">openai_moderation_cols</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">openai_moderation_cols</span><span class="p">)</span>
     <span class="c1"># remove all columns that have a / in them (because they have duplicates)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s1">&#39;/&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">c</span><span class="p">]]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="s2">"/"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">c</span><span class="p">]]</span>
     <span class="k">return</span> <span class="n">df</span></div>
 
 
@@ -260,14 +258,14 @@
 <span class="c1"># class GithubReposData:</span>
 <span class="c1">#     _: KW_ONLY</span>
 <span class="c1">#     raw_data_src: str = (</span>
-<span class="c1">#         &#39;https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1&#39;</span>
+<span class="c1">#         'https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1'</span>
 <span class="c1">#     )</span>
 <span class="c1">#     cache: CacheSpec = DFLT_CACHE_DIR</span>
 <span class="c1">#     raw_data_local_path: str = DFLT_RAW_DATA_FILEPATH</span>
 <span class="c1">#     planar_compute_chk_size: int = 1000</span>
-<span class="c1">#     embeddings_column: str = &#39;embedding&#39;</span>
-<span class="c1">#     text_segments_column: str = &#39;text&#39;</span>
-<span class="c1">#     planar_embeddings_func: PlanarEmbeddingSpec = &#39;ncvis&#39;</span>
+<span class="c1">#     embeddings_column: str = 'embedding'</span>
+<span class="c1">#     text_segments_column: str = 'text'</span>
+<span class="c1">#     planar_embeddings_func: PlanarEmbeddingSpec = 'ncvis'</span>
 <span class="c1">#     drop_duplicates: bool = True</span>
 <span class="c1">#     n_clusters: Sequence[int] = DFLT_N_CLUSTERS</span>
 <span class="c1">#     mk_cluster_learner: Callable = kmeans_cluster_indices</span>
@@ -301,12 +299,12 @@
 <span class="c1">#         df = pd.read_parquet(BytesIO(self._raw_data_bytes))</span>
 <span class="c1">#         if self.drop_duplicates:</span>
 <span class="c1">#             n_rows_before = len(df)</span>
-<span class="c1">#             self.log(f&quot;Dropping duplicate nameWithOwner (github stub)...&quot;)</span>
-<span class="c1">#             df = df.drop_duplicates(subset=[&#39;nameWithOwner&#39;])</span>
+<span class="c1">#             self.log(f"Dropping duplicate nameWithOwner (github stub)...")</span>
+<span class="c1">#             df = df.drop_duplicates(subset=['nameWithOwner'])</span>
 <span class="c1">#             n_rows_after = len(df)</span>
-<span class="c1">#             self.log(f&quot;... Dropped {n_rows_before - n_rows_after} duplicates&quot;)</span>
-<span class="c1">#         assert df.nameWithOwner.is_unique, f&quot;Duplicate nameWithOwner in df&quot;</span>
-<span class="c1">#         df = df.set_index(&quot;nameWithOwner&quot;, drop=False)</span>
+<span class="c1">#             self.log(f"... Dropped {n_rows_before - n_rows_after} duplicates")</span>
+<span class="c1">#         assert df.nameWithOwner.is_unique, f"Duplicate nameWithOwner in df"</span>
+<span class="c1">#         df = df.set_index("nameWithOwner", drop=False)</span>
 <span class="c1">#         return df</span>
 
 <span class="c1">#     @property</span>
@@ -324,11 +322,11 @@
 
 <span class="c1">#     segment_vectors = embeddings  # alias</span>
 
-<span class="c1">#     @cache_this(cache=&#39;cache&#39;, key=add_extension(&#39;.parquet&#39;))</span>
+<span class="c1">#     @cache_this(cache='cache', key=add_extension('.parquet'))</span>
 <span class="c1">#     @log_calls</span>
 <span class="c1">#     def planar_embeddings(self):</span>
 <span class="c1">#         self.log(</span>
-<span class="c1">#             &quot;Computing and saving planar embeddings with {self.planar_embeddings_func}&quot;</span>
+<span class="c1">#             "Computing and saving planar embeddings with {self.planar_embeddings_func}"</span>
 <span class="c1">#         )</span>
 <span class="c1">#         r = planar_embeddings_dict_to_df(planar_embeddings(self.segment_vectors))</span>
 <span class="c1">#         return r</span>
@@ -339,13 +337,13 @@
 <span class="c1">#             self.raw_data, self.planar_embeddings, left_index=True, right_index=True</span>
 <span class="c1">#         )</span>
 
-<span class="c1">#     @cache_this(cache=&#39;cache&#39;, key=add_extension(&#39;.parquet&#39;))</span>
+<span class="c1">#     @cache_this(cache='cache', key=add_extension('.parquet'))</span>
 <span class="c1">#     @log_calls</span>
 <span class="c1">#     def cluster_indices(self):</span>
-<span class="c1">#         &quot;&quot;&quot;</span>
+<span class="c1">#         """</span>
 <span class="c1">#         Make a dataframe containing kmeans cluster indices for the original embeddings.</span>
-<span class="c1">#         &quot;&quot;&quot;</span>
-<span class="c1">#         self.log(f&quot;Computing cluster indices for num of clusters: {self.n_clusters}&quot;)</span>
+<span class="c1">#         """</span>
+<span class="c1">#         self.log(f"Computing cluster indices for num of clusters: {self.n_clusters}")</span>
 
 <span class="c1">#         def compute_cluster_indices():</span>
 <span class="c1">#             for n_clusters in self.n_clusters:</span>
@@ -354,7 +352,7 @@
 <span class="c1">#                 )</span>
 
 <span class="c1">#         cluster_columns = (</span>
-<span class="c1">#             f&quot;clusters_{n_clusters:02.0f}&quot; for n_clusters in self.n_clusters</span>
+<span class="c1">#             f"clusters_{n_clusters:02.0f}" for n_clusters in self.n_clusters</span>
 <span class="c1">#         )</span>
 
 <span class="c1">#         r = pd.DataFrame(</span>
@@ -371,7 +369,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.github_repos &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.github_repos &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -89,13 +89,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imbed_data_prep.github_repos</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Data prep for Github Repositories data.</span>
+<span></span><span class="sd">"""Data prep for Github Repositories data.</span>
 
 <span class="sd">Data source:</span>
-<span class="sd">- [GitHub Public Repository Metadata](https://www.kaggle.com/datasets/pelmers/github-repository-metadata-with-5-stars?resource=download) </span>
+<span class="sd">- [GitHub Public Repository Metadata](https://www.kaggle.com/datasets/pelmers/github-repository-metadata-with-5-stars?resource=download)</span>
 <span class="sd">- ([Dropbox link to parquet file](https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=0))</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <span class="n">BytesIO</span>
@@ -131,18 +131,18 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
 
-<span class="n">raw_data_url</span> <span class="o">=</span> <span class="s1">&#39;https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1&#39;</span>
+<span class="n">raw_data_url</span> <span class="o">=</span> <span class="s2">"https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1"</span>
 
-<span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;github_repos&#39;</span>
-<span class="n">raw_data_name</span> <span class="o">=</span> <span class="s1">&#39;github_repos.parquet&#39;</span>
+<span class="n">data_name</span> <span class="o">=</span> <span class="s2">"github_repos"</span>
+<span class="n">raw_data_name</span> <span class="o">=</span> <span class="s2">"github_repos.parquet"</span>
 
 <span class="c1"># TODO: Use config2py tools to use and save default values</span>
 <span class="c1"># TODO: Use config2py tools to include a message containing the default values</span>
 <span class="n">_DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">saves_join</span><span class="p">(</span><span class="n">data_name</span><span class="p">)</span>
-<span class="n">DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="s1">&#39;GITHUB_REPOS_CACHE_DIR&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_CACHE_DIR</span><span class="p">)</span>
+<span class="n">DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span><span class="s2">"GITHUB_REPOS_CACHE_DIR"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_CACHE_DIR</span><span class="p">)</span>
 <span class="n">_DFLT_RAW_DATA_FILEPATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DFLT_CACHE_DIR</span><span class="p">,</span> <span class="n">raw_data_name</span><span class="p">)</span>
 <span class="n">DFLT_RAW_DATA_FILEPATH</span> <span class="o">=</span> <span class="n">get_config</span><span class="p">(</span>
-    <span class="s1">&#39;GITHUB_REPOS_RAW_DATA_FILEPATH&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_RAW_DATA_FILEPATH</span>
+    <span class="s2">"GITHUB_REPOS_RAW_DATA_FILEPATH"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_RAW_DATA_FILEPATH</span>
 <span class="p">)</span>
 <span class="n">DFLT_N_CLUSTERS</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
 
@@ -157,19 +157,19 @@
 <span class="c1"># class GithubReposConfig:</span>
 <span class="c1">#     _: KW_ONLY</span>
 <span class="c1">#     raw_data_url: str = (</span>
-<span class="c1">#         &#39;https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1&#39;</span>
+<span class="c1">#         'https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1'</span>
 <span class="c1">#     )</span>
-<span class="c1">#     data_name = &#39;github_repos&#39;</span>
-<span class="c1">#     raw_data_name = &#39;github_repos.parquet&#39;</span>
+<span class="c1">#     data_name = 'github_repos'</span>
+<span class="c1">#     raw_data_name = 'github_repos.parquet'</span>
 
 
-<span class="c1"># TODO: _cache_this doesn&#39;t work well with partial</span>
-<span class="c1"># cache_this = partial(_cache_this, cache=&#39;cache&#39;)</span>
+<span class="c1"># TODO: _cache_this doesn't work well with partial</span>
+<span class="c1"># cache_this = partial(_cache_this, cache='cache')</span>
 <span class="n">cache_this</span> <span class="o">=</span> <span class="n">_cache_this</span>
 
 <span class="n">log_calls</span> <span class="o">=</span> <span class="n">_log_calls</span><span class="p">(</span>
     <span class="n">logger</span><span class="o">=</span><span class="n">print_with_timestamp</span><span class="p">,</span>
-    <span class="n">log_condition</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">_log_calls</span><span class="o">.</span><span class="n">instance_flag_is_set</span><span class="p">,</span> <span class="n">flag_attr</span><span class="o">=</span><span class="s1">&#39;verbose&#39;</span><span class="p">),</span>
+    <span class="n">log_condition</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">_log_calls</span><span class="o">.</span><span class="n">instance_flag_is_set</span><span class="p">,</span> <span class="n">flag_attr</span><span class="o">=</span><span class="s2">"verbose"</span><span class="p">),</span>
 <span class="p">)</span>
 
 
@@ -179,14 +179,14 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">GithubReposData</span><span class="p">:</span>
     <span class="n">_</span><span class="p">:</span> <span class="n">KW_ONLY</span>
     <span class="n">raw_data_src</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s1">&#39;https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1&#39;</span>
+        <span class="s2">"https://www.dropbox.com/s/kokiypcm2ylx4an/github-repos.parquet?dl=1"</span>
     <span class="p">)</span>
     <span class="n">cache</span><span class="p">:</span> <span class="n">CacheSpec</span> <span class="o">=</span> <span class="n">DFLT_CACHE_DIR</span>
     <span class="n">raw_data_local_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_RAW_DATA_FILEPATH</span>
     <span class="n">planar_compute_chk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span>
-    <span class="n">embeddings_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;embedding&#39;</span>
-    <span class="n">text_segments_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;text&#39;</span>
-    <span class="n">planar_embeddings_func</span><span class="p">:</span> <span class="n">PlanarEmbeddingSpec</span> <span class="o">=</span> <span class="s1">&#39;ncvis&#39;</span>
+    <span class="n">embeddings_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"embedding"</span>
+    <span class="n">text_segments_column</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"text"</span>
+    <span class="n">planar_embeddings_func</span><span class="p">:</span> <span class="n">PlanarEmbeddingSpec</span> <span class="o">=</span> <span class="s2">"ncvis"</span>
     <span class="n">drop_duplicates</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="n">n_clusters</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DFLT_N_CLUSTERS</span>
     <span class="n">mk_cluster_learner</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">kmeans_cluster_indices</span>
@@ -220,12 +220,12 @@
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_raw_data_bytes</span><span class="p">))</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">:</span>
             <span class="n">n_rows_before</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping duplicate nameWithOwner (github stub)...&quot;</span><span class="p">)</span>
-            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nameWithOwner&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dropping duplicate nameWithOwner (github stub)..."</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">"nameWithOwner"</span><span class="p">])</span>
             <span class="n">n_rows_after</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;... Dropped </span><span class="si">{</span><span class="n">n_rows_before</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n_rows_after</span><span class="si">}</span><span class="s2"> duplicates&quot;</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">df</span><span class="o">.</span><span class="n">nameWithOwner</span><span class="o">.</span><span class="n">is_unique</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Duplicate nameWithOwner in df&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;nameWithOwner&quot;</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">"... Dropped </span><span class="si">{</span><span class="n">n_rows_before</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">n_rows_after</span><span class="si">}</span><span class="s2"> duplicates"</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">df</span><span class="o">.</span><span class="n">nameWithOwner</span><span class="o">.</span><span class="n">is_unique</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Duplicate nameWithOwner in df"</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"nameWithOwner"</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">df</span>
 
     <span class="nd">@property</span>
@@ -243,11 +243,11 @@
 
     <span class="n">segment_vectors</span> <span class="o">=</span> <span class="n">embeddings</span>  <span class="c1"># alias</span>
 
-    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;cache&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s2">"cache"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s2">".parquet"</span><span class="p">))</span>
     <span class="nd">@log_calls</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">planar_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
-            <span class="s2">&quot;Computing and saving planar embeddings with </span><span class="si">{self.planar_embeddings_func}</span><span class="s2">&quot;</span>
+            <span class="s2">"Computing and saving planar embeddings with </span><span class="si">{self.planar_embeddings_func}</span><span class="s2">"</span>
         <span class="p">)</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">planar_embeddings_dict_to_df</span><span class="p">(</span><span class="n">planar_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_vectors</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">r</span>
@@ -258,13 +258,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
 
-    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;cache&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;.parquet&#39;</span><span class="p">))</span>
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s2">"cache"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s2">".parquet"</span><span class="p">))</span>
     <span class="nd">@log_calls</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">cluster_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Make a dataframe containing kmeans cluster indices for the original embeddings.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing cluster indices for num of clusters: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Computing cluster indices for num of clusters: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="k">def</span><span class="w"> </span><span class="nf">compute_cluster_indices</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">n_clusters</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span><span class="p">:</span>
@@ -273,7 +273,7 @@
                 <span class="p">)</span>
 
         <span class="n">cluster_columns</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;clusters_</span><span class="si">{</span><span class="n">n_clusters</span><span class="si">:</span><span class="s2">02.0f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">n_clusters</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span>
+            <span class="sa">f</span><span class="s2">"clusters_</span><span class="si">{</span><span class="n">n_clusters</span><span class="si">:</span><span class="s2">02.0f</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">n_clusters</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_clusters</span>
         <span class="p">)</span>
 
         <span class="n">r</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
@@ -291,7 +291,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

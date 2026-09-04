@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.hcp &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.hcp &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -89,7 +89,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imbed_data_prep.hcp</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;HCP publications data&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""HCP publications data"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">partial</span>
@@ -112,12 +112,12 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">get_src_key_from_local_configs</span><span class="p">():</span>
-    <span class="n">config_val</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HCP_PUBS_SRC_KEY&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="n">config_val</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"HCP_PUBS_SRC_KEY"</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">config_val</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">config_val</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;You must specify a src_key or set HCP_PUBS_SRC_KEY in environment variables&quot;</span>
+            <span class="s2">"You must specify a src_key or set HCP_PUBS_SRC_KEY in environment variables"</span>
         <span class="p">)</span>
 
 
@@ -155,11 +155,11 @@
     <span class="n">mean_aggregator</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="n">cosine_mean_aggregator</span>
     <span class="n">src_store_factory</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">Files</span>
 
-    <span class="n">titles_aggr_src_key</span> <span class="o">=</span> <span class="s1">&#39;publications-hcp3-with_titles_aggregates.parquet&#39;</span>
-    <span class="n">embeddings_src_key</span> <span class="o">=</span> <span class="s1">&#39;publications-hcp2-embeddings.parquet&#39;</span>
-    <span class="n">citations_src_key</span> <span class="o">=</span> <span class="s1">&#39;citation-links-hcp3.tsv.zip&#39;</span>
-    <span class="n">info_src_key</span> <span class="o">=</span> <span class="s1">&#39;publications-hcp2.tsv.zip&#39;</span>
-    <span class="n">aggregate_titles_embeddings_key</span> <span class="o">=</span> <span class="s1">&#39;aggregate_titles_embeddings.parquet&#39;</span>
+    <span class="n">titles_aggr_src_key</span> <span class="o">=</span> <span class="s2">"publications-hcp3-with_titles_aggregates.parquet"</span>
+    <span class="n">embeddings_src_key</span> <span class="o">=</span> <span class="s2">"publications-hcp2-embeddings.parquet"</span>
+    <span class="n">citations_src_key</span> <span class="o">=</span> <span class="s2">"citation-links-hcp3.tsv.zip"</span>
+    <span class="n">info_src_key</span> <span class="o">=</span> <span class="s2">"publications-hcp2.tsv.zip"</span>
+    <span class="n">aggregate_titles_embeddings_key</span> <span class="o">=</span> <span class="s2">"aggregate_titles_embeddings.parquet"</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pjoin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -188,17 +188,17 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">embeddings_hcp2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">embeddings_hcp2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings_filepath</span><span class="p">)</span>
-        <span class="n">embeddings_hcp2</span> <span class="o">=</span> <span class="n">embeddings_hcp2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)[</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span>
+        <span class="n">embeddings_hcp2</span> <span class="o">=</span> <span class="n">embeddings_hcp2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)[</span><span class="s2">"embedding"</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">embeddings_hcp2</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_citations_hcp3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">citations_hcp3_src</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">citations_hcp3_src</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_citations_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s1">&#39;citing_pub_id&#39;</span><span class="p">])</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s1">&#39;cited_pub_id&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s2">"citing_pub_id"</span><span class="p">])</span> <span class="o">|</span> <span class="nb">set</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s2">"cited_pub_id"</span><span class="p">]</span>
         <span class="p">)</span>
 
 <div class="viewcode-block" id="Hcp3Dacc.citation_graph">
@@ -206,7 +206,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">citation_graph</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">min_proportion</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">min_citations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ids_with_embeddings</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""</span>
 <span class="sd">        Return the citation graph as a dict of {citing_id: [cited_id, ...]} pairs.</span>
 <span class="sd">        The graph is pruned to only include articles who have a `min_proportion`</span>
 <span class="sd">        of citations that have embeddings (in ids_with_embeddings).</span>
@@ -215,9 +215,9 @@
 <span class="sd">            min_proportion (float): The minimum proportion of citations that must have</span>
 <span class="sd">                embeddings for a node to be included in the graph.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">if</span> <span class="n">ids_with_embeddings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">ids_with_embeddings</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aggregate_titles_embeddings</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span>
+            <span class="n">ids_with_embeddings</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">aggregate_titles_embeddings</span><span class="p">[</span><span class="s2">"id"</span><span class="p">])</span>
         <span class="n">citations</span> <span class="o">=</span> <span class="p">{</span>
             <span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">citations_of</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min_citations</span>
         <span class="p">}</span>
@@ -240,20 +240,20 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">missing_cited_ids</span><span class="p">(</span><span class="n">dacc</span><span class="p">):</span>
-        <span class="n">cited_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">citations_hcp3</span><span class="p">[</span><span class="s1">&#39;cited_pub_id&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">info_hcp2</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="n">cited_ids</span>
+        <span class="n">cited_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">citations_hcp3</span><span class="p">[</span><span class="s2">"cited_pub_id"</span><span class="p">])</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">info_hcp2</span><span class="p">[</span><span class="s2">"id"</span><span class="p">])</span> <span class="o">-</span> <span class="n">cited_ids</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">citations_hcp3</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span>
-            <span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s1">&#39;citing_pub_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">missing_embedding_ids</span><span class="p">)</span>
-            <span class="o">&amp;</span> <span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s1">&#39;cited_pub_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">missing_embedding_ids</span><span class="p">)</span>
+            <span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s2">"citing_pub_id"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">missing_embedding_ids</span><span class="p">)</span>
+            <span class="o">&amp;</span> <span class="o">~</span><span class="bp">self</span><span class="o">.</span><span class="n">_citations_hcp3</span><span class="p">[</span><span class="s2">"cited_pub_id"</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">missing_embedding_ids</span><span class="p">)</span>
         <span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">cited_by</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">citations_hcp3</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;cited_pub_id&#39;</span><span class="p">)[</span><span class="s1">&#39;citing_pub_id&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">citations_hcp3</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"cited_pub_id"</span><span class="p">)[</span><span class="s2">"citing_pub_id"</span><span class="p">]</span>
             <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
             <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
             <span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
@@ -262,7 +262,7 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">citations_of</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">citations_hcp3</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;citing_pub_id&#39;</span><span class="p">)[</span><span class="s1">&#39;cited_pub_id&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">citations_hcp3</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"citing_pub_id"</span><span class="p">)[</span><span class="s2">"cited_pub_id"</span><span class="p">]</span>
             <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
             <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
             <span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
@@ -279,19 +279,19 @@
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">planar_mean_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">umap_2d_embeddings_df</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_aggregates</span><span class="p">,</span> <span class="n">key_col</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">umap_2d_embeddings_df</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mean_aggregates</span><span class="p">,</span> <span class="n">key_col</span><span class="o">=</span><span class="s2">"id"</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">info_hcp2</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info_filepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info_filepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"latin-1"</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">planar_mean_embeddings_with_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">planar_mean_embeddings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_hcp2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">planar_mean_embeddings</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">info_hcp2</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">"id"</span><span class="p">)</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">titles_aggr_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Precomputed titles aggregates, with info&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Precomputed titles aggregates, with info"""</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">titles_aggr_src_key</span><span class="p">]))</span>
 
     <span class="nd">@cached_property</span>
@@ -301,10 +301,10 @@
 <div class="viewcode-block" id="Hcp3Dacc.citing_and_cited_titles">
 <a class="viewcode-back" href="../../module_docs/imbed_data_prep/hcp.html#imbed_data_prep.hcp.Hcp3Dacc.citing_and_cited_titles">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">citing_and_cited_titles</span><span class="p">(</span><span class="n">dacc</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generator of (id, citing_title, cited_titles) triples.</span>
+<span class="w">        </span><span class="sd">"""Generator of (id, citing_title, cited_titles) triples.</span>
 <span class="sd">        Helper for dacc.titles_aggregate method.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">titles</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">info_hcp2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+<span class="sd">        """</span>
+        <span class="n">titles</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">info_hcp2</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"id"</span><span class="p">)[</span><span class="s2">"title"</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">cited_ids</span> <span class="ow">in</span> <span class="n">dacc</span><span class="o">.</span><span class="n">citations_of</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">cited_ids</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cited_ids</span><span class="p">)</span> <span class="o">-</span> <span class="n">dacc</span><span class="o">.</span><span class="n">missing_cited_ids</span><span class="p">)</span>
             <span class="n">cited_titles</span> <span class="o">=</span> <span class="n">titles</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">cited_ids</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
@@ -316,15 +316,15 @@
 <div class="viewcode-block" id="Hcp3Dacc.titles_aggregate">
 <a class="viewcode-back" href="../../module_docs/imbed_data_prep/hcp.html#imbed_data_prep.hcp.Hcp3Dacc.titles_aggregate">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">titles_aggregate</span><span class="p">(</span>
-        <span class="n">dacc</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">titles_sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">###</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">main_title_sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\n\n</span><span class="s1">######</span><span class="se">\n\n\n</span><span class="s1">&#39;</span>
+        <span class="n">dacc</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">titles_sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">###</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">,</span> <span class="n">main_title_sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\n\n\n</span><span class="s2">######</span><span class="se">\n\n\n</span><span class="s2">"</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;For each article, aggregate its title with the titles of the papers it cites.</span>
+<span class="w">        </span><span class="sd">"""For each article, aggregate its title with the titles of the papers it cites.</span>
 
-<span class="sd">        We use `dacc.info_hcp2.set_index(&#39;id&#39;)[&#39;title&#39;]` to get the titles of an id.</span>
+<span class="sd">        We use `dacc.info_hcp2.set_index('id')['title']` to get the titles of an id.</span>
 <span class="sd">        If a title is missing, it is ignored.</span>
 
 <span class="sd">        Returns a generator of `(id, aggregated_titles)` pairs.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">citing_title</span><span class="p">,</span> <span class="n">cited_titles</span> <span class="ow">in</span> <span class="n">dacc</span><span class="o">.</span><span class="n">citing_and_cited_titles</span><span class="p">():</span>
             <span class="n">title_aggregate</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">citing_title</span> <span class="o">+</span> <span class="n">main_title_sep</span> <span class="o">+</span> <span class="n">titles_sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cited_titles</span><span class="p">)</span>
@@ -337,24 +337,24 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">titles_aggregate_sr</span><span class="p">(</span>
         <span class="n">dacc</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
-        <span class="n">titles_sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">###</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">,</span>
-        <span class="n">main_title_sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n\n\n</span><span class="s1">######</span><span class="se">\n\n\n</span><span class="s1">&#39;</span><span class="p">,</span>
+        <span class="n">titles_sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">###</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">main_title_sep</span><span class="o">=</span><span class="s2">"</span><span class="se">\n\n\n</span><span class="s2">######</span><span class="se">\n\n\n</span><span class="s2">"</span><span class="p">,</span>
         <span class="n">print_progress_every</span><span class="o">=</span><span class="mi">50_000</span><span class="p">,</span>
     <span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;For each article, aggregate its title with the titles of the papers it cites.</span>
+<span class="w">        </span><span class="sd">"""For each article, aggregate its title with the titles of the papers it cites.</span>
 
-<span class="sd">        We use `dacc.info_hcp2.set_index(&#39;id&#39;)[&#39;title&#39;]` to get the titles of an id.</span>
+<span class="sd">        We use `dacc.info_hcp2.set_index('id')['title']` to get the titles of an id.</span>
 <span class="sd">        If a title is missing, it is ignored.</span>
 
 <span class="sd">        Returns a generator of `(id, aggregated_titles)` pairs.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">titles_aggregate_sr</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="n">it</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">titles_aggregate</span><span class="p">(</span><span class="n">titles_sep</span><span class="o">=</span><span class="n">titles_sep</span><span class="p">,</span> <span class="n">main_title_sep</span><span class="o">=</span><span class="n">main_title_sep</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">citing_id</span><span class="p">,</span> <span class="n">titles_aggregate</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">print_progress_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Proccessed </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> elements&quot;</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Proccessed </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> elements"</span><span class="p">)</span>
             <span class="n">titles_aggregate_sr</span><span class="p">[</span><span class="n">citing_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">titles_aggregate</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">titles_aggregate_sr</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;titles_aggregate&#39;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">titles_aggregate_sr</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"titles_aggregate"</span><span class="p">)</span></div>
 </div>
 
 </pre></div>
@@ -366,7 +366,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

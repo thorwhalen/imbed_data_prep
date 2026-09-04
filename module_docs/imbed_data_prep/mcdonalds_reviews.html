@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.mcdonalds_reviews &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.mcdonalds_reviews &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -126,7 +126,7 @@
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">imbed_data_prep.mcdonalds_reviews.</span></span><span class="sig-name descname"><span class="pre">McdonaldsReviewsDacc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'mcdonalds_reviews'</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">datadir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saves_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_data_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'McDonalds_Reviews_Cleaned.csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'text-embedding-3-small'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed_data_prep/mcdonalds_reviews.html#McdonaldsReviewsDacc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed_data_prep.mcdonalds_reviews.McdonaldsReviewsDacc" title="Link to this definition"></a></dt>
 <dd><p>Data accessor for McDonald’s reviews</p>
 <dl>
-<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dacc</span> <span class="o">=</span> <span class="n">McdonaldsReviewsDacc</span><span class="p">(</span><span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dacc</span> <span class="o">=</span> <span class="n">McdonaldsReviewsDacc</span><span class="p">(</span><span class="n">datadir</span><span class="o">=</span><span class="s1">'.'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">raw_data</span>  <span class="c1"># Loads CSV</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">embeddings_df</span>  <span class="c1"># Computes/loads embeddings</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">planar</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">planar_embeddings</span>  <span class="c1"># 2D projections</span>
@@ -214,21 +214,21 @@ df = pd.read_csv(f)</p>
 - Results persistence and analysis</p>
 <dl>
 <dt>Usage:</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dacc</span> <span class="o">=</span> <span class="n">McdonaldsReviewsMoodModeling</span><span class="p">(</span>
-<span class="gp">... </span>    <span class="n">datadir</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">semantic_attributes_path</span><span class="o">=</span><span class="s1">&#39;semantic_attributes.json&#39;</span>
+<span class="gp">... </span>    <span class="n">datadir</span><span class="o">=</span><span class="s1">'.'</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">semantic_attributes_path</span><span class="o">=</span><span class="s1">'semantic_attributes.json'</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Access semantic attributes</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">attrs</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">semantic_attributes</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get embeddings for a category</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">category_embeddings</span><span class="p">(</span><span class="s1">&#39;food_quality_presentation&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">category_embeddings</span><span class="p">(</span><span class="s1">'food_quality_presentation'</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Train models for all categories</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">all_category_results</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get model summary for a specific category</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">summary</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">category_model_summary</span><span class="p">(</span><span class="s1">&#39;food_quality_presentation&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">summary</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">category_model_summary</span><span class="p">(</span><span class="s1">'food_quality_presentation'</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd>
@@ -418,7 +418,7 @@ df = pd.read_csv(f)</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

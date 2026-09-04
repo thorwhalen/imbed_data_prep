@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.eurovis &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.eurovis &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -89,7 +89,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imbed_data_prep.eurovis</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Data prep for Eurovis data.&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Data prep for Eurovis data."""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -108,15 +108,15 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 
 
-<span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;eurovis&#39;</span>
+<span class="n">data_name</span> <span class="o">=</span> <span class="s2">"eurovis"</span>
 
-<span class="c1"># raw_data_name = &#39;github_repos.parquet&#39;</span>
+<span class="c1"># raw_data_name = 'github_repos.parquet'</span>
 
 <span class="c1"># TODO: Use config2py tools to use and save default values</span>
 <span class="c1"># TODO: Use config2py tools to include a message containing the default values</span>
 <span class="n">_DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">saves_join</span><span class="p">(</span><span class="n">data_name</span><span class="p">)</span>
 
-<span class="n">DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;EUROVIS_CACHE_DIR&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_CACHE_DIR</span><span class="p">)</span>
+<span class="n">DFLT_CACHE_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"EUROVIS_CACHE_DIR"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_DFLT_CACHE_DIR</span><span class="p">)</span>
 
 <span class="n">DFLT_N_CLUSTERS</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
 
@@ -138,20 +138,20 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">embed_segments_one_by_one</span><span class="p">(</span><span class="n">segments</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">KeyVectorPairs</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;This could take a LONG TIME!!!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"This could take a LONG TIME!!!"</span><span class="p">)</span>
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">segment</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">segments</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">vector</span> <span class="o">=</span> <span class="n">oa</span><span class="o">.</span><span class="n">embeddings</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">key</span><span class="p">,</span> <span class="n">vector</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error processing (</span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">) </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error processing (</span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">) </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
             <span class="c1"># continue</span>
 
 
-<span class="c1"># TODO: _cache_this doesn&#39;t work well with partial</span>
-<span class="c1"># cache_this = partial(_cache_this, cache=&#39;cache&#39;)</span>
-<span class="n">cache_this</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">_cache_this</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;parquet&#39;</span><span class="p">))</span>
+<span class="c1"># TODO: _cache_this doesn't work well with partial</span>
+<span class="c1"># cache_this = partial(_cache_this, cache='cache')</span>
+<span class="n">cache_this</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">_cache_this</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="s2">"saves"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s2">"parquet"</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="EurovisDacc">
@@ -164,45 +164,45 @@
     <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_EMBEDDING_MODEL</span>
 
-    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;csv&#39;</span><span class="p">))</span>
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s2">"csv"</span><span class="p">))</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">raw_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;The purpose of this function is to return the data that the user would</span>
+<span class="w">        </span><span class="sd">"""The purpose of this function is to return the data that the user would</span>
 <span class="sd">        have manually place in the saved_dir, so the method should never actually</span>
-<span class="sd">        be called.&quot;&quot;&quot;</span>
+<span class="sd">        be called."""</span>
         <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
-            <span class="s2">&quot;You need to place a file called `raw_data.csv` in the directory: &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="s2">"You need to place a file called `raw_data.csv` in the directory: "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
 
     <span class="nd">@cache_this</span><span class="p">(</span><span class="n">pre_cache</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">embeddable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># remove rows with missing title or abstract</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;abstract&#39;</span><span class="p">])</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">raw_data</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s2">"title"</span><span class="p">,</span> <span class="s2">"abstract"</span><span class="p">])</span>
         <span class="c1">## Add some util columns</span>
         <span class="c1"># contatenate title and abstract to make segment</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;segment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;##&#39;</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;abstract&#39;</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">"segment"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"##"</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s2">"title"</span><span class="p">]</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"abstract"</span><span class="p">)</span>
 
-        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">segment</span><span class="o">.</span><span class="n">isna</span><span class="p">()),</span> <span class="s2">&quot;some segments are NaN&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">segment</span><span class="o">.</span><span class="n">isna</span><span class="p">()),</span> <span class="s2">"some segments are NaN"</span>
 
         <span class="c1"># apply oa.num_tokens to segment to get n_tokens</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n_tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;segment&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">oa</span><span class="o">.</span><span class="n">num_tokens</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">"n_tokens"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"segment"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">oa</span><span class="o">.</span><span class="n">num_tokens</span><span class="p">)</span>
         <span class="n">max_tokens</span> <span class="o">=</span> <span class="n">oa</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">embeddings_models</span><span class="p">[</span><span class="n">oa</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">DFLT_EMBEDDINGS_MODEL</span><span class="p">][</span>
-            <span class="s1">&#39;max_input&#39;</span>
+            <span class="s2">"max_input"</span>
         <span class="p">]</span>
-        <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n_tokens&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">max_tokens</span><span class="p">,</span> <span class="s2">&quot;some segments exceed max tokens&quot;</span>
+        <span class="k">assert</span> <span class="n">df</span><span class="p">[</span><span class="s2">"n_tokens"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">max_tokens</span><span class="p">,</span> <span class="s2">"some segments exceed max tokens"</span>
 
-        <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;doi&#39;</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;id_&#39;</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">"doi"</span><span class="p">,</span> <span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"id_"</span>
         <span class="k">return</span> <span class="n">df</span>
 
     <span class="c1"># Replace by more scalable default</span>
     <span class="nd">@cache_this</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">embeddings_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;WARNING: This could take A LONG TIME&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""WARNING: This could take A LONG TIME"""</span>
         <span class="n">segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">()</span>  <span class="c1"># TODO: Should detect if property or method!</span>
         <span class="n">vectors</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">embed_segments_one_by_one</span><span class="p">(</span><span class="n">segments</span><span class="p">))</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;id_&#39;</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"id_"</span>
         <span class="k">return</span> <span class="n">df</span>
 
     <span class="nd">@cache_this</span>
@@ -216,10 +216,10 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">segments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddable</span>
         <span class="n">segments</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">segment</span><span class="p">))</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="s2">&quot;oops, duplicate DOIs&quot;</span>
-        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span>
-            <span class="nb">map</span><span class="p">(</span><span class="n">oa</span><span class="o">.</span><span class="n">text_is_valid</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">segment</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-        <span class="p">),</span> <span class="s2">&quot;some segments are invalid&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span> <span class="s2">"oops, duplicate DOIs"</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">oa</span><span class="o">.</span><span class="n">text_is_valid</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">segment</span><span class="o">.</span><span class="n">values</span><span class="p">)),</span> <span class="p">(</span>
+            <span class="s2">"some segments are invalid"</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">segments</span>
 
@@ -227,7 +227,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">clusters_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">clusters_df</span><span class="p">()</span>
 
-    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s1">&#39;saves&#39;</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s1">&#39;parquet&#39;</span><span class="p">))</span>
+    <span class="nd">@cache_this</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="s2">"saves"</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">add_extension</span><span class="p">(</span><span class="s2">"parquet"</span><span class="p">))</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">merged_artifacts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddable</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">left_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">right_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -236,7 +236,7 @@
 
     <span class="nd">@cache_this</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">testing123</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]})</span></div>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"a"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]})</span></div>
 
 </pre></div>
 
@@ -247,7 +247,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

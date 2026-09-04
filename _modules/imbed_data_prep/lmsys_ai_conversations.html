@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.lmsys_ai_conversations &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.lmsys_ai_conversations &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -89,13 +89,13 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imbed_data_prep.lmsys_ai_conversations</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""</span>
 <span class="sd">Lymsys AI Conversations</span>
 
 <span class="sd">See paper: https://arxiv.org/pdf/2309.11998.pdf</span>
 <span class="sd">Data here: https://huggingface.co/papers/2309.11998</span>
 
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">"""</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">partial</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -117,15 +117,15 @@
 <div class="viewcode-block" id="concatenate_arrays">
 <a class="viewcode-back" href="../../module_docs/imbed_data_prep/lmsys_ai_conversations.html#imbed_data_prep.lmsys_ai_conversations.concatenate_arrays">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">concatenate_arrays</span><span class="p">(</span><span class="n">arrays</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Essentially, np.vstack(arrays) but faster&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Essentially, np.vstack(arrays) but faster"""</span>
     <span class="n">n_arrays</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span>
     <span class="n">array_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arrays</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_arrays</span><span class="p">,</span> <span class="n">array_size</span><span class="p">)</span></div>
 
 
 
-<span class="n">data_name</span> <span class="o">=</span> <span class="s1">&#39;lmsys-chat-1m&#39;</span>
-<span class="n">huggingface_data_stub</span> <span class="o">=</span> <span class="s1">&#39;lmsys/lmsys-chat-1m&#39;</span>
+<span class="n">data_name</span> <span class="o">=</span> <span class="s2">"lmsys-chat-1m"</span>
+<span class="n">huggingface_data_stub</span> <span class="o">=</span> <span class="s2">"lmsys/lmsys-chat-1m"</span>
 <span class="n">data_saves_join</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">saves_join</span><span class="p">,</span> <span class="n">data_name</span><span class="p">)</span>
 
 
@@ -153,15 +153,15 @@
 
     <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spec</span><span class="p">:</span> <span class="n">DataSpec</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">assert_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_spec</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="c1"># if data_spec is a string, check if it&#39;s an attribute or a key of saves</span>
+            <span class="c1"># if data_spec is a string, check if it's an attribute or a key of saves</span>
             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spec</span><span class="p">):</span>
                 <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spec</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">data_spec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">data_spec</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">assert_type</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
-                <span class="n">data_spec</span><span class="p">,</span> <span class="n">assert_type</span>
-            <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_spec</span><span class="si">=}</span><span class="s2"> is not </span><span class="si">{</span><span class="n">assert_type</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_spec</span><span class="p">,</span> <span class="n">assert_type</span><span class="p">),</span> <span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">data_spec</span><span class="si">=}</span><span class="s2"> is not </span><span class="si">{</span><span class="n">assert_type</span><span class="si">}</span><span class="s2">"</span>
+            <span class="p">)</span>
         <span class="c1"># just return the data_spec itself as the data</span>
         <span class="k">return</span> <span class="n">data_spec</span>
 
@@ -171,7 +171,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_train_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_dict</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_dict</span><span class="p">[</span><span class="s2">"train"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">train_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -180,41 +180,41 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">conversation_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">_conversation_sizes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">conversation</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">len</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span>
-            <span class="n">_conversation_sizes</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">turn</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="p">),</span> <span class="s2">&quot;Some turns were not twice the conversation size&quot;</span>
+        <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">_conversation_sizes</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">turn</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span>
+            <span class="s2">"Some turns were not twice the conversation size"</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">_conversation_sizes</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">language_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;language&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s2">"language"</span><span class="p">])</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">model_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s2">"model"</span><span class="p">])</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">redacted_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;redacted&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">counts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s2">"redacted"</span><span class="p">])</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">role_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span>
-            <span class="n">x</span><span class="p">[</span><span class="s1">&#39;role&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">conversation</span><span class="p">)</span>
+            <span class="n">x</span><span class="p">[</span><span class="s2">"role"</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="o">.</span><span class="n">conversation</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">most_common</span><span class="p">()))</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">en_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s1">&#39;language&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;English&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">[</span><span class="s2">"language"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"English"</span><span class="p">]</span>
 
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">flat_en</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">en_df</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_rows</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;conversation&#39;</span><span class="p">,</span> <span class="s1">&#39;openai_moderation&#39;</span><span class="p">])</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;conversation&#39;</span><span class="p">,</span> <span class="s1">&#39;openai_moderation&#39;</span><span class="p">],</span> <span class="n">key_mapper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">],</span> <span class="n">key_mapper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;category_scores&#39;</span><span class="p">])</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_rows</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s2">"conversation"</span><span class="p">,</span> <span class="s2">"openai_moderation"</span><span class="p">])</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s2">"conversation"</span><span class="p">,</span> <span class="s2">"openai_moderation"</span><span class="p">],</span> <span class="n">key_mapper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s2">"categories"</span><span class="p">],</span> <span class="n">key_mapper</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">expand_columns</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="s2">"category_scores"</span><span class="p">])</span>
         <span class="k">return</span> <span class="n">t</span>
 
     <span class="nd">@cached_property</span>
@@ -223,12 +223,12 @@
         <span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">text_is_valid</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-        <span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;text-embedding-3-small&#39;</span>
-        <span class="n">max_tokens</span> <span class="o">=</span> <span class="n">embeddings_models</span><span class="p">[</span><span class="n">model</span><span class="p">][</span><span class="s1">&#39;max_input&#39;</span><span class="p">]</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="s2">"text-embedding-3-small"</span>
+        <span class="n">max_tokens</span> <span class="o">=</span> <span class="n">embeddings_models</span><span class="p">[</span><span class="n">model</span><span class="p">][</span><span class="s2">"max_input"</span><span class="p">]</span>
 
         <span class="c1"># TODO: Make it source from self.flat_en directly (once persistent caching is working)</span>
         <span class="c1"># TODO: Also make it check if dacc.flat_en is loaded or not before, and if not, unload it after using.</span>
-        <span class="n">flat_en</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s1">&#39;flat_en.parquet&#39;</span><span class="p">]</span>
+        <span class="n">flat_en</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s2">"flat_en.parquet"</span><span class="p">]</span>
 
         <span class="n">lidx</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="nb">list</span><span class="p">(</span>
@@ -240,9 +240,9 @@
                 <span class="p">)</span>
             <span class="p">)</span>
         <span class="p">)</span>
-        <span class="n">invalid_conversations</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">flat_en</span><span class="p">[</span><span class="n">lidx</span><span class="p">][</span><span class="s1">&#39;conversation_id&#39;</span><span class="p">])</span>
+        <span class="n">invalid_conversations</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">flat_en</span><span class="p">[</span><span class="n">lidx</span><span class="p">][</span><span class="s2">"conversation_id"</span><span class="p">])</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">invalid_conversations</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">invalid_conversations</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
 
         <span class="n">df</span> <span class="o">=</span> <span class="n">flat_en</span><span class="p">[</span><span class="o">~</span><span class="n">flat_en</span><span class="o">.</span><span class="n">conversation_id</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">invalid_conversations</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">df</span>
@@ -252,12 +252,12 @@
         <span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">KeyTemplate</span><span class="p">,</span> <span class="n">cache_iter</span>
 
         <span class="n">key_template</span> <span class="o">=</span> <span class="n">KeyTemplate</span><span class="p">(</span>
-            <span class="s1">&#39;flat_en_embeddings/</span><span class="si">{index}</span><span class="s1">.parquet&#39;</span><span class="p">,</span>
-            <span class="n">from_str_funcs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
-            <span class="n">to_str_funcs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{:04d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">},</span>
+            <span class="s2">"flat_en_embeddings/</span><span class="si">{index}</span><span class="s2">.parquet"</span><span class="p">,</span>
+            <span class="n">from_str_funcs</span><span class="o">=</span><span class="p">{</span><span class="s2">"index"</span><span class="p">:</span> <span class="nb">int</span><span class="p">},</span>
+            <span class="n">to_str_funcs</span><span class="o">=</span><span class="p">{</span><span class="s2">"index"</span><span class="p">:</span> <span class="s2">"</span><span class="si">{:04d}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">},</span>
         <span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">key_template</span><span class="o">.</span><span class="n">filt_iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">)</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">key_template</span><span class="o">.</span><span class="n">key_codec</span><span class="p">(</span><span class="n">decoded</span><span class="o">=</span><span class="s1">&#39;single&#39;</span><span class="p">)(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">key_template</span><span class="o">.</span><span class="n">key_codec</span><span class="p">(</span><span class="n">decoded</span><span class="o">=</span><span class="s2">"single"</span><span class="p">)(</span><span class="n">s</span><span class="p">)</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">cache_iter</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">keys_cache</span><span class="o">=</span><span class="nb">sorted</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">s</span>
 
@@ -268,9 +268,9 @@
 <div class="viewcode-block" id="Dacc.flat_en_embeddings_iter">
 <a class="viewcode-back" href="../../module_docs/imbed_data_prep/lmsys_ai_conversations.html#imbed_data_prep.lmsys_ai_conversations.Dacc.flat_en_embeddings_iter">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">flat_en_embeddings_iter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Yields embeddings matrices&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Yields embeddings matrices"""</span>
         <span class="k">return</span> <span class="nb">map</span><span class="p">(</span>
-            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">concatenate_arrays</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;embeddings&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">concatenate_arrays</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s2">"embeddings"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">flat_en_embeddings_store</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span>
         <span class="p">)</span></div>
 
@@ -283,21 +283,21 @@
     <span class="nd">@cached_property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">flat_en_conversation_grouped_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="c1"># TODO: This is the kind of thing that the save decorator should take care of</span>
-        <span class="k">if</span> <span class="s1">&#39;flat_en_conversation_grouped_embeddings.parquet&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s1">&#39;flat_en_conversation_grouped_embeddings.parquet&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">"flat_en_conversation_grouped_embeddings.parquet"</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s2">"flat_en_conversation_grouped_embeddings.parquet"</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flat_en_embeddings</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"content"</span><span class="p">])</span>
             <span class="c1"># groupby conversation_id, doing the following with, for each group:</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;conversation_id&#39;</span><span class="p">)</span>
-            <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;num_of_tokens&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span> <span class="s1">&#39;embeddings&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">})</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s1">&#39;flat_en_conversation_grouped_embeddings.parquet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"conversation_id"</span><span class="p">)</span>
+            <span class="n">g</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s2">"num_of_tokens"</span><span class="p">:</span> <span class="s2">"sum"</span><span class="p">,</span> <span class="s2">"embeddings"</span><span class="p">:</span> <span class="s2">"mean"</span><span class="p">})</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s2">"flat_en_conversation_grouped_embeddings.parquet"</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span>
             <span class="k">return</span> <span class="n">g</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">planar_embeddings_with_metadata</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">planar_embeddings</span><span class="p">:</span> <span class="n">DataSpec</span><span class="p">,</span>
-        <span class="n">metadata</span><span class="p">:</span> <span class="n">DataSpec</span> <span class="o">=</span> <span class="s1">&#39;flat_en_embeddable&#39;</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="p">:</span> <span class="n">DataSpec</span> <span class="o">=</span> <span class="s2">"flat_en_embeddable"</span><span class="p">,</span>
         <span class="o">*</span><span class="p">,</span>
         <span class="n">merge_on</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="p">):</span>
@@ -305,48 +305,48 @@
         <span class="n">metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">merge_data</span><span class="p">(</span>
-            <span class="n">metadata</span><span class="p">,</span> <span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">merge_on</span><span class="o">=</span><span class="n">merge_on</span><span class="p">,</span> <span class="n">data_2_cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span>
+            <span class="n">metadata</span><span class="p">,</span> <span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">merge_on</span><span class="o">=</span><span class="n">merge_on</span><span class="p">,</span> <span class="n">data_2_cols</span><span class="o">=</span><span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">]</span>
         <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">planar_embeddings_of_grouped_conversations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s1">&#39;planar_embeddings_grouped.pkl&#39;</span><span class="p">]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s2">"planar_embeddings_grouped.pkl"</span><span class="p">]</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;index&#39;</span><span class="p">:</span> <span class="s1">&#39;conversation_id&#39;</span><span class="p">})</span>
-        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">"index"</span><span class="p">:</span> <span class="s2">"conversation_id"</span><span class="p">})</span>
+        <span class="n">t</span><span class="p">[</span><span class="s2">"x"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">t</span><span class="p">[</span><span class="s2">"y"</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
         <span class="n">t</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">t</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;id&#39;</span>
-        <span class="c1"># self.saves[&#39;planar_embeddings_grouped.tsv&#39;] = t</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">"id"</span>
+        <span class="c1"># self.saves['planar_embeddings_grouped.tsv'] = t</span>
         <span class="k">return</span> <span class="n">t</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">meta_for_grouped_conversations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s1">&#39;flat_en.parquet&#39;</span><span class="p">]</span>
-        <span class="n">nested_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;.&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s2">"flat_en.parquet"</span><span class="p">]</span>
+        <span class="n">nested_columns</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">"."</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="n">meta</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
         <span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
-            <span class="p">[</span><span class="s1">&#39;language&#39;</span><span class="p">,</span> <span class="s1">&#39;redacted&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;role&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">nested_columns</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+            <span class="p">[</span><span class="s2">"language"</span><span class="p">,</span> <span class="s2">"redacted"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">,</span> <span class="s2">"role"</span><span class="p">]</span> <span class="o">+</span> <span class="n">nested_columns</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
         <span class="p">)</span>
         <span class="n">aggregate_specs_1</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="s1">&#39;turn&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="s1">&#39;flagged&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;num_of_tokens&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
+            <span class="s2">"model"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">"turn"</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+            <span class="s2">"flagged"</span><span class="p">:</span> <span class="s2">"mean"</span><span class="p">,</span>
+            <span class="s2">"num_of_tokens"</span><span class="p">:</span> <span class="s2">"sum"</span><span class="p">,</span>
         <span class="p">}</span>
         <span class="n">remaining_columns</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="nb">set</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">aggregate_specs_1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="p">{</span><span class="s1">&#39;conversation_id&#39;</span><span class="p">}</span>
+            <span class="nb">set</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">aggregate_specs_1</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">-</span> <span class="p">{</span><span class="s2">"conversation_id"</span><span class="p">}</span>
         <span class="p">)</span>
         <span class="n">aggregate_specs</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s1">&#39;model&#39;</span><span class="p">:</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;turn&#39;</span><span class="p">:</span> <span class="s1">&#39;first&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;flagged&#39;</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;num_of_tokens&#39;</span><span class="p">:</span> <span class="s1">&#39;sum&#39;</span><span class="p">,</span>
-            <span class="o">**</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="s1">&#39;mean&#39;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">remaining_columns</span><span class="p">},</span>
+            <span class="s2">"model"</span><span class="p">:</span> <span class="s2">"first"</span><span class="p">,</span>
+            <span class="s2">"turn"</span><span class="p">:</span> <span class="s2">"first"</span><span class="p">,</span>
+            <span class="s2">"flagged"</span><span class="p">:</span> <span class="s2">"mean"</span><span class="p">,</span>
+            <span class="s2">"num_of_tokens"</span><span class="p">:</span> <span class="s2">"sum"</span><span class="p">,</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">col</span><span class="p">:</span> <span class="s2">"mean"</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">remaining_columns</span><span class="p">},</span>
         <span class="p">}</span>
 
         <span class="c1"># group by conversaion_id and apply aggaggregate_specs to each group</span>
-        <span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;conversation_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">aggregate_specs</span><span class="p">)</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"conversation_id"</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">aggregate_specs</span><span class="p">)</span>
         <span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">meta</span>
 
@@ -354,11 +354,11 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">planar_embeddings_of_grouped_conversations_with_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">planar_embeddings_of_grouped_conversations</span>
         <span class="n">meta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta_for_grouped_conversations</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">merge_data</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">merge_on</span><span class="o">=</span><span class="s1">&#39;conversation_id&#39;</span><span class="p">)</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">conversation_id</span>  <span class="c1"># just because cosmograph needs it!</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">merge_data</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">meta</span><span class="p">,</span> <span class="n">merge_on</span><span class="o">=</span><span class="s2">"conversation_id"</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">conversation_id</span>  <span class="c1"># just because cosmograph needs it!</span>
         <span class="k">return</span> <span class="n">df</span></div>
 
-        <span class="c1"># dacc.saves[&#39;planar_embeddings_of_grouped_conversations_with_metadata.tsv&#39;] = df</span>
+        <span class="c1"># dacc.saves['planar_embeddings_of_grouped_conversations_with_metadata.tsv'] = df</span>
 
 
 <span class="n">LmsysDacc</span> <span class="o">=</span> <span class="n">Dacc</span>  <span class="c1"># backwards compatibility alias</span>
@@ -375,10 +375,10 @@
 
 <span class="c1">#     dacc = dacc or mk_dacc()</span>
 
-<span class="c1">#     model = &#39;text-embedding-3-small&#39;</span>
-<span class="c1">#     max_tokens = embeddings_models[model][&#39;max_input&#39;]</span>
+<span class="c1">#     model = 'text-embedding-3-small'</span>
+<span class="c1">#     max_tokens = embeddings_models[model]['max_input']</span>
 
-<span class="c1">#     flat_en = dacc.saves[&#39;flat_en.parquet&#39;]</span>
+<span class="c1">#     flat_en = dacc.saves['flat_en.parquet']</span>
 
 <span class="c1">#     lidx = ~np.array(</span>
 <span class="c1">#         list(</span>
@@ -390,9 +390,9 @@
 <span class="c1">#             )</span>
 <span class="c1">#         )</span>
 <span class="c1">#     )</span>
-<span class="c1">#     invalid_conversations = set(flat_en[lidx][&#39;conversation_id&#39;])</span>
+<span class="c1">#     invalid_conversations = set(flat_en[lidx]['conversation_id'])</span>
 
-<span class="c1">#     print(f&quot;{len(invalid_conversations)=}&quot;)</span>
+<span class="c1">#     print(f"{len(invalid_conversations)=}")</span>
 
 <span class="c1">#     df = flat_en[~flat_en.conversation_id.isin(invalid_conversations)]</span>
 <span class="c1">#     return df</span>
@@ -407,7 +407,7 @@
     <span class="n">chk_size</span><span class="o">=</span><span class="n">DFLT_CHK_SIZE</span><span class="p">,</span>  <span class="c1"># needs to be under max batch size of 2048</span>
     <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="n">overwrite_chunks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;text-embedding-3-small&#39;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">"text-embedding-3-small"</span><span class="p">,</span>
     <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="n">exclude_chk_ids</span><span class="o">=</span><span class="p">(),</span>
     <span class="n">include_chk_ids</span><span class="o">=</span><span class="p">(),</span>
@@ -416,7 +416,7 @@
     <span class="n">__clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddable</span><span class="p">[[</span><span class="s1">&#39;conversation_id&#39;</span><span class="p">,</span> <span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;num_of_tokens&#39;</span><span class="p">]]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddable</span><span class="p">[[</span><span class="s2">"conversation_id"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">,</span> <span class="s2">"num_of_tokens"</span><span class="p">]]</span>
 
     <span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">embeddings</span> <span class="k">as</span> <span class="n">embeddings_</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -426,7 +426,7 @@
     <span class="n">embeddings</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">embeddings_</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">key_for_chunk_index</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;flat_en_embeddings/</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">04d</span><span class="si">}</span><span class="s2">.parquet&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"flat_en_embeddings/</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">04d</span><span class="si">}</span><span class="s2">.parquet"</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">store_chunk</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">chunk</span><span class="p">):</span>
         <span class="n">save_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="o">.</span><span class="n">rootdir</span><span class="p">,</span> <span class="n">key_for_chunk_index</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
@@ -437,24 +437,24 @@
             <span class="c1"># skip this chunk if it is in the exclude list or if the</span>
             <span class="c1"># include list is not empty and this chunk is not in it</span>
             <span class="n">__clog</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;Skipping </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> because it is in the exclude list or not in the include list.&quot;</span>
+                <span class="sa">f</span><span class="s2">"Skipping </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> because it is in the exclude list or not in the include list."</span>
             <span class="p">)</span>
             <span class="k">continue</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite_chunks</span> <span class="ow">and</span> <span class="n">key_for_chunk_index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">:</span>
-            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> because it is already saved.&quot;</span><span class="p">)</span>
+            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Skipping </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> because it is already saved."</span><span class="p">)</span>
             <span class="k">continue</span>
         <span class="c1"># else...</span>
         <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Processing </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">chunk</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
                 <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">index_and_row</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">index_and_row</span><span class="p">]</span>
             <span class="p">)</span>
             <span class="n">vectors</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-            <span class="n">chunk</span><span class="p">[</span><span class="s1">&#39;embeddings&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vectors</span>
+            <span class="n">chunk</span><span class="p">[</span><span class="s2">"embeddings"</span><span class="p">]</span> <span class="o">=</span> <span class="n">vectors</span>
             <span class="n">store_chunk</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--&gt; ERROR: </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">e</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"--&gt; ERROR: </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">e</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_and_save_planar_embeddings</span><span class="p">(</span><span class="n">dacc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
@@ -463,26 +463,26 @@
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Getting flat_en_embeddings&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Getting flat_en_embeddings"</span><span class="p">)</span>
     <span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Making an embeddings store from it, using flat_end_embeddings keys as keys&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Making an embeddings store from it, using flat_end_embeddings keys as keys"</span><span class="p">)</span>
     <span class="n">embdeddings_store</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">id_</span><span class="p">:</span> <span class="n">row</span><span class="o">.</span><span class="n">embeddings</span> <span class="k">for</span> <span class="n">id_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()</span>
     <span class="p">}</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Offload the flat_en_embeddings from memory&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Offload the flat_en_embeddings from memory"</span><span class="p">)</span>
     <span class="k">del</span> <span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Computing the 2d embeddings (the long process)...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Computing the 2d embeddings (the long process)..."</span><span class="p">)</span>
     <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">umap_2d_embeddings</span><span class="p">(</span><span class="n">embdeddings_store</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Reformatting the embeddings into a DataFrame&quot;</span><span class="p">)</span>
-    <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Reformatting the embeddings into a DataFrame"</span><span class="p">)</span>
+    <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">"x"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Saving the planar embeddings to planar_embeddings.parquet&#39;&quot;</span><span class="p">)</span>
-    <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s1">&#39;planar_embeddings.parquet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">planar_embeddings</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Saving the planar embeddings to planar_embeddings.parquet'"</span><span class="p">)</span>
+    <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="s2">"planar_embeddings.parquet"</span><span class="p">]</span> <span class="o">=</span> <span class="n">planar_embeddings</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_and_save_incremental_pca</span><span class="p">(</span>
@@ -490,7 +490,7 @@
     <span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">n_pca_components</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="n">save_name</span><span class="o">=</span><span class="s1">&#39;pca</span><span class="si">{pca_components}</span><span class="s1">.pkl&#39;</span><span class="p">,</span>
+    <span class="n">save_name</span><span class="o">=</span><span class="s2">"pca</span><span class="si">{pca_components}</span><span class="s2">.pkl"</span><span class="p">,</span>
 <span class="p">):</span>
 
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
@@ -500,9 +500,9 @@
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">))</span>
     <span class="n">__clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="c1"># X = np.load(data_saves_join(&#39;flat_en_embeddings.npy&#39;))</span>
+    <span class="c1"># X = np.load(data_saves_join('flat_en_embeddings.npy'))</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Taking the PCA (</span><span class="si">{</span><span class="n">n_pca_components</span><span class="si">=}</span><span class="s2">) of the embeddings...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Taking the PCA (</span><span class="si">{</span><span class="n">n_pca_components</span><span class="si">=}</span><span class="s2">) of the embeddings..."</span><span class="p">)</span>
 
     <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncrementalPCA</span>
 
@@ -510,12 +510,12 @@
     <span class="n">pca</span> <span class="o">=</span> <span class="n">IncrementalPCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_pca_components</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">embeddings_chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings_iter</span><span class="p">(),</span> <span class="mi">1</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="n">__clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Processing chunk (#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) of </span><span class="si">{</span><span class="n">embeddings_chunk</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">__clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   Processing chunk (#</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">) of </span><span class="si">{</span><span class="n">embeddings_chunk</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
             <span class="n">pca</span><span class="o">.</span><span class="n">partial_fit</span><span class="p">(</span><span class="n">embeddings_chunk</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="c1"># TODO: Save intermediate results?</span>
-            <span class="k">if</span> <span class="s1">&#39;must be less or equal to the batch number of samples&#39;</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="k">break</span>  <span class="c1"># it&#39;s the last chunk</span>
+            <span class="k">if</span> <span class="s2">"must be less or equal to the batch number of samples"</span> <span class="ow">in</span> <span class="n">e</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">break</span>  <span class="c1"># it's the last chunk</span>
 
     <span class="c1"># def compute_pca_projections():</span>
     <span class="c1">#     for embeddings_chunk in dacc.flat_en_embeddings_iter():</span>
@@ -524,7 +524,7 @@
     <span class="c1"># X = np.vstack(compute_pca_projections())</span>
 
     <span class="k">if</span> <span class="n">save_name</span><span class="p">:</span>
-        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving the planar embeddings to </span><span class="si">{</span><span class="n">save_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving the planar embeddings to </span><span class="si">{</span><span class="n">save_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">save_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pca</span>
 
     <span class="k">return</span> <span class="n">pca</span>
@@ -534,20 +534,20 @@
     <span class="n">dacc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">pca_model</span><span class="o">=</span><span class="s1">&#39;pca500.pkl&#39;</span><span class="p">,</span>
-    <span class="n">pca_embeddings_name</span><span class="o">=</span><span class="s1">&#39;pca500_embeddings.npy&#39;</span><span class="p">,</span>
+    <span class="n">pca_model</span><span class="o">=</span><span class="s2">"pca500.pkl"</span><span class="p">,</span>
+    <span class="n">pca_embeddings_name</span><span class="o">=</span><span class="s2">"pca500_embeddings.npy"</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">))</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading the PCA model </span><span class="si">{</span><span class="n">pca_model</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading the PCA model </span><span class="si">{</span><span class="n">pca_model</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">pca</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">pca_model</span><span class="p">]</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Computing the PCA projections of the embeddings&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Computing the PCA projections of the embeddings"</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">embeddings_matrix</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving the PCA embeddings to </span><span class="si">{</span><span class="n">pca_embeddings_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">dacc</span> <span class="o">=</span> <span class="n">mk_dacc</span><span class="p">()</span>  <span class="c1"># to offload the dacc&#39;s data</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving the PCA embeddings to </span><span class="si">{</span><span class="n">pca_embeddings_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+    <span class="n">dacc</span> <span class="o">=</span> <span class="n">mk_dacc</span><span class="p">()</span>  <span class="c1"># to offload the dacc's data</span>
     <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">pca_embeddings_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span>
     <span class="k">return</span> <span class="n">X</span>
 
@@ -556,22 +556,22 @@
     <span class="n">dacc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">embeddings_save_name</span><span class="o">=</span><span class="s1">&#39;pca500_embeddings.npy&#39;</span><span class="p">,</span>
-    <span class="n">ncvis_planar_embeddings_name</span><span class="o">=</span><span class="s1">&#39;ncvis_planar_pca500_embeddings.npy&#39;</span><span class="p">,</span>
+    <span class="n">embeddings_save_name</span><span class="o">=</span><span class="s2">"pca500_embeddings.npy"</span><span class="p">,</span>
+    <span class="n">ncvis_planar_embeddings_name</span><span class="o">=</span><span class="s2">"ncvis_planar_pca500_embeddings.npy"</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">ncvis</span>
 
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">verbose</span><span class="p">))</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading the embeddings from </span><span class="si">{</span><span class="n">embeddings_save_name</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Loading the embeddings from </span><span class="si">{</span><span class="n">embeddings_save_name</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">embeddings_save_name</span><span class="p">]</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Computing the NCVis planar embeddings&quot;</span><span class="p">)</span>
-    <span class="n">vis</span> <span class="o">=</span> <span class="n">ncvis</span><span class="o">.</span><span class="n">NCVis</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Computing the NCVis planar embeddings"</span><span class="p">)</span>
+    <span class="n">vis</span> <span class="o">=</span> <span class="n">ncvis</span><span class="o">.</span><span class="n">NCVis</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">"cosine"</span><span class="p">)</span>
     <span class="n">ncvis_planar_embeddings</span> <span class="o">=</span> <span class="n">vis</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving the NCVis planar embeddings to </span><span class="si">{</span><span class="n">ncvis_planar_embeddings_name</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving the NCVis planar embeddings to </span><span class="si">{</span><span class="n">ncvis_planar_embeddings_name</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">ncvis_planar_embeddings_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ncvis_planar_embeddings</span>
 
     <span class="k">return</span> <span class="n">ncvis_planar_embeddings</span>
@@ -582,11 +582,11 @@
     <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">n_pca_components</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="n">save_name</span><span class="o">=</span><span class="s1">&#39;planar_embeddings_pca</span><span class="si">{pca_components}</span><span class="s1">_</span><span class="si">{planar_projector}</span><span class="s1">.npy&#39;</span><span class="p">,</span>
-    <span class="n">planar_projector</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="s1">&#39;ncvis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ncvis&#39;</span><span class="p">,</span>
+    <span class="n">save_name</span><span class="o">=</span><span class="s2">"planar_embeddings_pca</span><span class="si">{pca_components}</span><span class="s2">_</span><span class="si">{planar_projector}</span><span class="s2">.npy"</span><span class="p">,</span>
+    <span class="n">planar_projector</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"umap"</span><span class="p">,</span> <span class="s2">"ncvis"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"ncvis"</span><span class="p">,</span>
 <span class="p">):</span>
 
-    <span class="k">assert</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">planar_projector</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">planar_projector</span><span class="si">=}</span><span class="s2"> installed&quot;</span>
+    <span class="k">assert</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">planar_projector</span><span class="p">),</span> <span class="sa">f</span><span class="s2">"No </span><span class="si">{</span><span class="n">planar_projector</span><span class="si">=}</span><span class="s2"> installed"</span>
 
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
 
@@ -596,9 +596,9 @@
 
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
-    <span class="c1"># X = np.load(data_saves_join(&#39;flat_en_embeddings.npy&#39;))</span>
+    <span class="c1"># X = np.load(data_saves_join('flat_en_embeddings.npy'))</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Taking the PCA (</span><span class="si">{</span><span class="n">n_pca_components</span><span class="si">=}</span><span class="s2">) of the embeddings...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Taking the PCA (</span><span class="si">{</span><span class="n">n_pca_components</span><span class="si">=}</span><span class="s2">) of the embeddings..."</span><span class="p">)</span>
 
     <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncrementalPCA</span>
 
@@ -612,27 +612,27 @@
 
     <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">compute_pca_projections</span><span class="p">())</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;And now, </span><span class="si">{planar_projector}</span><span class="s2">... Crossing fingers&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"And now, </span><span class="si">{planar_projector}</span><span class="s2">... Crossing fingers"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s1">&#39;umap&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s2">"umap"</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">umap</span>
 
         <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span>
-            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_metric</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_metric</span><span class="o">=</span><span class="s2">"cosine"</span>
         <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="k">elif</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s1">&#39;ncvis&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s2">"ncvis"</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">ncvis</span>
 
-        <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">ncvis</span><span class="o">.</span><span class="n">NCVis</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">ncvis</span><span class="o">.</span><span class="n">NCVis</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">"cosine"</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;deleting X&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"deleting X"</span><span class="p">)</span>
     <span class="k">del</span> <span class="n">X</span>
 
     <span class="k">if</span> <span class="n">save_name</span><span class="p">:</span>
-        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving the planar embeddings to </span><span class="si">{</span><span class="n">save_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving the planar embeddings to </span><span class="si">{</span><span class="n">save_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">save_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">planar_embeddings</span>
         <span class="k">except</span><span class="p">:</span>
@@ -649,12 +649,12 @@
     <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">n_pca_components</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-    <span class="n">save_name</span><span class="o">=</span><span class="s1">&#39;planar_embeddings_pca</span><span class="si">{pca_components}</span><span class="s1">_</span><span class="si">{planar_projector}</span><span class="s1">.npy&#39;</span><span class="p">,</span>
-    <span class="n">planar_projector</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s1">&#39;umap&#39;</span><span class="p">,</span> <span class="s1">&#39;ncvis&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ncvis&#39;</span><span class="p">,</span>
+    <span class="n">save_name</span><span class="o">=</span><span class="s2">"planar_embeddings_pca</span><span class="si">{pca_components}</span><span class="s2">_</span><span class="si">{planar_projector}</span><span class="s2">.npy"</span><span class="p">,</span>
+    <span class="n">planar_projector</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"umap"</span><span class="p">,</span> <span class="s2">"ncvis"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"ncvis"</span><span class="p">,</span>
     <span class="n">incremental_pca_chunk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 
-    <span class="k">assert</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">planar_projector</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;No </span><span class="si">{</span><span class="n">planar_projector</span><span class="si">=}</span><span class="s2"> installed&quot;</span>
+    <span class="k">assert</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">planar_projector</span><span class="p">),</span> <span class="sa">f</span><span class="s2">"No </span><span class="si">{</span><span class="n">planar_projector</span><span class="si">=}</span><span class="s2"> installed"</span>
 
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
 
@@ -664,14 +664,14 @@
 
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Loading embeddings&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Loading embeddings"</span><span class="p">)</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
     <span class="n">X</span> <span class="o">=</span> <span class="n">concatenate_arrays</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
     <span class="k">del</span> <span class="n">dacc</span>  <span class="c1"># offloading data</span>
-    <span class="c1"># X = np.load(data_saves_join(&#39;flat_en_embeddings.npy&#39;))</span>
+    <span class="c1"># X = np.load(data_saves_join('flat_en_embeddings.npy'))</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Taking the PCA (</span><span class="si">{</span><span class="n">n_pca_components</span><span class="si">=}</span><span class="s2">) of the embeddings </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Taking the PCA (</span><span class="si">{</span><span class="n">n_pca_components</span><span class="si">=}</span><span class="s2">) of the embeddings </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">=}</span><span class="s2">..."</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">incremental_pca_chunk_size</span><span class="p">:</span>
         <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
@@ -685,36 +685,36 @@
         <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">chk_size</span><span class="p">):</span>
             <span class="c1"># print progress on the same line</span>
-            <span class="c1"># _clog(f&quot;Rows {i}/{n}&quot;)</span>
+            <span class="c1"># _clog(f"Rows {i}/{n}")</span>
             <span class="n">X_chunk</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">chk_size</span><span class="p">)]</span>
             <span class="n">pca</span><span class="o">.</span><span class="n">partial_fit</span><span class="p">(</span><span class="n">X_chunk</span><span class="p">)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="c1"># _clog(&quot;Taking only part of them&quot;)</span>
+    <span class="c1"># _clog("Taking only part of them")</span>
     <span class="c1"># X = X[(X.shape[0] // 2):]</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;And now, </span><span class="si">{planar_projector}</span><span class="s2">... Crossing fingers&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"And now, </span><span class="si">{planar_projector}</span><span class="s2">... Crossing fingers"</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s1">&#39;umap&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s2">"umap"</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">umap</span>
 
         <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span>
-            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_metric</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">output_metric</span><span class="o">=</span><span class="s2">"cosine"</span>
         <span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="k">elif</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s1">&#39;ncvis&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">planar_projector</span> <span class="o">==</span> <span class="s2">"ncvis"</span><span class="p">:</span>
         <span class="kn">import</span><span class="w"> </span><span class="nn">ncvis</span>
 
-        <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">ncvis</span><span class="o">.</span><span class="n">NCVis</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s1">&#39;cosine&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">ncvis</span><span class="o">.</span><span class="n">NCVis</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="s2">"cosine"</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;deleting X&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"deleting X"</span><span class="p">)</span>
     <span class="k">del</span> <span class="n">X</span>
 
     <span class="k">if</span> <span class="n">save_name</span><span class="p">:</span>
         <span class="n">dacc</span> <span class="o">=</span> <span class="n">mk_dacc</span><span class="p">()</span>
-        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving the planar embeddings to </span><span class="si">{</span><span class="n">save_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving the planar embeddings to </span><span class="si">{</span><span class="n">save_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">save_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">planar_embeddings</span>
         <span class="k">except</span><span class="p">:</span>
@@ -731,22 +731,22 @@
 
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Loading grouped embeddings&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Loading grouped embeddings"</span><span class="p">)</span>
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
     <span class="n">saves</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span>
 
     <span class="n">d</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_conversation_grouped_embeddings</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Making key-value store from them&quot;</span><span class="p">)</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;embeddings&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()}</span>
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Deleting dacc to free up memory&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Making key-value store from them"</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[</span><span class="s2">"embeddings"</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()}</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Deleting dacc to free up memory"</span><span class="p">)</span>
     <span class="k">del</span> <span class="n">dacc</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Computing planar embeddings&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Computing planar embeddings"</span><span class="p">)</span>
     <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">umap_2d_embeddings</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Saving the planar embeddings to planar_embeddings_grouped.pkl&#39;&quot;</span><span class="p">)</span>
-    <span class="n">saves</span><span class="p">[</span><span class="s1">&#39;planar_embeddings_grouped.pkl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">planar_embeddings</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Saving the planar embeddings to planar_embeddings_grouped.pkl'"</span><span class="p">)</span>
+    <span class="n">saves</span><span class="p">[</span><span class="s2">"planar_embeddings_grouped.pkl"</span><span class="p">]</span> <span class="o">=</span> <span class="n">planar_embeddings</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_and_save_embeddings_pca</span><span class="p">(</span>
@@ -755,7 +755,7 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">pca_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="n">chk_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50_000</span><span class="p">,</span>
-    <span class="n">data_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;pca_model.pkl&#39;</span><span class="p">,</span>
+    <span class="n">data_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"pca_model.pkl"</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
@@ -764,13 +764,13 @@
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
     <span class="n">saves</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Loading data...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Loading data..."</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">flat_en_embeddings</span><span class="o">.</span><span class="n">embeddings</span>
     <span class="k">del</span> <span class="n">dacc</span>  <span class="c1"># offloading data</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Making a data matrix X from it...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Making a data matrix X from it..."</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
 
     <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">IncrementalPCA</span>
 
@@ -781,12 +781,12 @@
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">chk_size</span><span class="p">):</span>
         <span class="c1"># print progress on the same line</span>
-        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rows </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Rows </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="n">X_chunk</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="n">chk_size</span><span class="p">)]</span>
         <span class="n">pca</span><span class="o">.</span><span class="n">partial_fit</span><span class="p">(</span><span class="n">X_chunk</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">data_name</span><span class="p">:</span>
-        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving the PCA to </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving the PCA to </span><span class="si">{</span><span class="n">data_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
         <span class="n">saves</span><span class="p">[</span><span class="n">data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pca</span>
 
     <span class="k">return</span> <span class="n">pca</span>
@@ -799,27 +799,27 @@
     <span class="o">*</span><span class="p">,</span>
     <span class="n">eps</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
     <span class="n">min_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
-    <span class="n">source_data_name</span><span class="o">=</span><span class="s1">&#39;flat_en_embeddings_pca100.npy&#39;</span><span class="p">,</span>
-    <span class="n">data_name</span><span class="o">=</span><span class="s1">&#39;dbscan_0.7_1000_pca100.pkl&#39;</span><span class="p">,</span>
+    <span class="n">source_data_name</span><span class="o">=</span><span class="s2">"flat_en_embeddings_pca100.npy"</span><span class="p">,</span>
+    <span class="n">data_name</span><span class="o">=</span><span class="s2">"dbscan_0.7_1000_pca100.pkl"</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">DBSCAN</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
     <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Loading data...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Loading data..."</span><span class="p">)</span>
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
 
     <span class="n">X</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">source_data_name</span><span class="p">]</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Standardizing the data...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="s2">"Standardizing the data..."</span><span class="p">)</span>
     <span class="n">X</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing DBSCAN(eps=</span><span class="si">{</span><span class="n">eps</span><span class="si">}</span><span class="s2">, min_samples=</span><span class="si">{</span><span class="n">min_samples</span><span class="si">}</span><span class="s2">)...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Computing DBSCAN(eps=</span><span class="si">{</span><span class="n">eps</span><span class="si">}</span><span class="s2">, min_samples=</span><span class="si">{</span><span class="n">min_samples</span><span class="si">}</span><span class="s2">)..."</span><span class="p">)</span>
     <span class="n">dbscan</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="n">min_samples</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="n">rootdir</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">,</span> <span class="s1">&#39;rootdir&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saving the DBSCAN to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rootdir</span><span class="p">,</span><span class="w"> </span><span class="n">data_name</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">rootdir</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">,</span> <span class="s2">"rootdir"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Saving the DBSCAN to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rootdir</span><span class="p">,</span><span class="w"> </span><span class="n">data_name</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dbscan</span>
 
     <span class="k">return</span> <span class="n">dbscan</span>
@@ -834,10 +834,10 @@
     <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">standardized_X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
     <span class="n">n_clusters</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
-    <span class="n">source_data_name</span><span class="o">=</span><span class="s1">&#39;flat_en_embeddings_pca100.npy&#39;</span><span class="p">,</span>
-    <span class="n">data_name</span><span class="o">=</span><span class="s1">&#39;kmeans_</span><span class="si">{n_clusters}</span><span class="s1">_clusters_indices.pkl&#39;</span><span class="p">,</span>
+    <span class="n">source_data_name</span><span class="o">=</span><span class="s2">"flat_en_embeddings_pca100.npy"</span><span class="p">,</span>
+    <span class="n">data_name</span><span class="o">=</span><span class="s2">"kmeans_</span><span class="si">{n_clusters}</span><span class="s2">_clusters_indices.pkl"</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the kmeans clusting and save it to the data store.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Compute the kmeans clusting and save it to the data store."""</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardScaler</span>
 
@@ -846,47 +846,28 @@
     <span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">mk_dacc</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Loading data...&quot;</span><span class="p">)</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="s2">"Loading data..."</span><span class="p">)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">source_data_name</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">standardized_X</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;Need to provide X if standardized_X is not provided&quot;</span>
-        <span class="n">_clog</span><span class="p">(</span><span class="s2">&quot;Standardizing the data...&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">X</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"Need to provide X if standardized_X is not provided"</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="s2">"Standardizing the data..."</span><span class="p">)</span>
         <span class="n">standardized_X</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 
-    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Computing Kmeans(n_clusters=</span><span class="si">{</span><span class="n">n_clusters</span><span class="si">}</span><span class="s2">)...&quot;</span><span class="p">)</span>
+    <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Computing Kmeans(n_clusters=</span><span class="si">{</span><span class="n">n_clusters</span><span class="si">}</span><span class="s2">)..."</span><span class="p">)</span>
     <span class="n">kmeans_clusters</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">)</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">standardized_X</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">data_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">rootdir</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">,</span> <span class="s1">&#39;rootdir&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">rootdir</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">,</span> <span class="s2">"rootdir"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
         <span class="n">_clog</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;Saving the kmeans cluster indices to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rootdir</span><span class="p">,</span><span class="w"> </span><span class="n">data_name</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"Saving the kmeans cluster indices to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">rootdir</span><span class="p">,</span><span class="w"> </span><span class="n">data_name</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
-        <span class="k">if</span> <span class="s1">&#39;</span><span class="si">{n_clusters}</span><span class="s1">&#39;</span> <span class="ow">in</span> <span class="n">data_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">"</span><span class="si">{n_clusters}</span><span class="s2">"</span> <span class="ow">in</span> <span class="n">data_name</span><span class="p">:</span>
             <span class="n">data_name</span> <span class="o">=</span> <span class="n">data_name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">)</span>
         <span class="n">dacc</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">data_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">kmeans_clusters</span>
 
     <span class="k">return</span> <span class="n">kmeans_clusters</span></div>
 
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">argh</span><span class="w"> </span><span class="kn">import</span> <span class="n">dispatch_commands</span>
-
-    <span class="n">dispatch_commands</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="n">compute_and_save_embeddings</span><span class="p">,</span>
-            <span class="n">compute_and_save_incremental_pca</span><span class="p">,</span>
-            <span class="n">compute_and_save_planar_embeddings</span><span class="p">,</span>
-            <span class="n">compute_and_save_planar_embeddings_with_incremental_pca</span><span class="p">,</span>
-            <span class="n">compute_and_save_planar_embeddings_light</span><span class="p">,</span>
-            <span class="n">compute_and_save_grouped_embeddings</span><span class="p">,</span>
-            <span class="n">compute_and_save_embeddings_pca</span><span class="p">,</span>
-            <span class="n">compute_and_save_dbscan</span><span class="p">,</span>
-            <span class="n">compute_and_save_kmeans</span><span class="p">,</span>
-            <span class="n">compute_and_save_ncvis_planar_embeddings</span><span class="p">,</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
 </pre></div>
 
            </div>
@@ -896,7 +877,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

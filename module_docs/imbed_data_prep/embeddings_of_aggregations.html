@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.embeddings_of_aggregations &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.embeddings_of_aggregations &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -120,16 +120,16 @@ seed (int): The random seed for reproducibility.</p>
 </dl>
 <p>Examples:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">graph</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper2&#39;</span><span class="p">,</span> <span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper1&#39;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="p">[],</span>
+<span class="gp">... </span>    <span class="s1">'paper1'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'paper2'</span><span class="p">,</span> <span class="s1">'paper3'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">'paper2'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'paper3'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">'paper3'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'paper1'</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="s1">'paper4'</span><span class="p">:</span> <span class="p">[],</span>
 <span class="gp">... </span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">node_titles</span> <span class="o">=</span> <span class="p">{</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 1&#39;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 2&#39;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 3&#39;</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 4&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">'paper1'</span><span class="p">:</span> <span class="s1">'Title of Paper 1'</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">'paper2'</span><span class="p">:</span> <span class="s1">'Title of Paper 2'</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">'paper3'</span><span class="p">:</span> <span class="s1">'Title of Paper 3'</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">'paper4'</span><span class="p">:</span> <span class="s1">'Title of Paper 4'</span><span class="p">,</span>
 <span class="gp">... </span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_permutations</span> <span class="o">=</span> <span class="mi">2</span>
@@ -137,9 +137,9 @@ seed (int): The random seed for reproducibility.</p>
 <span class="gp">... </span>    <span class="n">graph</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_permutations</span><span class="p">,</span> <span class="n">node_to_text</span><span class="o">=</span><span class="n">node_titles</span><span class="o">.</span><span class="n">get</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">text_to_embedding</span><span class="o">=</span><span class="n">simple_semantic_features</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span>
 <span class="gp">... </span><span class="p">))</span>
-<span class="go">[{&#39;citing_id&#39;: &#39;paper2&#39;,</span>
-<span class="go">&#39;permutation_index&#39;: 0,</span>
-<span class="go">&#39;aggregated_title&#39;: &#39;Title of Paper 2</span>
+<span class="go">[{'citing_id': 'paper2',</span>
+<span class="go">'permutation_index': 0,</span>
+<span class="go">'aggregated_title': 'Title of Paper 2</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -222,7 +222,7 @@ contract-based check).</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

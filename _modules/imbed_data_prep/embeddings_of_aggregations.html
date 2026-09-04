@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed_data_prep.embeddings_of_aggregations &mdash; imbed_data_prep 0.1.0 documentation</title>
+  <title>imbed_data_prep.embeddings_of_aggregations &mdash; imbed_data_prep 0.1.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../_static/documentation_options.js?v=a58bc63e"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -89,7 +89,7 @@
            <div itemprop="articleBody">
              
   <h1>Source code for imbed_data_prep.embeddings_of_aggregations</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Tools to analyze the embeddings of aggregations&quot;&quot;&quot;</span>
+<span></span><span class="sd">"""Tools to analyze the embeddings of aggregations"""</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipe</span>
@@ -97,6 +97,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">oa</span>
+
 <span class="c1"># `simple_semantic_features` was moved/renamed in `imbed`; the current equivalent</span>
 <span class="c1"># is `three_text_features` in `imbed.components.vectorization`.</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.vectorization</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -112,7 +113,7 @@
 <div class="viewcode-block" id="get_n_unique_permutations">
 <a class="viewcode-back" href="../../module_docs/imbed_data_prep/embeddings_of_aggregations.html#imbed_data_prep.embeddings_of_aggregations.get_n_unique_permutations">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_n_unique_permutations</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DFLT_RANDOM_SEED</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get n unique permutations of an array, with a random seed fixed, and</span>
 <span class="sd">    raise an error if n is larger than the number of possible permutations.</span>
 
@@ -146,7 +147,7 @@
 <span class="sd">        Traceback (most recent call last):</span>
 <span class="sd">        ...</span>
 <span class="sd">        ValueError: n (=7) is larger than the number of possible permutations: 6</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
@@ -155,7 +156,7 @@
     <span class="n">n_perms</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">arr</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">n_perms</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;n (=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">) is larger than the number of possible permutations: </span><span class="si">{</span><span class="n">n_perms</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">"n (=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">) is larger than the number of possible permutations: </span><span class="si">{</span><span class="n">n_perms</span><span class="si">}</span><span class="s2">"</span>
         <span class="p">)</span>
     <span class="n">perms</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">perms</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
@@ -172,12 +173,12 @@
     <span class="n">n_permutations</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">node_to_text</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Node</span><span class="p">],</span> <span class="nb">str</span><span class="p">],</span>
-    <span class="n">aggregate_texts</span><span class="p">:</span> <span class="nb">callable</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">,</span>
+    <span class="n">aggregate_texts</span><span class="p">:</span> <span class="nb">callable</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">,</span>
     <span class="n">text_to_embedding</span><span class="p">:</span> <span class="nb">callable</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">max_permutations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
 <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Get a (without replacement) sample of n_nodes items of the citation_graph</span>
 <span class="sd">    and for each, take n_permutations permutations of the cited_ids,</span>
 <span class="sd">    aggregate the titles of the cited_ids and compute its embedding.</span>
@@ -199,16 +200,16 @@
 <span class="sd">    Examples:</span>
 
 <span class="sd">        &gt;&gt;&gt; graph = {</span>
-<span class="sd">        ...     &#39;paper1&#39;: [&#39;paper2&#39;, &#39;paper3&#39;],</span>
-<span class="sd">        ...     &#39;paper2&#39;: [&#39;paper3&#39;],</span>
-<span class="sd">        ...     &#39;paper3&#39;: [&#39;paper1&#39;],</span>
-<span class="sd">        ...     &#39;paper4&#39;: [],</span>
+<span class="sd">        ...     'paper1': ['paper2', 'paper3'],</span>
+<span class="sd">        ...     'paper2': ['paper3'],</span>
+<span class="sd">        ...     'paper3': ['paper1'],</span>
+<span class="sd">        ...     'paper4': [],</span>
 <span class="sd">        ... }</span>
 <span class="sd">        &gt;&gt;&gt; node_titles = {</span>
-<span class="sd">        ...     &#39;paper1&#39;: &#39;Title of Paper 1&#39;,</span>
-<span class="sd">        ...     &#39;paper2&#39;: &#39;Title of Paper 2&#39;,</span>
-<span class="sd">        ...     &#39;paper3&#39;: &#39;Title of Paper 3&#39;,</span>
-<span class="sd">        ...     &#39;paper4&#39;: &#39;Title of Paper 4&#39;,</span>
+<span class="sd">        ...     'paper1': 'Title of Paper 1',</span>
+<span class="sd">        ...     'paper2': 'Title of Paper 2',</span>
+<span class="sd">        ...     'paper3': 'Title of Paper 3',</span>
+<span class="sd">        ...     'paper4': 'Title of Paper 4',</span>
 <span class="sd">        ... }</span>
 <span class="sd">        &gt;&gt;&gt; n_nodes = 2</span>
 <span class="sd">        &gt;&gt;&gt; n_permutations = 2</span>
@@ -216,27 +217,27 @@
 <span class="sd">        ...     graph, n_nodes, n_permutations, node_to_text=node_titles.get,</span>
 <span class="sd">        ...     text_to_embedding=simple_semantic_features, seed=42</span>
 <span class="sd">        ... ))  # doctest: +SKIP</span>
-<span class="sd">        [{&#39;citing_id&#39;: &#39;paper2&#39;,</span>
-<span class="sd">        &#39;permutation_index&#39;: 0,</span>
-<span class="sd">        &#39;aggregated_title&#39;: &#39;Title of Paper 2\n\nTitle of Paper 3&#39;,</span>
-<span class="sd">        &#39;embedding&#39;: (8, 26, 0)},</span>
-<span class="sd">        {&#39;citing_id&#39;: &#39;paper1&#39;,</span>
-<span class="sd">        &#39;permutation_index&#39;: 0,</span>
-<span class="sd">        &#39;aggregated_title&#39;: &#39;Title of Paper 1\n\nTitle of Paper 2\n\nTitle of Paper 3&#39;,</span>
-<span class="sd">        &#39;embedding&#39;: (12, 39, 0)},</span>
-<span class="sd">        {&#39;citing_id&#39;: &#39;paper1&#39;,</span>
-<span class="sd">        &#39;permutation_index&#39;: 1,</span>
-<span class="sd">        &#39;aggregated_title&#39;: &#39;Title of Paper 1\n\nTitle of Paper 3\n\nTitle of Paper 2&#39;,</span>
-<span class="sd">        &#39;embedding&#39;: (12, 39, 0)}]</span>
+<span class="sd">        [{'citing_id': 'paper2',</span>
+<span class="sd">        'permutation_index': 0,</span>
+<span class="sd">        'aggregated_title': 'Title of Paper 2\n\nTitle of Paper 3',</span>
+<span class="sd">        'embedding': (8, 26, 0)},</span>
+<span class="sd">        {'citing_id': 'paper1',</span>
+<span class="sd">        'permutation_index': 0,</span>
+<span class="sd">        'aggregated_title': 'Title of Paper 1\n\nTitle of Paper 2\n\nTitle of Paper 3',</span>
+<span class="sd">        'embedding': (12, 39, 0)},</span>
+<span class="sd">        {'citing_id': 'paper1',</span>
+<span class="sd">        'permutation_index': 1,</span>
+<span class="sd">        'aggregated_title': 'Title of Paper 1\n\nTitle of Paper 3\n\nTitle of Paper 2',</span>
+<span class="sd">        'embedding': (12, 39, 0)}]</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">factorial</span>
 
     <span class="n">nodes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="k">if</span> <span class="n">n_nodes</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;n_nodes (</span><span class="si">{</span><span class="n">n_nodes</span><span class="si">}</span><span class="s2">) is larger than the number of nodes in the citation_graph (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">"n_nodes (</span><span class="si">{</span><span class="n">n_nodes</span><span class="si">}</span><span class="s2">) is larger than the number of nodes in the citation_graph (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span><span class="si">}</span><span class="s2">)"</span>
         <span class="p">)</span>
 
     <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
@@ -260,13 +261,13 @@
             <span class="p">)</span>
 
             <span class="n">d</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;citing_id&#39;</span><span class="p">:</span> <span class="n">citing_id</span><span class="p">,</span>
-                <span class="s1">&#39;n_cited&#39;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbor_nodes</span><span class="p">),</span>
-                <span class="s1">&#39;permutation_index&#39;</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
-                <span class="s1">&#39;aggregated_title&#39;</span><span class="p">:</span> <span class="n">aggregated_title</span><span class="p">,</span>
+                <span class="s2">"citing_id"</span><span class="p">:</span> <span class="n">citing_id</span><span class="p">,</span>
+                <span class="s2">"n_cited"</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">neighbor_nodes</span><span class="p">),</span>
+                <span class="s2">"permutation_index"</span><span class="p">:</span> <span class="n">idx</span><span class="p">,</span>
+                <span class="s2">"aggregated_title"</span><span class="p">:</span> <span class="n">aggregated_title</span><span class="p">,</span>
             <span class="p">}</span>
             <span class="k">if</span> <span class="n">text_to_embedding</span><span class="p">:</span>
-                <span class="n">d</span><span class="p">[</span><span class="s1">&#39;embedding&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">text_to_embedding</span><span class="p">(</span><span class="n">aggregated_title</span><span class="p">)</span>
+                <span class="n">d</span><span class="p">[</span><span class="s2">"embedding"</span><span class="p">]</span> <span class="o">=</span> <span class="n">text_to_embedding</span><span class="p">(</span><span class="n">aggregated_title</span><span class="p">)</span>
             <span class="k">yield</span> <span class="n">d</span></div>
 
 
@@ -290,11 +291,11 @@
     <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">perms</span> <span class="o">=</span> <span class="n">get_n_unique_permutations</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="c1"># Contract-based checks (RNG selection is not stable across versions):</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">perms</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;Wrong number of permutations returned&quot;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">perms</span><span class="p">))</span> <span class="o">==</span> <span class="n">n</span><span class="p">,</span> <span class="s2">&quot;Permutations are not unique&quot;</span>
-    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span>
-        <span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">perms</span>
-    <span class="p">),</span> <span class="s2">&quot;Each result must be a permutation of the input array&quot;</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">perms</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">,</span> <span class="s2">"Wrong number of permutations returned"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">perms</span><span class="p">))</span> <span class="o">==</span> <span class="n">n</span><span class="p">,</span> <span class="s2">"Permutations are not unique"</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">perms</span><span class="p">),</span> <span class="p">(</span>
+        <span class="s2">"Each result must be a permutation of the input array"</span>
+    <span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_get_n_unique_permutations_error</span><span class="p">():</span>
@@ -303,9 +304,9 @@
     <span class="k">try</span><span class="p">:</span>
         <span class="n">perms</span> <span class="o">=</span> <span class="n">get_n_unique_permutations</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;n (=7) is larger than the number of possible permutations: 6&quot;</span>
+        <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"n (=7) is larger than the number of possible permutations: 6"</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;ValueError was not raised when expected&quot;</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"ValueError was not raised when expected"</span>
 
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sequence</span>
@@ -321,17 +322,17 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_get_aggregated_embeddings_for_sample</span><span class="p">():</span>
     <span class="n">citation_graph</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper2&#39;</span><span class="p">,</span> <span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper1&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">"paper1"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper2"</span><span class="p">,</span> <span class="s2">"paper3"</span><span class="p">],</span>
+        <span class="s2">"paper2"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper3"</span><span class="p">],</span>
+        <span class="s2">"paper3"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper1"</span><span class="p">],</span>
+        <span class="s2">"paper4"</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">}</span>
 
     <span class="n">node_titles</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 3&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 4&#39;</span><span class="p">,</span>
+        <span class="s2">"paper1"</span><span class="p">:</span> <span class="s2">"Title of Paper 1"</span><span class="p">,</span>
+        <span class="s2">"paper2"</span><span class="p">:</span> <span class="s2">"Title of Paper 2"</span><span class="p">,</span>
+        <span class="s2">"paper3"</span><span class="p">:</span> <span class="s2">"Title of Paper 3"</span><span class="p">,</span>
+        <span class="s2">"paper4"</span><span class="p">:</span> <span class="s2">"Title of Paper 4"</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">2</span>
@@ -345,28 +346,28 @@
         <span class="n">text_to_embedding</span><span class="o">=</span><span class="n">simple_semantic_features</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="s2">&quot;DataFrame is empty&quot;</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">n_nodes</span> <span class="o">*</span> <span class="n">n_permutations</span><span class="p">,</span> <span class="s2">&quot;DataFrame has more rows than expected&quot;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">empty</span><span class="p">,</span> <span class="s2">"DataFrame is empty"</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">n_nodes</span> <span class="o">*</span> <span class="n">n_permutations</span><span class="p">,</span> <span class="s2">"DataFrame has more rows than expected"</span>
 
     <span class="c1"># Check that embeddings are numpy arrays</span>
     <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 
-    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_is_vector</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;embedding&#39;</span><span class="p">])),</span> <span class="s2">&quot;Embeddings are not vectors&quot;</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">_is_vector</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s2">"embedding"</span><span class="p">])),</span> <span class="s2">"Embeddings are not vectors"</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_node_with_no_citations</span><span class="p">():</span>
     <span class="n">citation_graph</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper2&#39;</span><span class="p">,</span> <span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper1&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">"paper1"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper2"</span><span class="p">,</span> <span class="s2">"paper3"</span><span class="p">],</span>
+        <span class="s2">"paper2"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper3"</span><span class="p">],</span>
+        <span class="s2">"paper3"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper1"</span><span class="p">],</span>
+        <span class="s2">"paper4"</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">}</span>
 
     <span class="n">node_titles</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 3&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 4&#39;</span><span class="p">,</span>
+        <span class="s2">"paper1"</span><span class="p">:</span> <span class="s2">"Title of Paper 1"</span><span class="p">,</span>
+        <span class="s2">"paper2"</span><span class="p">:</span> <span class="s2">"Title of Paper 2"</span><span class="p">,</span>
+        <span class="s2">"paper3"</span><span class="p">:</span> <span class="s2">"Title of Paper 3"</span><span class="p">,</span>
+        <span class="s2">"paper4"</span><span class="p">:</span> <span class="s2">"Title of Paper 4"</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># All nodes</span>
@@ -380,25 +381,25 @@
         <span class="n">text_to_embedding</span><span class="o">=</span><span class="n">simple_semantic_features</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># Check that &#39;paper4&#39; (node with no citations) is not in df[&#39;citing_id&#39;]</span>
-    <span class="k">assert</span> <span class="p">(</span>
-        <span class="s1">&#39;paper4&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;citing_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-    <span class="p">),</span> <span class="s2">&quot;Node with no citations should be skipped&quot;</span>
+    <span class="c1"># Check that 'paper4' (node with no citations) is not in df['citing_id']</span>
+    <span class="k">assert</span> <span class="s2">"paper4"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s2">"citing_id"</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="p">(</span>
+        <span class="s2">"Node with no citations should be skipped"</span>
+    <span class="p">)</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_n_nodes_too_large</span><span class="p">():</span>
     <span class="n">citation_graph</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper2&#39;</span><span class="p">,</span> <span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper3&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;paper1&#39;</span><span class="p">],</span>
-        <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">"paper1"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper2"</span><span class="p">,</span> <span class="s2">"paper3"</span><span class="p">],</span>
+        <span class="s2">"paper2"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper3"</span><span class="p">],</span>
+        <span class="s2">"paper3"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"paper1"</span><span class="p">],</span>
+        <span class="s2">"paper4"</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">}</span>
 
     <span class="n">node_titles</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;paper1&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 1&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper2&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper3&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 3&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;paper4&#39;</span><span class="p">:</span> <span class="s1">&#39;Title of Paper 4&#39;</span><span class="p">,</span>
+        <span class="s2">"paper1"</span><span class="p">:</span> <span class="s2">"Title of Paper 1"</span><span class="p">,</span>
+        <span class="s2">"paper2"</span><span class="p">:</span> <span class="s2">"Title of Paper 2"</span><span class="p">,</span>
+        <span class="s2">"paper3"</span><span class="p">:</span> <span class="s2">"Title of Paper 3"</span><span class="p">,</span>
+        <span class="s2">"paper4"</span><span class="p">:</span> <span class="s2">"Title of Paper 4"</span><span class="p">,</span>
     <span class="p">}</span>
 
     <span class="n">n_nodes</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># There are only 4 nodes in citation_graph</span>
@@ -414,11 +415,11 @@
         <span class="p">)</span>
     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">assert</span> <span class="p">(</span>
-            <span class="s2">&quot;n_nodes (5) is larger than the number of nodes in the citation_graph (4)&quot;</span>
+            <span class="s2">"n_nodes (5) is larger than the number of nodes in the citation_graph (4)"</span>
             <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;ValueError was not raised when expected&quot;</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">"ValueError was not raised when expected"</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">test_all_permutation_tools</span><span class="p">():</span>
@@ -436,7 +437,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright NO COPYRIGHT.</p>
+    <p></p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
