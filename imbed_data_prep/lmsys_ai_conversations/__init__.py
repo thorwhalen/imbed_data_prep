@@ -765,22 +765,3 @@ def compute_and_save_kmeans(
         dacc.saves[data_name] = kmeans_clusters
 
     return kmeans_clusters
-
-
-if __name__ == "__main__":
-    from argh import dispatch_commands
-
-    dispatch_commands(
-        [
-            compute_and_save_embeddings,
-            compute_and_save_incremental_pca,
-            compute_and_save_planar_embeddings,
-            compute_and_save_planar_embeddings_with_incremental_pca,
-            compute_and_save_planar_embeddings_light,
-            compute_and_save_grouped_embeddings,
-            compute_and_save_embeddings_pca,
-            compute_and_save_dbscan,
-            compute_and_save_kmeans,
-            compute_and_save_ncvis_planar_embeddings,
-        ]
-    )
