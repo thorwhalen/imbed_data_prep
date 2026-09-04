@@ -5,7 +5,7 @@
 ```python
 import os
 import re
-import pandas as pd 
+import pandas as pd
 import numpy as np
 import requests
 
@@ -15,13 +15,13 @@ import tabled
 
 ```python
 # settings
-raw_src_url = 'https://raw.githubusercontent.com/thorwhalen/content/refs/heads/master/text/trump-zelensky-2025-03-01--with_speakers.txt'
+raw_src_url = "https://raw.githubusercontent.com/thorwhalen/content/refs/heads/master/text/trump-zelensky-2025-03-01--with_speakers.txt"
 
-rootdir = '.'   # NOTE: Put your own rootdir here
+rootdir = "."  # NOTE: Put your own rootdir here
 
 # save keys (e.g. relative paths)
-embeddings_save_key = 'data/trump_vs_zelenskyy_embeddings.parquet'
-transcript_save_key = 'data/trump_vs_zelenskyy_transcript.parquet'
+embeddings_save_key = "data/trump_vs_zelenskyy_embeddings.parquet"
+transcript_save_key = "data/trump_vs_zelenskyy_transcript.parquet"
 ```
 
 
@@ -40,12 +40,11 @@ transcript_text = requests.get(raw_src_url).text
 # Every line of transcript_text starts with [speaker]: [text]
 # Let's parse the transcript_text to get a list of (speaker, text) dicts
 # Define a regex pattern to match the speaker and text
-pattern = re.compile(r'\[(?P<speaker>[^\]]+)\]: (?P<text>.*)')
+pattern = re.compile(r"\[(?P<speaker>[^\]]+)\]: (?P<text>.*)")
 
 # Parse the transcript_text to get a list of (speaker, text) dicts
 transcript_dict_list = [
-    match.groupdict()
-    for match in pattern.finditer(transcript_text)
+    match.groupdict() for match in pattern.finditer(transcript_text)
 ]
 
 transcript_df = pd.DataFrame(transcript_dict_list)
@@ -58,7 +57,7 @@ transcript_df
 
 
 ```python
-t = transcript_df['speaker'].value_counts()
+t = transcript_df["speaker"].value_counts()
 n_top_speakers = 4
 print(f"Unique speakers: {len(t)}")
 print(f"Top 5 speakers: {t.head(n_top_speakers)}")
@@ -76,11 +75,11 @@ print(f"Top 5 speakers: {t.head(n_top_speakers)}")
 
 ```python
 # replace all speakers that are not the top 3 with 'Other'
-top_speakers = transcript_df['speaker'].value_counts().head(3).index
-transcript_df['speaker'] = transcript_df['speaker'].apply(
-    lambda speaker: speaker if speaker in top_speakers else 'Other'
+top_speakers = transcript_df["speaker"].value_counts().head(3).index
+transcript_df["speaker"] = transcript_df["speaker"].apply(
+    lambda speaker: speaker if speaker in top_speakers else "Other"
 )
-transcript_df['speaker'].value_counts()  # only 4 unique speakers now
+transcript_df["speaker"].value_counts()  # only 4 unique speakers now
 ```
 
 
@@ -100,24 +99,24 @@ transcript_df['speaker'].value_counts()  # only 4 unique speakers now
 if embeddings_save_key not in store:
     # compute the embeddings
     import oa
-    embeddings_vectors = oa.embeddings(transcript_df['text'])
-    embeddings_df = pd.DataFrame({'embeddings': embeddings_vectors})
+
+    embeddings_vectors = oa.embeddings(transcript_df["text"])
+    embeddings_df = pd.DataFrame({"embeddings": embeddings_vectors})
     store[embeddings_save_key] = embeddings_df
 else:
     embeddings_df = store[embeddings_save_key]
-    embeddings_vectors = np.vstack(embeddings_df['embeddings'])
+    embeddings_vectors = np.vstack(embeddings_df["embeddings"])
 ```
 
 
 ```python
 # project embeddings to plane using TSNE
-if 'tsne_x' not in transcript_df.columns:
-
+if "tsne_x" not in transcript_df.columns:
     from sklearn.manifold import TSNE
-    
+
     tsne_vectors = TSNE(n_components=2).fit_transform(embeddings_vectors)
 
-    t = pd.DataFrame(tsne_vectors, columns=['tsne_x', 'tsne_y'])
+    t = pd.DataFrame(tsne_vectors, columns=["tsne_x", "tsne_y"])
     transcript_df = pd.concat([transcript_df, t], axis=1)
 
 print(f"{transcript_df.shape=}")
@@ -141,23 +140,19 @@ transcript_df.iloc[0]
 
 ```python
 # project embeddings to plane using linear discriminant analysis on speakers
-if 'lda_x' not in transcript_df.columns:
-
-    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA 
+if "lda_x" not in transcript_df.columns:
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
     from sklearn.pipeline import Pipeline
     from sklearn.decomposition import PCA
 
-    speakers = transcript_df['speaker']
+    speakers = transcript_df["speaker"]
 
-    pipeline = Pipeline([
-        ('pca', PCA(n_components=50)),
-        ('lda', LDA(n_components=2))
-    ])
+    pipeline = Pipeline([("pca", PCA(n_components=50)), ("lda", LDA(n_components=2))])
 
     pipeline.fit(embeddings_vectors, y=speakers)
     lda_vectors = pipeline.transform(embeddings_vectors)
 
-    t = pd.DataFrame(lda_vectors, columns=['lda_x', 'lda_y'])
+    t = pd.DataFrame(lda_vectors, columns=["lda_x", "lda_y"])
     transcript_df = pd.concat([transcript_df, t], axis=1)
 
 print(f"{transcript_df.shape=}")
@@ -183,23 +178,19 @@ transcript_df.iloc[0]
 
 ```python
 # project embeddings to plane using linear discriminant analysis on speakers
-if 'single_speaker_lda' not in transcript_df.columns:
-
-    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA 
+if "single_speaker_lda" not in transcript_df.columns:
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
     from sklearn.pipeline import Pipeline
     from sklearn.decomposition import PCA
 
-    speakers = transcript_df['speaker']
+    speakers = transcript_df["speaker"]
 
-    pipeline = Pipeline([
-        ('pca', PCA(n_components=50)),
-        ('lda', LDA(n_components=1))
-    ])
+    pipeline = Pipeline([("pca", PCA(n_components=50)), ("lda", LDA(n_components=1))])
 
     pipeline.fit(embeddings_vectors, y=speakers)
     lda_vectors = pipeline.transform(embeddings_vectors)
 
-    t = pd.DataFrame(lda_vectors, columns=['single_speaker_lda'])
+    t = pd.DataFrame(lda_vectors, columns=["single_speaker_lda"])
     transcript_df = pd.concat([transcript_df, t], axis=1)
 
 print(f"{transcript_df.shape=}")
@@ -237,19 +228,20 @@ transcript_df.iloc[0]
 
 
 ```python
-if 'pca_1' not in transcript_df.columns:
+if "pca_1" not in transcript_df.columns:
     from sklearn.decomposition import PCA
+
     pca = PCA(n_components=2)
 
     pca_vectors = pca.fit_transform(embeddings_vectors)
 
-    t = pd.DataFrame(pca_vectors, columns=['pca_1', 'pca_2'])
+    t = pd.DataFrame(pca_vectors, columns=["pca_1", "pca_2"])
     transcript_df = pd.concat([transcript_df, t], axis=1)
 ```
 
 
 ```python
-ww = list(map(sentiment_score, transcript_df.iloc[:3]['text']))
+ww = list(map(sentiment_score, transcript_df.iloc[:3]["text"]))
 ww
 ```
 
@@ -262,10 +254,12 @@ ww
 
 
 ```python
-if 'sentiment_f' not in transcript_df.columns:
+if "sentiment_f" not in transcript_df.columns:
     from mood.sentiment import flair_sentiment_score
 
-    t = pd.DataFrame(list(map(flair_sentiment_score, transcript_df['text'])), columns=['sentiment_f'])
+    t = pd.DataFrame(
+        list(map(flair_sentiment_score, transcript_df["text"])), columns=["sentiment_f"]
+    )
     transcript_df = pd.concat([transcript_df, t], axis=1)
 transcript_df.iloc[0]
 ```
@@ -300,20 +294,19 @@ transcript_df.iloc[0]
 ```python
 import dol
 
-pickle_store = dol.PickleFiles('.')
-models = pickle_store['oa_embeddings_sentiment_models.pickle']
+pickle_store = dol.PickleFiles(".")
+models = pickle_store["oa_embeddings_sentiment_models.pickle"]
 
 print(f"{list(models)=}")
 
-label = 'anger'
+label = "anger"
 print(f"{list(models[label])=}")
 print(f"{models[label]['stats']}")
 
-if 'disgust' not in transcript_df.columns:
+if "disgust" not in transcript_df.columns:
     for sentiment, d in models.items():
-        model = d['model']
+        model = d["model"]
         model.predict()
-
 ```
 
     list(models)=['anger', 'sadness', 'surprise', 'disgust', 'fear']
@@ -349,11 +342,11 @@ if 'disgust' not in transcript_df.columns:
 
 
 ```python
-if 'compound' not in transcript_df.columns:
+if "compound" not in transcript_df.columns:
     from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
     analyzer = SentimentIntensityAnalyzer()
-    t = pd.DataFrame(list(map(analyzer.polarity_scores, transcript_df['text'])))
+    t = pd.DataFrame(list(map(analyzer.polarity_scores, transcript_df["text"])))
     transcript_df = pd.concat([transcript_df, t], axis=1)
 
 print(f"{transcript_df.shape=}")
@@ -384,12 +377,11 @@ transcript_df.iloc[0]
 
 
 ```python
-if 'Happy' not in transcript_df.columns:
+if "Happy" not in transcript_df.columns:
     import text2emotion as te
 
-    t = pd.DataFrame(list(map(te.get_emotion, transcript_df['text'])))
+    t = pd.DataFrame(list(map(te.get_emotion, transcript_df["text"])))
     transcript_df = pd.concat([transcript_df, t], axis=1)
-
 ```
 
     [nltk_data] Downloading package stopwords to
@@ -405,7 +397,7 @@ if 'Happy' not in transcript_df.columns:
 
 
 ```python
-transcript_df['turn'] = range(len(transcript_df))
+transcript_df["turn"] = range(len(transcript_df))
 ```
 
 

@@ -146,8 +146,8 @@ Transforms the raw parquet tables into Cosmograph-ready DataFrames:
 from imbed_data_prep.epstein_files import prepare_cosmograph_data
 
 cosmo_data = prepare_cosmograph_data(data_dir="path/to/parquets")
-points = cosmo_data['points']   # canonical_name, degree, hop_distance
-links  = cosmo_data['links']    # source, target, weight, action, ...
+points = cosmo_data["points"]  # canonical_name, degree, hop_distance
+links = cosmo_data["links"]  # source, target, weight, action, ...
 ```
 
 The resulting DataFrames can be passed directly to Cosmograph:
